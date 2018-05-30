@@ -1,0 +1,1498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name=renderer content=webkit>
+    <title>入住率分析</title>
+    <script src="../echarts/echarts.js"></script>
+    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <script src="../js/jquery.min.js"></script>
+    <script src = "../bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/rate.css">
+    <script src="../js/rate.js"> </script>
+</head>
+
+<body>
+	<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            	</button>
+				<img class="logo" src="../img/logo1.jpg" alt="logo" />
+				<span class="title">入住率分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					
+					<li>
+						<a href="main.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+<div class="container1">
+    <div class="left">
+        <!--<div class="btn_rate">
+            <button type="button" id="btn_week" onclick="change_week()">当周</button>
+            <button type="button" id="btn_month" onclick="change_month()">当月</button>
+            <button type="button" id="btn_year" onclick="change_year()">当季</button>
+        </div>-->
+        <div id="rate" class="rate" >
+            <div id="week"   class ="week"></div>
+            <div id="month"  class ="month" ></div>
+            <div id="year"   class ="year" ></div>
+            <button type="button" id="btn_week" onclick="change_week()">当周</button>
+            <button type="button" id="btn_month" onclick="change_month()">当月</button>
+            <button type="button" id="btn_year" onclick="change_year()">当季</button>
+        </div>
+    </div>
+
+    <div class="pie">
+        <div class="top" id="top"></div>
+        <div class="bottom" id="bottom"></div>
+    </div>
+
+</div>
+
+<div class="three">
+    <div id="hotel_one" class="hotel_one"></div>
+    <div id="house_one" class="house_one"></div>
+</div>
+
+<script>
+    var myChart_week = echarts.init(document.getElementById('week'));
+    var myChart_month = echarts.init(document.getElementById('month'));
+    var myChart_year = echarts.init(document.getElementById('year'));
+    var myChart_pie_top = echarts.init(document.getElementById('top'));
+    var myChart_pie_bottom = echarts.init(document.getElementById('bottom'));
+    var myChart_hotel_one = echarts.init(document.getElementById('hotel_one'));
+    var myChart_house_one = echarts.init(document.getElementById('house_one'));
+    var text="";
+    var text1="";
+
+    function change_week() {
+        $("#month").css("display", "none");
+        $("#week").css("display", "block");
+        $("#year").css("display", "none");
+        $("#btn_week").css("background-color","#027AE0");
+        $("#btn_week").css("color","white");
+        $("#btn_week").siblings().css("background-color","white");
+        $("#btn_week").siblings().css("color","#027AE0");
+    }
+    function change_month() {
+        $("#month").css("display", "block");
+        $("#week").css("display", "none");
+        $("#year").css("display", "none");
+        $("#btn_month").css("background-color","#027AE0");
+        $("#btn_month").css("color","white");
+        $("#btn_month").siblings().css("background-color","white");
+        $("#btn_month").siblings().css("color","#027AE0");
+    }
+    function change_year() {
+        $("#month").css("display", "none");
+        $("#week").css("display", "none");
+        $("#year").css("display", "block");
+        $("#btn_year").css("background-color","#027AE0");
+        $("#btn_year").css("color","white");
+        $("#btn_year").siblings().css("background-color","white");
+        $("#btn_year").siblings().css("color","#027AE0");
+    }
+
+    myChart_week.on('click',function(data){
+        if(data.name=='三星'){
+            var text="▌三星级酒店入住率分析图";
+            var text1="▌三星级牧人之家入住率分析图";
+            option_hotel_one = {
+                title: {
+                    text: text,
+                    x: 'left',
+                    top: '2%',
+                    left: '2%',
+                    textStyle: {
+                        color: '#EEB300',
+                        fontSize: 15
+                    }
+                },
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                xAxis : [
+
+
+                    {
+                        type : 'category',
+                        data : [ '喜园居','生力商务酒店', '锡林白马饭店', '	嘉誉东乌酒店', '	喜上元商务酒店 ','豪泰商务酒店','多伦万豪居宾馆','正蓝旗添财旅社','嘉海旅店','	西乌旗电力宾馆'],
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLabel: {
+                            margin:10,
+                            rotate:30,
+                            textStyle: {
+                                color: '#858585'
+                            },
+                            interval:0
+                        }
+                        /* name:'月份',*/
+                        /* boundaryGap : false*/
+                    }
+                ],
+                yAxis : [
+                    {
+                        /*name : '订单天数',*/
+                        type : 'value',
+                        max : 1,
+                         axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+                    }
+                ],
+                series : [
+                    {
+                        /* name:'订单天数',*/
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[0.73, 0.82, 0.64, 0.78, 0.69,0.67,0.89,0.45,0.56,0.66]
+                    }
+                ]
+            };
+            option_house_one={
+                title: {
+                    text: text1,
+                    x: 'left',
+                    top: '2%',
+                    left: '2%',
+                    textStyle: {
+                        color: '#EEB300',
+                        fontSize: 15
+                    }
+                },
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                xAxis : [
+
+                    {
+                        type : 'category',
+                        data : ['阿拉腾杭盖', '巴音布日德', '特木尔巴根', '高尧乌拉', '莎莲娜', '巴彦敖包','太仆寺旗','塔林艾里','特木尔巴根','王盖敖包'],
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLabel: {
+                            margin:10,
+                            rotate:30,
+                            textStyle: {
+                                color: '#858585'
+                            },
+                            interval:0
+                        }
+                        /* name:'月份',*/
+                        /* boundaryGap : false*/
+                    }
+                ],
+                yAxis : [
+                    {
+                        /*name : '订单天数',*/
+                        type : 'value',
+                        max : 1,
+                         axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+                    }
+                ],
+                series : [
+                    {
+                        /*  name:'订单天数',*/
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[0.82, 0.76, 0.69, 0.56, 0.61, 0.72,0.85,0.67,0.54,0.68]
+                    }
+                ]
+            };
+            myChart_hotel_one.setOption(option_hotel_one);
+            myChart_house_one.setOption(option_house_one);
+        }
+
+        if(data.name=='四星'){
+            var text="▌四星级酒店入住率分析图";
+            var text1="▌四星级牧人之家入住率分析图";
+            option_hotel_one = {
+                title: {
+                    text: text,
+                    x: 'left',
+                    top: '2%',
+                    left: '2%',
+                    textStyle: {
+                        color: '#EEB300',
+                        fontSize: 15
+                    }
+                },
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                xAxis : [
+
+
+                    {
+                        type : 'category',
+                        data : ['乌拉盖迎宾馆', '西灵大酒店  ', '锡林浩特大酒店','时泰国际大酒店','如归旅店酒店','锡林河旅店','乌珠穆沁旗旅店','客来居旅店','长顺商务宾馆','多伦嘉华宾馆'],
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#858585'
+                            },
+                            interval:0
+                        }
+                        /* name:'月份',*/
+                        /* boundaryGap : false*/
+                    }
+                ],
+                yAxis : [
+                    {
+                        /*name : '订单天数',*/
+                        type : 'value',
+                        max : 1,
+                         axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+                    }
+                ],
+                series : [
+                    {
+                        /* name:'订单天数',*/
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[0.73, 0.82, 0.64, 0.78,0.45,0.34,0.46,0.56,0.63,0.39]
+                    }
+                ]
+            };
+            option_house_one={
+                title: {
+                    text: text1,
+                    x: 'left',
+                    top: '2%',
+                    left: '2%',
+                    textStyle: {
+                        color: '#EEB300',
+                        fontSize: 15
+                    }
+                },
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '10%',
+                    containLabel: true
+                },
+                xAxis : [
+
+                    {
+                        type : 'category',
+                        data : ['白音敖包', '东牧原民俗村', '乌珠穆沁', '白音部落', '哈音海尔瓦', '毕力贺','高尧乌拉','斯仍音昭','巴达日胡','珠勒人家'],
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#858585'
+                            },
+                            interval:0
+                        }
+                        /* name:'月份',*/
+                        /* boundaryGap : false*/
+                    }
+                ],
+                yAxis : [
+                    {
+                        /*name : '订单天数',*/
+                        type : 'value',
+                        max : 1,
+                         axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+                    }
+                ],
+                series : [
+                    {
+                        /*  name:'订单天数',*/
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[0.82, 0.76, 0.69, 0.56, 0.61, 0.72,0.67,0.78,0.65,0.78]
+                    }
+                ]
+            };
+            myChart_hotel_one.setOption(option_hotel_one);
+            myChart_house_one.setOption(option_house_one);
+        }
+
+    });
+
+    myChart_hotel_one.on('click',function(data){
+        if(data.name==''){
+            var text="三星级酒店入住率分析图";
+            var text1="三星级牧人之家入住率分析图";
+            option_hotel_one = {
+                title: {
+                    text: text,
+                    top:'2%',
+                    x: 'center'
+                },
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+
+
+                    {
+                        type : 'category',
+                        data : ['	西乌旗电力宾馆', '生力商务酒店', '锡林白马饭店', '	嘉誉东乌酒店', '	喜上元商务酒店 ','太仆寺旗豪泰商务酒店','锡林郭勒盟多伦万豪居宾馆','锡林郭勒正蓝旗添财旅社','锡林郭勒盟喜园居','锡林郭勒盟嘉海旅店'],
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#858585'
+                            },
+                            interval:0
+                        }
+                        /* name:'月份',*/
+                        /* boundaryGap : false*/
+                    }
+                ],
+                yAxis : [
+                    {
+                        /*name : '订单天数',*/
+                        type : 'value',
+                        max : 1,
+                         axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+                    }
+                ],
+                series : [
+                    {
+                        /* name:'订单天数',*/
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[0.73, 0.82, 0.64, 0.78, 0.69]
+                    }
+                ]
+            };
+            option_house_one={
+                title: {
+                    text: text1,
+                    x: 'center'
+                },
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+
+                    {
+                        type : 'category',
+                        data : ['阿拉腾杭盖', '巴音布日德', '特木尔巴根', '高尧乌拉', '莎莲娜', '巴彦敖包','太仆寺旗','塔林艾里','特木尔巴根','王盖敖包'],
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#858585'
+                            },
+                            interval:0
+                        }
+                        /* name:'月份',*/
+                        /* boundaryGap : false*/
+                    }
+                ],
+                yAxis : [
+                    {
+                        /*name : '订单天数',*/
+                        type : 'value',
+                        max : 1,
+                         axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+                    }
+                ],
+                series : [
+                    {
+                        /*  name:'订单天数',*/
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[0.82, 0.76, 0.69, 0.56, 0.61, 0.72]
+                    }
+                ]
+            };
+            myChart_hotel_one.setOption(option_hotel_one);
+            myChart_house_one.setOption(option_house_one);
+        }
+
+        if(data.name=='锡林白马饭店'){
+            window.location.href="horse.html"
+            option_hotel_one = {
+                title: {
+                    text: text,
+                    x: 'center'
+                },
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+
+
+                    {
+                        type : 'category',
+                        data : ['乌拉盖迎宾馆', '锡林浩特西灵大酒店  ', '锡林浩特大酒店', '	锡林浩特时泰国际大酒店'],
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#858585'
+                            },
+                            interval:0
+                        }
+                        /* name:'月份',*/
+                        /* boundaryGap : false*/
+                    }
+                ],
+                yAxis : [
+                    {
+                        /*name : '订单天数',*/
+                        type : 'value',
+                        max : 1
+                    }
+                ],
+                series : [
+                    {
+                        /* name:'订单天数',*/
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[0.73, 0.82, 0.64, 0.78]
+                    }
+                ]
+            };
+            option_house_one={
+                title: {
+                    text: text1,
+                    x: 'center'
+                },
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+
+                    {
+                        type : 'category',
+                        data : ['白音敖包', '东牧原民俗村', '乌珠穆沁', '白音部落', '哈音海尔瓦', '毕力贺'],
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#858585'
+                            },
+                            interval:0
+                        }
+                        /* name:'月份',*/
+                        /* boundaryGap : false*/
+                    }
+                ],
+                yAxis : [
+                    {
+                        /*name : '订单天数',*/
+                        type : 'value',
+                        max : 1,
+                         axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+                    }
+                ],
+                series : [
+                    {
+                        /*  name:'订单天数',*/
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[0.82, 0.76, 0.69, 0.56, 0.61, 0.72]
+                    }
+                ]
+            };
+            myChart_hotel_one.setOption(option_hotel_one);
+            myChart_house_one.setOption(option_house_one);
+        }
+
+    });
+
+    myChart_house_one.on('click',function(data){
+        if(data.name=='三星'){
+            var text="三星级酒店入住率分析图";
+            var text1="三星级牧人之家入住率分析图";
+            option_hotel_one = {
+                title: {
+                    text: text,
+                    x: 'center'
+                },
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+
+
+                    {
+                        type : 'category',
+                        data : ['	西乌旗电力宾馆', '	锡市生力商务酒店', '锡林白马饭店', '	嘉誉东乌酒店', '	喜上元商务酒店 '],
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#858585'
+                            },
+                            interval:0
+                        }
+                        /* name:'月份',*/
+                        /* boundaryGap : false*/
+                    }
+                ],
+                yAxis : [
+                    {
+                        /*name : '订单天数',*/
+                        type : 'value',
+                        max : 1,
+                         axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+                    }
+                ],
+                series : [
+                    {
+                        /* name:'订单天数',*/
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[0.73, 0.82, 0.64, 0.78, 0.69]
+                    }
+                ]
+            };
+            option_house_one={
+                title: {
+                    text: text1,
+                    x: 'center'
+                },
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+
+                    {
+                        type : 'category',
+                        data : ['阿拉腾杭盖', '巴音布日德', '特木尔巴根', '高尧乌拉', '莎莲娜', '巴彦敖包'],
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#858585'
+                            },
+                            interval:0
+                        }
+                        /* name:'月份',*/
+                        /* boundaryGap : false*/
+                    }
+                ],
+                yAxis : [
+                    {
+                        /*name : '订单天数',*/
+                        type : 'value',
+                        max : 1,
+                         axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+                    }
+                ],
+                series : [
+                    {
+                        /*  name:'订单天数',*/
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[0.82, 0.76, 0.69, 0.56, 0.61, 0.72]
+                    }
+                ]
+            };
+            myChart_hotel_one.setOption(option_hotel_one);
+            myChart_house_one.setOption(option_house_one);
+        }
+
+        if(data.name=='四星'){
+            var text="四星级酒店入住率分析图";
+            var text1="四星级牧人之家入住率分析图";
+            option_hotel_one = {
+                title: {
+                    text: text,
+                    x: 'center'
+                },
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+
+
+                    {
+                        type : 'category',
+                        data : ['乌拉盖迎宾馆', '锡林浩特西灵大酒店  ', '锡林浩特大酒店', '	锡林浩特时泰国际大酒店'],
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#858585'
+                            },
+                            interval:0
+                        }
+                        /* name:'月份',*/
+                        /* boundaryGap : false*/
+                    }
+                ],
+                yAxis : [
+                    {
+                        /*name : '订单天数',*/
+                        type : 'value',
+                        max : 1,
+                         axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+                    }
+                ],
+                series : [
+                    {
+                        /* name:'订单天数',*/
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[0.73, 0.82, 0.64, 0.78]
+                    }
+                ]
+            };
+            option_house_one={
+                title: {
+                    text: text1,
+                    x: 'center'
+                },
+                color: ['#3398DB'],
+                tooltip : {
+                    trigger: 'axis',
+                    axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                        type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                    }
+                },
+
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis : [
+
+                    {
+                        type : 'category',
+                        data : ['白音敖包', '东牧原民俗村', '乌珠穆沁', '白音部落', '哈音海尔瓦', '毕力贺'],
+                        axisTick: {
+                            alignWithLabel: true
+                        },
+                        axisLabel: {
+                            textStyle: {
+                                color: '#858585'
+                            },
+                            interval:0
+                        }
+                        /* name:'月份',*/
+                        /* boundaryGap : false*/
+                    }
+                ],
+                yAxis : [
+                    {
+                        /*name : '订单天数',*/
+                        type : 'value',
+                        max : 1,
+                         axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+                    }
+                ],
+                series : [
+                    {
+                        /*  name:'订单天数',*/
+                        type:'bar',
+                        barWidth: '60%',
+                        data:[0.82, 0.76, 0.69, 0.56, 0.61, 0.72]
+                    }
+                ]
+            };
+            myChart_hotel_one.setOption(option_hotel_one);
+            myChart_house_one.setOption(option_house_one);
+        }
+
+    });
+
+
+    option_week = {
+        title: {
+            text: '▌不同类型酒店/牧人之家入住率分析图',
+            x: 'center',
+            top: '2%',
+            left: '2%',
+            textStyle: {
+                color: '#EEB300',
+                fontSize: 15
+            }
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        legend: {
+            data: ['酒店', '牧人之家'],
+            top:20,
+            right:250,
+            top:"bottom"
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['一星','二星','三星','四星','五星'],
+                axisPointer: {
+                    type: 'shadow'
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                max:1,
+                name:"入住率",
+                 axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+            }
+        ],
+        series: [
+            {
+                name:'酒店',
+                type:'bar',
+                barWidth:'25%',
+                data: [0.63, 0.56, 0.45, 0.22, 0.18]
+            },
+            {
+                name:'牧人之家',
+                type:'bar',
+                barWidth:'25%',
+                data: [0.73, 0.66, 0.48, 0.24, 0.11]
+            }
+        ]
+    };
+    option_month={
+        title: {
+            text: '▌不同类型酒店/牧人之家入住率分析图',
+            x: 'center',
+            top: '2%',
+            left: '2%',
+            textStyle: {
+                color: '#EEB300',
+                fontSize: 15
+            }
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        legend: {
+            data: ['酒店', '牧人之家'],
+            top:20,
+            right:250,
+            top:"bottom"
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['一星','二星','三星','四星','五星'],
+                axisPointer: {
+                    type: 'shadow'
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                max:1,
+                name:"入住率",
+                 axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+            }
+        ],
+        series: [
+            {
+                name:'酒店',
+                type:'bar',
+                barWidth:'25%',
+                data: [0.78, 0.66, 0.54, 0.34, 0.22]
+            },
+            {
+                name:'牧人之家',
+                type:'bar',
+                barWidth:'25%',
+                data: [0.79, 0.64, 0.55, 0.45, 0.26]
+            }
+        ]
+    };
+    option_year ={
+        title: {
+            text: '▌不同类型酒店/牧人之家入住率分析图',
+            x: 'center',
+            top: '2%',
+            left: '2%',
+            textStyle: {
+                color: '#EEB300',
+                fontSize: 15
+            }
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                crossStyle: {
+                    color: '#999'
+                }
+            }
+        },
+        legend: {
+            data: ['酒店', '牧人之家'],
+            top:20,
+            right:250,
+            top:"bottom"
+        },
+        xAxis: [
+            {
+                type: 'category',
+                data: ['一星','二星','三星','四星','五星'],
+                axisPointer: {
+                    type: 'shadow'
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                max:1,
+                name:"入住率",
+                 axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+            }
+        ],
+        series: [
+            {
+                name:'酒店',
+                type:'bar',
+                barWidth:'25%',
+                data: [0.83, 0.76, 0.58, 0.34, 0.28]
+            },
+            {
+                name:'牧人之家',
+                type:'bar',
+                barWidth:'25%',
+                data: [0.81, 0.72, 0.60, 0.42, 0.28]
+            }
+        ]
+    };
+    option_hotel_one = {
+        title: {
+            text: '▌三星级酒店入住率分析图',
+            x: 'left',
+            top: '2%',
+            left: '2%',
+            textStyle: {
+                color: '#EEB300',
+                fontSize: 15
+            }
+        },
+        color: ['#3398DB'],
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '10%',
+            containLabel: true
+        },
+        xAxis : [
+
+
+            {
+                type : 'category',
+                data : ['喜园居', '生力商务酒店', '锡林白马饭店', '嘉誉东乌酒店', '	喜上元商务酒店 ','豪泰商务酒店','多伦万豪居宾馆','正蓝旗添财旅社','嘉海旅店','	西乌旗电力宾馆'],
+                axisTick: {
+                    alignWithLabel: true
+                },
+                axisLabel: {
+                    interval:0,
+                    margin:10,
+                    rotate:30,
+                    textStyle: {
+                        color: '#858585'
+                    }
+                }
+                /* name:'月份',*/
+                /* boundaryGap : false*/
+            }
+        ],
+        yAxis : [
+            {
+                /*name : '订单天数',*/
+                type : 'value',
+                max : 1,
+                name:"入住率",
+                 axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+            }
+        ],
+        series : [
+            {
+               /* name:'订单天数',*/
+                type:'bar',
+                barWidth: '60%',
+                data:[0.73, 0.82, 0.64, 0.78, 0.69,0.67,0.89,0.45,0.56,0.66]
+            }
+        ]
+    };
+    option_house_one={
+        title: {
+            text: '▌三星级牧人之家入住率分析图',
+            x: 'left',
+            top: '2%',
+            left: '2%',
+            textStyle: {
+                color: '#EEB300',
+                fontSize: 15
+            }
+        },
+        color: ['#3398DB'],
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '10%',
+            containLabel: true
+        },
+        xAxis : [
+
+            {
+                type : 'category',
+                data : ['阿拉腾杭盖', '巴音布日德', '特木尔巴根', '高尧乌拉', '莎莲娜', '巴彦敖包','太仆寺旗','塔林艾里','特木尔巴根','王盖敖包'],
+                    axisTick: {
+                    alignWithLabel: true
+                },
+                axisLabel: {
+                    interval:0,
+                    margin:10,
+                    rotate:30,
+                    textStyle: {
+                        color: '#858585',
+
+                    }
+                }
+                /* name:'月份',*/
+                /* boundaryGap : false*/
+            }
+        ],
+        yAxis : [
+            {
+                /*name : '订单天数',*/
+                type : 'value',
+                max : 1,
+                name:"入住率",
+                 axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+            }
+        ],
+        series : [
+            {
+              /*  name:'订单天数',*/
+                type:'bar',
+                barWidth: '60%',
+                data:[0.82, 0.76, 0.69, 0.56, 0.61, 0.72,0.85,0.67,0.54,0.68]
+            }
+        ]
+    };
+    option_pie_top={
+        title : {
+            text: '▌酒店类型占比',
+            x: 'center',
+            top: '2%',
+            left: '2%',
+            textStyle: {
+                color: '#EEB300',
+                fontSize: 15
+            }
+    },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        series : [
+            {
+                name: '数量',
+                type: 'pie',
+                radius : '55%',
+                center: ['50%', '50%'],
+                data:[
+                    {value:335, name:'一星'},
+                    {value:310, name:'二星'},
+                    {value:234, name:'三星'},
+                    {value:135, name:'四星'},
+                    {value:68, name:'五星'}
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]};
+    option_pie_bottom={
+        title : {
+            text: '▌牧人之家类型占比',
+            x: 'center',
+            top: '2%',
+            left: '2%',
+            textStyle: {
+                color: '#EEB300',
+                fontSize: 15
+            }
+        },
+        tooltip : {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        series : [
+            {
+                name: '数量',
+                type: 'pie',
+                radius : '57%',
+                center: ['50%', '50%'],
+                data:[
+                    {value:65, name:'一星'},
+                    {value:180, name:'二星'},
+                    {value:264, name:'三星'},
+                    {value:345, name:'四星'},
+                    {value:108, name:'五星'}
+                ],
+                itemStyle: {
+                    emphasis: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]};
+
+
+    myChart_week.setOption(option_week);
+    myChart_month.setOption(option_month);
+    myChart_year.setOption(option_year);
+    myChart_hotel_one.setOption(option_hotel_one );
+    myChart_house_one.setOption(option_house_one );
+    myChart_pie_top.setOption(option_pie_top);
+    myChart_pie_bottom.setOption(option_pie_bottom);
+</script>
+</body>
+</html>

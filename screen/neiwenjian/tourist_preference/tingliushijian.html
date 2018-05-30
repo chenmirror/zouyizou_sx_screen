@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name=renderer content=webkit>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="../tour_crowd/js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="../tour_crowd/js/bootstrap-table-zh-CN.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+		<link rel="stylesheet" href="../tour_crowd/css/bootstrap-table.min.css">
+		<link rel="stylesheet" href="css/youkepianhao.css">
+		<link rel="stylesheet" href="../tour_crowd/css/passengerflow.css" />
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/preference.css" />
+		<title>游客停留时间偏好分析</title>
+		<style type="text/css">
+	.row{
+		    padding: 0;
+    margin: 0;
+    width: 100%;
+	}
+			.nav-tabs {
+	padding-left: 60px;
+	padding-bottom: 2px;
+	border-bottom: 0px;
+	    position: relative;
+    top: 35px;
+}
+.title_ul{
+	margin-top: 29px;
+}
+.nav {
+    margin-bottom: 0px;
+}
+li a {
+	color: white;
+	background-color: #3E4955;
+	/*border: 5px solid ghostwhite;*/
+	font-size: 14px;
+}
+.times {
+	color: white;
+}
+
+.times_div {
+	float: right;
+	padding: 10px;
+	margin-right: 30px;
+	/*border: 1px solid #759AA0;*/
+	display: inline;
+	padding-top: 0px;
+    margin-top: 30px;
+    padding-bottom: 0px;
+}
+
+.title {
+    margin-top: 29px;
+    float:right;
+    margin-left: 10px;
+    color: white;
+    font-size: 24px;
+}
+.navbar-collapse{
+	padding-right: 5px!important;
+}
+img{
+	margin-left: 5px;
+    margin-top: 5px;
+}
+	
+	</style>
+<script>
+	
+	$(document).ready(function(){
+			
+			var time_jieri_echart = echarts.init(document.getElementById("time_jieri"));
+			
+			var option = {
+					title: {
+						text: '▌节假日日期偏好',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					color: ['#FF4D2E'],
+					tooltip: {
+						trigger: 'axis',
+						formatter: '{b} : {c}(人)'
+					},
+					/*toolbox: {
+						show: true,
+						feature: {
+							mark: {
+								show: true
+							},
+							magicType: {
+								show: true,
+								type: ['line', 'bar']
+							},
+						}
+					},*/
+					grid: {
+						top: '25%',
+						left: '3%',
+						right: '15%',
+						bottom: '3%',
+						containLabel: true
+					},
+					calculable: true,
+					xAxis: [{
+						type: 'category',
+						name: '节日',
+						nameTextStyle: {
+							color: '#858585',
+						},
+						boundaryGap: true,
+						data: ['元旦', '春节', '清明节', '劳动节', '端午节', '中秋节', '国庆节', '双休', '平日'],
+						axisLabel: {
+							textStyle: {
+								color: '#858585'
+							},
+							interval: 0
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#858585'
+							}
+						},
+						axisTick: {
+							interval: 0,
+							lineStyle: {
+								color: '#858585'
+							}
+						},
+
+					}],
+					yAxis: [{
+						type: 'value',
+						name: '人数(人)',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+
+					}],
+					series: [{
+						name: '人数',
+						type: 'line',
+						 data:[10000, 10400, 4000, 12000, 10600, 9500, 20500,1500,9000]
+					}]
+
+				};
+			
+			time_jieri_echart.setOption(option);
+			
+			var tingliushijian = echarts.init(document.getElementById("tingliushijian"));
+			
+			var option = {
+			    title : {
+			        text: '▌停留时间偏好(天)',
+			        top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			    },
+			    legend: {
+			        orient: 'horizontal',
+						//						top: 'bottom',
+						bottom: '5%',
+			        data: ['0-2','2-4','4-6','6-8','8-10','10以上']
+			    },
+			    series : [
+			        {
+			            name: '停留天数',
+			            type: 'pie',
+			            radius: ['30%', '55%'],
+			            data:[
+			                {value:1000, name:'0-2'},
+			                {value:5000, name:'2-4'},
+			                {value:1600, name:'4-6'},
+			                {value:2000, name:'6-8'},
+			                {value:1400, name:'8-10'},
+			                {value:500, name:'10以上'}
+			            ],
+			            itemStyle: {
+			                emphasis: {
+			                    shadowBlur: 10,
+			                    shadowOffsetX: 0,
+			                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                }
+			            }
+			        }
+			    ]
+			};
+			
+		tingliushijian.setOption(option);
+		
+		var chartJijie = echarts.init(document.getElementById("chartJijie"));
+		var option = {
+			    title : {
+			        text: '▌季节偏好',
+			        top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			    },
+			    legend: {
+			        orient: 'horizontal',
+						//						top: 'bottom',
+					bottom: '5%',
+			        data: ['春','夏','秋','冬']
+			    },
+			    series : [
+			        {
+			            name: '人数',
+			            type: 'pie',
+			            radius: ['30%', '55%'],
+			            data:[
+			                {value:18500, name:'春'},
+			                {value:12600, name:'夏'},
+			                {value:40500, name:'秋'},
+			                {value:38500, name:'冬'}
+			            ],
+			            itemStyle: {
+			                emphasis: {
+			                    shadowBlur: 10,
+			                    shadowOffsetX: 0,
+			                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                }
+			            }
+			        }
+			    ]
+			};
+			
+			chartJijie.setOption(option);
+			
+			chartJijie.on('click',function (data){
+				var name = data.name;
+				if(name=='春'){
+					$("#time_dong").css('display','none');
+					$("#time_qiu").css('display','none');
+					$("#time_xia").css('display','none');
+					$('#time_chun').css('display','block');
+				}else if(name=='夏'){
+					$("#time_dong").css('display','none');
+					$("#time_qiu").css('display','none');
+					$("#time_xia").css('display','block');
+					$('#time_chun').css('display','none');
+				}else if(name=='秋'){
+					$("#time_dong").css('display','none');
+					$("#time_qiu").css('display','block');
+					$("#time_xia").css('display','none');
+					$('#time_chun').css('display','none');
+				}else if(name=='冬'){
+					$("#time_dong").css('display','block');
+					$("#time_qiu").css('display','none');
+					$("#time_xia").css('display','none');
+					$('#time_chun').css('display','none');
+				}else{
+					
+				}
+				
+			});
+			
+			$("#time_dong").css('display','none');
+			$("#time_qiu").css('display','none');
+			$("#time_xia").css('display','none');
+			
+	})
+</script>
+	</head>
+	<body id="body">
+			<div>
+			<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">游客时间偏好分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+			
+					<li>
+						<a href="tourist_preference.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+			<!--<div class="times_div">
+					<div class="times">
+						<p class="ks">开始时间：</p>
+						<span class="input-append date form_datetime start_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<div class="times">&nbsp;&nbsp;
+						<p class="js">结束时间:</p>
+						<span class="input-append date form_datetime end_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<span><a id="search" name="search" href="javascript:void(0)" onclick="doSearch()">&nbsp;&nbsp;查询</a></span>
+				</div>-->
+			</div>
+		<div class="container1">
+			
+			<div class="row">
+			
+			<div class="col-md-4 ">
+				<div id="tingliushijian" class="tingliushijian mar-left20"></div>
+			</div>
+			
+			<div class="col-md-4">
+				<div id="chartJijie" class="chartJijie">
+					
+				</div>
+			</div>
+			
+			<div class="col-md-4">
+				<div class="time_div_table" id="time_chun" style="margin-right: 40px;">
+						<table id="time_table" class="table table-hover" data-toggle="table" data-url="#" data-page-size="5" data-pagination="true">
+								<thead>
+									<tr class="dytop_table_th">
+										<th></th>
+										<th>3月 </th>
+										<th>4月</th>
+										<th>5月</th>
+										
+										<!--<th>6月</th>
+										<th>7月</th>
+										<th>8月</th>
+										
+										<th>9月</th>
+										<th>10月</th>
+										<th>11月</th>
+										
+										<th>12月</th>
+										<th>1月</th>
+										<th>2月</th>-->
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="dytop_table_td1">
+										<td >人数(k人)</td>
+										<td>5</td>
+										<td>3</td>
+										<td>10.5</td>
+									</tr>
+									<tr class="dytop_table_td1">
+										<td >季度占比(%)</td>
+										<td>27</td>
+										<td>16</td>
+										<td>57</td>
+									</tr> 
+									<tr class="dytop_table_td1">
+										<td >年占比(%)</td>
+										<td>4.5</td>
+										<td>2.7</td>
+										<td>9.5</td>
+									</tr> 
+									<tr class="dytop_table_td1">
+										<td >合计(k人)</td>
+										<td colspan="3">18.5</td>
+										<!--<td colspan="3">12.6</td>
+										<td colspan="3">40.5</td>
+										<td colspan="3">38.5</td>-->
+									</tr> 
+								</tbody>
+						</table>
+					</div>
+				
+					<div class="time_div_table" id="time_xia"  style="margin-right: 40px;">
+						<table id="time_table" class="table table-hover" data-toggle="table" data-url="#" data-page-size="5" >
+								<thead>
+									<tr>
+										<th></th>
+										<!--<th>3月 </th>
+										<th>4月</th>
+										<th>5月</th>-->
+										
+										<th>6月</th>
+										<th>7月</th>
+										<th>8月</th>
+										
+										<!--<th>9月</th>
+										<th>10月</th>
+										<th>11月</th>
+										
+										<th>12月</th>
+										<th>1月</th>
+										<th>2月</th>-->
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="dytop_table_td1">
+										<td >人数(k人)</td>
+										<!--<td>5</td>
+										<td>3</td>
+										<td>10.5</td>-->
+										<td>4</td>
+										<td>3</td>
+										<td>5.6</td>
+										<!--<td>4.5</td>
+										<td>30</td>
+										<td>6</td>
+										<!--<td>8.5</td>
+										<td>11</td>
+										<td>19</td>-->
+									</tr>
+									<tr >
+										<td >季度占比(%)</td>
+										<td>32</td>
+										<td>24</td>
+										<td>44</td>
+									</tr> 
+									<tr >
+										<td >年占比(%)</td>
+										<td>3.6</td>
+										<td>2.7</td>
+										<td>5.1</td>
+									</tr> 
+									<tr >
+										<td >合计(k人)</td>
+										<!--<td colspan="3">18.5</td>-->
+										<td colspan="3">12.6</td>
+										<!--<td colspan="3">40.5</td>
+										<td colspan="3">38.5</td>-->
+									</tr> 
+									<!--<tr >
+										<td >合计比例(%)</td>
+										<td colspan="3">16.8</td>
+										<!--<td colspan="3">11.4</td>
+										<td colspan="3">36.8</td>
+										<td colspan="3">35.0</td>-->
+									</tr> 
+								</tbody>
+						</table>
+					</div>
+					
+					<div class="time_div_table" id="time_qiu" style="margin-right: 40px;">
+						<table id="time_table" class="table table-hover" data-toggle="table" data-url="#" data-page-size="5" >
+								<thead>
+									<tr>
+										<th></th>
+										<!--<th>3月 </th>
+										<th>4月</th>
+										<th>5月</th>-->
+										
+										<!--<th>6月</th>
+										<th>7月</th>
+										<th>8月</th>-->
+										
+										<th>9月</th>
+										<th>10月</th>
+										<th>11月</th>
+										
+										<!--<th>12月</th>
+										<th>1月</th>
+										<th>2月</th>-->
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="dytop_table_td1">
+										<td >人数(k人)</td>
+										<!--<td>5</td>
+										<td>3</td>
+										<td>10.5</td>
+										<!--<td>4</td>
+										<td>3</td>
+										<td>5.6</td>-->
+										<td>4.5</td>
+										<td>30</td>
+										<td>6</td>
+										<!--<td>8.5</td>
+										<td>11</td>
+										<td>19</td>-->
+									</tr>
+									<tr >
+										<td >季度占比(%)</td>
+										<td>11</td>
+										<td>74</td>
+										<td>15</td>
+									</tr> 
+									<tr >
+										<td >年占比(%)</td>
+										<td>4.1</td>
+										<td>27.2</td>
+										<td>5.4</td>
+									</tr> 
+									<tr >
+										<td >合计(k人)</td>
+										<!--<td colspan="3">18.5</td>
+										<td colspan="3">12.6</td>-->
+										<td colspan="3">40.5</td>
+									<!--	<td colspan="3">38.5</td>-->
+									</tr> 
+									<!--<tr >
+										<td >合计比例(%)</td>
+										<td colspan="3">16.8</td>
+										<!--<td colspan="3">11.4</td>
+										<td colspan="3">36.8</td>
+										<td colspan="3">35.0</td>-->
+									</tr> 
+								</tbody>
+						</table>
+					</div>
+					
+					<div class="time_div_table" id="time_dong" style="margin-right: 40px;">
+						<table id="time_table" class="table table-hover" data-toggle="table" data-url="#" data-page-size="5" >
+								<thead>
+									<tr>
+										<th></th>
+										<!--<th>3月 </th>
+										<th>4月</th>
+										<th>5月</th>-->
+										
+										<!--<th>6月</th>
+										<th>7月</th>
+										<th>8月</th>
+										
+										<th>9月</th>
+										<th>10月</th>
+										<th>11月</th>-->
+										
+										<th>12月</th>
+										<th>1月</th>
+										<th>2月</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="dytop_table_td1">
+										<td >人数(k人)</td>
+										<!--<td>5</td>
+										<td>3</td>
+										<td>10.5</td>-->
+										<!--<td>4</td>
+										<td>3</td>
+										<td>5.6</td>
+										<td>4.5</td>
+										<td>30</td>
+										<td>6</td>-->
+										<td>8.5</td>
+										<td>11</td>
+										<td>19</td>
+									</tr>
+									<tr >
+										<td >季度占比(%)</td>
+										<td>22</td>
+										<td>29</td>
+										<td>49</td>
+									</tr> 
+									<tr >
+										<td >年占比(%)</td>
+										<td>7.7</td>
+										<td>10.0</td>
+										<td>17.3</td>
+									</tr> 
+									
+									<tr >
+										<td >合计(k人)</td>
+										<!--<td colspan="3">18.5</td>-->
+										<!--<td colspan="3">12.6</td>
+										<td colspan="3">40.5</td>-->
+										<td colspan="3">38.5</td>
+									</tr> 
+									<!--<tr >
+										<td >合计比例(%)</td>
+										<td colspan="3">16.8</td>
+										<!--<td colspan="3">11.4</td>
+										<td colspan="3">36.8</td>
+										<td colspan="3">35.0</td>-->
+									</tr> 
+								</tbody>
+						</table>
+					</div>
+					
+			</div>
+			
+		</div>
+		
+		<div class="row">
+			<div class="col-md-12">
+				<div class="time_jieri" id="time_jieri"></div>				
+			</div>
+		</div>
+		
+		</div>
+	</body>
+</html>

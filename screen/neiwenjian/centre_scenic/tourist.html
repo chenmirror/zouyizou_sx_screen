@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name=renderer content=webkit>
+		<title></title>
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<!--<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/world.js"></script>
+		<script type="text/javascript" src="js/china.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+		<script src="js/bmap.js"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0UqXGL98FSmi22w2Rl6HK56I"></script>
+		<script src="semantic/semantic.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<!--<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">-->
+		<link rel="stylesheet" href="css/total.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+		<!--<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css" />
+		<link rel="stylesheet" type="text/css" href="semantic/docs.css" />-->
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+
+		<style>
+		.nav-tabs {
+	padding-left: 60px;
+	padding-bottom: 2px;
+	border-bottom: 0px;
+}
+.title_ul{
+	margin-top: 29px;
+}
+.nav {
+    margin-bottom: 0px;
+}
+li a {
+	color: white;
+	background-color: #3E4955;
+	/*border: 5px solid ghostwhite;*/
+	font-size: 14px;
+}
+.times {
+	color: white;
+}
+
+.times_div {
+	float: right;
+	padding: 10px;
+	margin-right: 30px;
+	/*border: 1px solid #759AA0;*/
+	display: inline;
+	padding-top: 0px;
+    margin-top: 30px;
+    padding-bottom: 0px;
+}
+
+.title {
+    margin-top: 29px;
+    float:right;
+    margin-left: 10px;
+    color: white;
+    font-size: 24px;
+}
+.navbar-collapse{
+	padding-right: 5px!important;
+}
+img{
+	margin-left: 5px;
+    margin-top: 5px;
+}
+			#body1 {
+				margin-top: -1px;
+				background-color: #eff1ff;
+			}
+			
+			#main {
+				width: 100%;
+				height: 330px;
+				margin-top: 5px;
+			}
+			
+			#main1 {
+				float: left;
+				width: 39%;
+				height: 330px;
+				margin: 5px;
+				 border-radius: 5px;
+			}
+			
+			#main2 {
+				float: left;
+				width: 59%;
+				height: 330px;
+				/*border: 5px solid #eff1ff;*/
+				margin: 5px;
+				 border-radius: 5px;
+			}
+			/*.btn-group{
+				width: 1100px;height: 21px;background-color: white;
+			}*/
+			
+			#foot {
+				width: 100%;
+				height: 350px;
+			}
+			
+			#foot1 {
+				width: 39%;
+				height: 350px;
+				    margin-top: 15px;
+    margin-left: 5px;
+    border-radius: 5px;
+					}
+			
+			#foot2 {
+				top: 416px;
+				width: 59%;
+				height: 350px;
+				position: absolute;
+				left: 39.8%;
+				/*top: 364px;*/
+		margin: 5px;
+				 border-radius: 5px;
+				/*z-index: -1;*/
+			}
+			
+			#btn1 {
+				/*z-index: -2;*/
+				width: 440px;
+				height: 10px;
+				background-color: white;
+			}
+			
+			#btn2 {
+				z-index: -2;
+				width: 640px;
+				height: 10px;
+				background-color: white;
+			}
+			
+			#foot21 {
+				float: left;
+				width: 440px;
+				height: 390px;
+				border: 5px solid #eff1ff;
+			}
+			
+			#foot22 {
+				float: left;
+				width: 640px;
+				height: 390px;
+				border: 5px solid #eff1ff;
+			}
+			
+			#btn11 {
+				/*margin-top: 15px;
+				height: 22px;
+				margin-left: 230px;
+				font-size: 12px;
+				color: white;
+				background-color: #027AE0;
+				border: 1px solid #027AE0;
+				border-top-left-radius: 5px;
+				border-bottom-left-radius: 5px;*/
+				position: relative;
+				left: 23%;
+				padding: 0px;
+				height: 25px;
+				bottom: 336px;
+				width: 5%;
+				margin-bottom: 3px;
+				font-size: 12px;
+				color: white;
+				background-color: #027AE0;
+				border: 1px solid #027AE0;
+				border-top-left-radius: 5px;
+				border-bottom-left-radius: 5px;
+				border-bottom-right-radius: inherit;
+                border-top-right-radius: inherit;
+			}
+			
+			#btn12 {
+				/*height: 22px;
+				position: relative;
+				left: -8px;
+				font-size: 12px;
+				color: #027AE0;
+				background-color: white;
+				border: 1px solid #027AE0;*/
+				/*border-top-left-radius: 5px;
+				border-bottom-left-radius: 5px;*/
+				position: relative;
+				left: 22.6%;
+				padding: 0px;
+				height: 25px;
+				bottom: 336px;
+				width: 5%;
+				margin-bottom: 3px;
+				font-size: 12px;
+				color: #027AE0;
+				background-color: white;
+				border: 1px solid #027AE0;
+				border-top-right-radius: 0px;
+				border-bottom-right-radius: 0px;
+					border-top-left-radius: 0px;
+				border-bottom-left-radius: 0px;
+			}
+			
+			#btn13 {
+				/*height: 22px;
+				position: relative;
+				font-size: 12px;
+				left: -16px;
+				color: #027AE0;
+				background-color: white;
+				border: 1px solid #027AE0;
+				border-top-right-radius: 5px;
+				border-bottom-right-radius: 5px;*/
+				position: relative;
+				left: 22.2%;
+				padding: 0px;
+				height: 25px;
+				bottom: 336px;
+				width: 5%;
+				margin-bottom: 3px;
+				font-size: 12px;
+				color: #027AE0;
+				background-color: white;
+				border: 1px solid #027AE0;
+				border-top-right-radius: 5px;
+				border-bottom-right-radius: 5px;
+						border-top-left-radius: 0px;
+				border-bottom-left-radius: 0px;
+			}
+			
+			#btn21 {
+				position: relative;
+				left: 61%;
+			
+				padding: 0px;
+				height: 25px;
+				bottom: 336px;
+				width: 5%;
+				margin-bottom: 3px;
+				font-size: 12px;
+				color: white;
+				background-color: #027AE0;
+				border: 1px solid #027AE0;
+				border-top-left-radius: 5px;
+				border-bottom-left-radius: 5px;
+				border-top-right-radius: 0px;
+				border-bottom-right-radius: 0px;
+			}
+			
+			#btn22 {
+				position: relative;
+				left: 60.345%;
+				padding: 0px;
+				height: 25px;
+				bottom: 336px;
+				width: 5%;
+				margin-bottom: 3px;
+				font-size: 12px;
+				color: #027AE0;
+				background-color: white;
+				border: 1px solid #027AE0;
+				border-top-right-radius: 0px;
+				border-bottom-right-radius: 0px;
+				/*border-top-left-radius: 5px;
+				border-bottom-left-radius: 5px;*/
+						border-top-left-radius: 0px;
+				border-bottom-left-radius: 0px;
+			}
+			
+			#btn23 {
+				position: relative;
+				left: 59.8182%;
+				padding: 0px;
+				height: 25px;
+				bottom: 336px;
+				width: 5%;
+				margin-bottom: 3px;
+				font-size: 12px;
+				color: #027AE0;
+				background-color: white;
+				border: 1px solid #027AE0;
+				border-top-right-radius: 5px;
+				border-bottom-right-radius: 5px;
+						border-top-left-radius: 0px;
+				border-bottom-left-radius: 0px;
+			}
+		</style>
+		<script>
+			$(document).ready(function() {
+
+				var echarts_main = echarts.init(document.getElementById("main1"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '3%',
+						left: '2%',
+						text: '▌锡盟每日旅游人数',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					color: ['#3398DB'],
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					grid: {
+						left: '0%',
+						right: '4%',
+						bottom: '7%',
+						containLabel: true
+					},
+					xAxis: [{
+						type: 'category',
+						axisLabel: {
+							interval: 0,
+							rotate: 25,
+							margin: 5,
+
+						},
+						data: ['6月12号', '6月13号', '6月14号', '6月15号', '6月16号', '6月17号', '6月18号'],
+						axisTick: {
+							alignWithLabel: true
+						}
+					}],
+					yAxis: [{
+						type: 'value',
+						name: '数量（人）',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+
+					}],
+					series: [{
+						name: '游客总数',
+						type: 'bar',
+						barWidth: '60%',
+						data: [118001, 108450, 94200, 96334, 85390, 108330, 90220]
+					}]
+				};
+				echarts_main.setOption(option);
+			})
+		</script>
+		<script>
+			$(document).ready(function() {
+				var echarts_main = echarts.init(document.getElementById("main2"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '3%',
+						left: '2%',
+						text: '▌景区每日游客数',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						orient: 'horizontal',
+						//						top: 'bottom',
+						bottom: '3%',
+						data: ['', '', ' ', '元上都遗址', '多伦湖', '蒙古汗城', '贝子庙', '灰腾草原']
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '13%',
+						containLabel: true
+					},
+
+					xAxis: {
+						type: 'category',
+
+						boundaryGap: false,
+						data: ['6月12号', '6月13号', '6月14号', '6月15号', '6月16号', '6月17号', '6月18号']
+					},
+					yAxis: {
+						type: 'value',
+						name: '数量（人）',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+					},
+					series: [{
+						name: '元上都遗址',
+						type: 'line',
+
+						data: [11120, 9132, 10101, 9634, 10090, 11230, 9210]
+					}, {
+						name: '多伦湖',
+						type: 'line',
+
+						data: [11220, 10182, 9191, 10234, 8990, 9330, 10310]
+					}, {
+						name: '蒙古汗城',
+						type: 'line',
+
+						data: [10150, 9232, 8901, 10154, 11190, 9330, 9410]
+					}, {
+						name: '贝子庙',
+						type: 'line',
+
+						data: [10320, 8332, 12301, 9334, 7390, 10330, 9320]
+					}, {
+						name: '灰腾草原',
+						type: 'line',
+
+						data: [13820, 9932, 10901, 8934, 11290, 10330, 9320]
+					}]
+				};
+
+				echarts_main.setOption(option);
+
+			})
+		</script>
+		<script>
+			var foot1_char;
+			$(document).ready(function() {
+				foot1_char = echarts.init(document.getElementById("foot1"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '3%',
+						left: '2%',
+						text: '▌锡盟旅游人数历史数据',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					color: ['#3398DB'],
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					xAxis: [{
+						type: 'category',
+						data: ['2017.7', '2017.6', '2017.5'],
+						axisLabel: {
+							interval: 0,
+							rotate: 27,
+						},
+
+						axisTick: {
+							alignWithLabel: true
+						}
+					}],
+					yAxis: [{
+						type: 'value',
+						name: '数量（人）',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+					}],
+					series: [{
+						name: '锡盟游客总量',
+						type: 'bar',
+						barWidth: '40%',
+						data: [1910334, 1602390, 1230330, ]
+					}]
+				};
+				foot1_char.setOption(option);
+			})
+
+			function three() {
+				$("#btn11").css("background-color", "#027AE0");
+				$("#btn11").css("color", "white");
+				$("#btn12").css("background-color", "white");
+				$("#btn12").css("color", "#027AE0");
+				$("#btn13").css("background-color", "white");
+				$("#btn13").css("color", "#027AE0");
+
+				var option = {
+					color: ['#3398DB'],
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					xAxis: [{
+						type: 'category',
+						data: ['2017.7', '2017.6', '2017.5'],
+						axisLabel: {
+							interval: 0,
+							rotate: 27,
+						},
+
+						axisTick: {
+							alignWithLabel: true
+						}
+					}],
+					yAxis: [{
+						type: 'value'
+					}],
+					series: [{
+						name: '锡盟游客总量',
+						type: 'bar',
+						barWidth: '40%',
+						data: [1910334, 1602390, 1230330, ]
+					}]
+				};
+				foot1_char.setOption(option);
+			}
+
+			function year() {
+				$("#btn13").css("background-color", "#027AE0");
+				$("#btn13").css("color", "white");
+				$("#btn11").css("background-color", "white");
+				$("#btn11").css("color", "#027AE0");
+				$("#btn12").css("background-color", "white");
+				$("#btn12").css("color", "#027AE0");
+
+				var option = {
+					color: ['#3398DB'],
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					xAxis: [{
+						type: 'category',
+						data: ['2017.7', '2017.6', '2017.5', '2017.4', '2017.3', '2017.2', '2017.1', '2016.12', '2016.11', '2016.10', '2016.9', '2016.8'],
+						axisLabel: {
+							interval: 0,
+							rotate: 27,
+						},
+						axisTick: {
+							alignWithLabel: true
+						}
+					}],
+					yAxis: [{
+						type: 'value'
+					}],
+					series: [{
+						name: '锡盟游客总量',
+						type: 'bar',
+						barWidth: '60%',
+						data: [1910334, 1602390, 1230330, 1090658, 980023, 765942, 548923, 459023, 533875, 782342, 896902, 1502342]
+					}]
+				};
+
+				foot1_char.setOption(option);
+			}
+
+			function halfyear() {
+				$("#btn12").css("background-color", "#027AE0");
+				$("#btn12").css("color", "white");
+				$("#btn11").css("background-color", "white");
+				$("#btn11").css("color", "#027AE0");
+				$("#btn13").css("background-color", "white");
+				$("#btn13").css("color", "#027AE0");
+
+				var option = {
+					color: ['#3398DB'],
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					xAxis: [{
+						type: 'category',
+						data: ['2017.7', '2017.6', '2017.5', '2017.4', '2017.3', '2017.2'],
+						axisLabel: {
+							interval: 0,
+							rotate: 27,
+						},
+
+						axisTick: {
+							alignWithLabel: true
+						}
+					}],
+					yAxis: [{
+						type: 'value'
+					}],
+					series: [{
+						name: '锡盟游客总量',
+						type: 'bar',
+						barWidth: '60%',
+						data: [1910334, 1602390, 1230330, 1090658, 980023, 765942]
+					}]
+				};
+				foot1_char.setOption(option);
+			}
+		</script>
+		<script>
+			var foot2_char
+			$(document).ready(function() {
+
+				foot2_char = echarts.init(document.getElementById("foot2"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '3%',
+						left: '2%',
+						text: '▌景区人数历史数据',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						orient: 'horizontal',
+						//						top: 'bottom',
+						bottom: '3%',
+						data: ['', '', '', '元上都遗址', '多伦湖', '蒙古汗城', '贝子庙', '灰腾草原']
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '10%',
+						containLabel: true
+					},
+
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['2017.7', '2017.6', '2017.5']
+					},
+					yAxis: {
+						type: 'value',
+						name: '数量（人）',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+					},
+					series: [{
+						name: '元上都遗址',
+						type: 'line',
+
+						data: [273420, 226832, 199071]
+					}, {
+						name: '多伦湖',
+						type: 'line',
+
+						data: [368220, 305182, 271191]
+					}, {
+						name: '蒙古汗城',
+						type: 'line',
+
+						data: [232150, 215232, 278201]
+					}, {
+						name: '贝子庙',
+						type: 'line',
+
+						data: [272320, 224332, 212301]
+					}, {
+						name: '灰腾草原',
+						type: 'line',
+
+						data: [405820, 272932, 205901]
+					}]
+				};
+
+				foot2_char.setOption(option);
+
+			})
+
+			function year1() {
+				$("#btn23").css("background-color", "#027AE0");
+				$("#btn23").css("color", "white");
+				$("#btn21").css("background-color", "white");
+				$("#btn21").css("color", "#027AE0");
+				$("#btn22").css("background-color", "white");
+				$("#btn22").css("color", "#027AE0");
+				var option = {
+					title: {
+						top: '3%',
+						left: '2%',
+						text: '▌景区人数历史数据'
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						orient: 'horizontal',
+						//						top: 'bottom',
+						bottom: '3%',
+						data: ['', '', '', '元上都遗址', '多伦湖', '蒙古汗城', '贝子庙', '灰腾草原']
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '10%',
+						containLabel: true
+					},
+
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['2017.7', '2017.6', '2017.5', '2017.4', '2017.3', '2017.2', '2017.1', '2016.12', '2016.11', '2016.10', '2016.9', '2016.8']
+					},
+					yAxis: {
+						type: 'value'
+					},
+					series: [{
+						name: '元上都遗址',
+						type: 'line',
+
+						data: [353420, 326832, 299071, 276623, 250984, 268475, 190234, 209752, 240395, 290953, 320945, 379046]
+					}, {
+						name: '多伦湖',
+						type: 'line',
+
+						data: [368220, 345182, 311191, 298042, 262750, 240871, 220945, 190234, 209423, 240864, 270984, 333048]
+					}, {
+						name: '蒙古汗城',
+						type: 'line',
+
+						data: [312150, 335232, 298201, 267485, 284500, 230242, 210984, 210347, 230947, 280846, 308623, 378749]
+					}, {
+						name: '贝子庙',
+						type: 'line',
+
+						data: [372320, 354332, 342301, 290424, 289405, 310285, 298304, 240857, 249039, 310983, 359304, 367847]
+					}, {
+						name: '灰腾草原',
+						type: 'line',
+
+						data: [405820, 372932, 305901, 267485, 208475, 110847, 90432, 80976, 110923, 209384, 289405, 389485]
+					}]
+				};
+				foot2_char.setOption(option);
+			}
+
+			function halfyear1() {
+				$("#btn22").css("background-color", "#027AE0");
+				$("#btn22").css("color", "white");
+				$("#btn21").css("background-color", "white");
+				$("#btn21").css("color", "#027AE0");
+
+				$("#btn23").css("background-color", "white");
+				$("#btn23").css("color", "#027AE0");
+				var option = {
+					title: {
+						top: '3%',
+						left: '2%',
+						text: '▌景区人数历史数据'
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						orient: 'horizontal',
+						//						top: 'bottom',
+						bottom: '3%',
+						data: ['', '', '', '元上都遗址', '多伦湖', '蒙古汗城', '贝子庙', '灰腾草原']
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '10%',
+						containLabel: true
+					},
+
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['2017.7', '2017.6', '2017.5', '2017.4', '2017.3', '2017.2']
+					},
+					yAxis: {
+						type: 'value'
+					},
+					series: [{
+						name: '元上都遗址',
+						type: 'line',
+
+						data: [353420, 326832, 299071, 276623, 250984, 268475]
+					}, {
+						name: '多伦湖',
+						type: 'line',
+
+						data: [368220, 345182, 311191, 298042, 262750, 240871]
+					}, {
+						name: '蒙古汗城',
+						type: 'line',
+
+						data: [312150, 335232, 298201, 267485, 284500, 230242]
+					}, {
+						name: '贝子庙',
+						type: 'line',
+
+						data: [372320, 354332, 342301, 290424, 289405, 310285]
+					}, {
+						name: '灰腾草原',
+						type: 'line',
+
+						data: [405820, 372932, 305901, 267485, 208475, 110847]
+					}]
+				};
+				foot2_char.setOption(option);
+			}
+
+			function three1() {
+				$("#btn21").css("background-color", "#027AE0");
+				$("#btn21").css("color", "white");
+				$("#btn22").css("background-color", "white");
+				$("#btn22").css("color", "#027AE0");
+				$("#btn23").css("background-color", "white");
+				$("#btn23").css("color", "#027AE0");
+				var option = {
+					title: {
+						top: '3%',
+						left: '2%',
+						text: '▌景区人数历史数据'
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						orient: 'horizontal',
+						//						top: 'bottom',
+						bottom: '3%',
+						data: ['', '', '', '元上都遗址', '多伦湖', '蒙古汗城', '贝子庙', '灰腾草原']
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '10%',
+						containLabel: true
+					},
+					toolbox: {
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['2017.7', '2017.6', '2017.5']
+					},
+					yAxis: {
+						type: 'value'
+					},
+					series: [{
+						name: '元上都遗址',
+						type: 'line',
+
+						data: [273420, 226832, 199071]
+					}, {
+						name: '多伦湖',
+						type: 'line',
+
+						data: [368220, 305182, 271191]
+					}, {
+						name: '蒙古汗城',
+						type: 'line',
+
+						data: [232150, 215232, 278201]
+					}, {
+						name: '贝子庙',
+						type: 'line',
+
+						data: [272320, 224332, 212301]
+					}, {
+						name: '灰腾草原',
+						type: 'line',
+
+						data: [405820, 272932, 205901]
+					}]
+				};
+				foot2_char.setOption(option);
+			}
+		</script>
+	</head>
+
+	<body id="body1">
+		<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">游客量分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					
+					
+					<li>
+						<a href="huizong.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+			<!--<div class="times_div">
+					<div class="times">
+						<p class="ks">开始时间：</p>
+						<span class="input-append date form_datetime start_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<div class="times">&nbsp;&nbsp;
+						<p class="js">结束时间:</p>
+						<span class="input-append date form_datetime end_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<span><a id="search" name="search" href="javascript:void(0)" onclick="doSearch()">&nbsp;&nbsp;查询</a></span>
+				</div>-->
+			</div>
+		<div id="main">
+			<div id="main1"></div>
+			<div id="main2"></div>
+		</div>
+
+		<!--<div id="foot">
+			<div id="foot21">
+				<div class="btn-group1" id="btn1" role="group" aria-label="...">-->
+		<div id="foot1"></div>
+		<button type="button" id="btn11" onclick="three()" class="btn btn-info three">近三个月</button>
+		<button type="button" id="btn12" onclick="halfyear()" class="btn btn-info halfyear">近半年</button>
+		<button type="button" id="btn13" onclick="year()" class="btn btn-info year">近一年</button>
+		<!--</div>
+				
+			</div>-->
+		<!--<div id="foot22">
+				<div class="btn-group2" id="btn2" role="group" aria-label="...">-->
+		<div id="foot2"></div>
+		<button type="button" id="btn21" onclick="three1()" class="btn btn-info three">近三个月</button>
+		<button type="button" id="btn22" onclick="halfyear1()" class="btn btn-info halfyear">近半年</button>
+		<button type="button" id="btn23" onclick="year1()" class="btn btn-info  year">近一年</button>
+		<!--</div>
+				
+			</div>-->
+		</div>
+	</body>
+
+</html>

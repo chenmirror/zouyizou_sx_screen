@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+<title></title>
+<link rel="stylesheet" href="../resource/css/bootstrap.css"/>
+<link rel="stylesheet" href="../resource/css/video-js.min.css"/>
+<link rel="stylesheet" href="../resource/css/swiper.min.css"/>
+<link rel="stylesheet" href="../resource/css/common.css"/>
+<link rel="stylesheet" href="../resource/css/ui-form.css"/>
+<style>
+	.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
+		padding: 7px;
+		border-top: 0;
+	}
+	.module-three-in{
+		padding-top: 0;
+		border: 2px solid #36869D;
+	}
+	.module-three-in .map{
+	    box-shadow: 0 0 40px #36869D inset;
+	}
+	.title-menu{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		z-index: 100;
+		border-right: 1px solid #3D7FDD;
+	}
+	.title-menu>li{
+		float: left;
+		padding: 0;
+		width: 33.33%;
+		height: 50px;
+		line-height: 50px;
+		border: 1px solid #3D7FDD;
+		border-right: none;
+	}
+	.module-bot:before{
+		background: transparent;
+	}
+	.slideshow{display: none;}
+	.slidemenu{padding: 0 8px;list-style:none;overflow:hidden;}
+	.slidemenu .btn{padding:0;height: 34px;line-height: 34px;text-align:center;}
+	.slidemenu li{float:left;width:50%}
+	.plot-footer2>footer{z-index:999}
+	.products-table th{border-bottom: none;}
+	td a{display:inline-block;width:30px;height:20px;line-height: 20px;border:1px solid #295EA4;color: #2C86FF;}
+
+	/* edit by yf */
+	.dis-none {
+		display: none;
+	}
+	.es-show .slideshow {
+		overflow-y: hidden;
+	}
+	.es-show .list-unstyled {
+		margin-top: 0;
+	}
+	/* windown info */
+	.dialog-blue1, .dialog-blue2 {
+		position: static;
+	}
+	.dialog-blue2 .main {
+		height: 180px;
+		width: 350px;
+		box-sizing: border-box;
+		padding-left: 120px;
+	}
+	.dialog-blue2 .img {
+		position: absolute;
+    	left: 5px;
+    	float: none;
+	}
+	.dialog-blue2 .list {
+		float: none;
+		margin-left: 10px;
+		overflow: hidden;
+		height: 100%;
+	}
+	.arrow { /* border */
+		width: 0;
+		height: 0;
+		position: absolute;
+		z-index: 10000;
+	    left: 50%;
+	    margin-left: -15px;
+	    border-left: 15px solid transparent;
+	    border-right: 15px solid transparent;
+	    /* border-top: 20px solid #207FFF; */
+	    border-top: 20px solid rgba(32,127,255,.4);
+	}
+	/* .arrow:after { 实体
+		content: ' ';
+		width: 0;
+		height: 0;
+		position: absolute;
+	    left: 50%;
+	    top: -22px;
+	    margin-left: -15px;
+	    border-left: 15px solid transparent;
+	    border-right: 15px solid transparent;
+	    border-top: 20px solid rgba(32,127,255,.4);
+	} */
+	.comborder{
+		margin-bottom: 20px;
+		padding: 0 10px;
+	    border: 1px solid #235288;
+	}
+	.comborder table{
+		margin-bottom: 0;
+	}
+	.comborder th{
+		border-bottom: none !important;
+	}
+	.title-menu .select{
+		margin-right: 0 !important;
+		width: 100%;
+		height: 100%;
+	}
+	.title-menu .select p{
+		border: none;
+		height: 48px;
+    	line-height: 50px;
+	}
+	.title-menu .select li{
+		height: 48px;
+    	line-height: 52px;
+    	border: 1px solid #15CBFD;
+    	border-top: none;
+	}
+	.title-menu .select .select-pull{
+		left: -1px;
+		width: 100%;
+	    width: calc(100% + 2px);
+		overflow:scroll;
+		overflow-y:hidden;
+		overflow-x:hidden;
+		height:auto;
+	}
+	.jichushow{
+		display: none;
+	}
+	.jichulist {
+		margin-bottom: 20px;
+		padding-left: 10px;
+	}
+	.jichulist li{
+		margin-top: 12px;
+		padding-right: 0;请输入
+		padding-left: 140px;
+		position: relative;
+		width: 100%;
+		height: 100px;
+	}
+	.jichulist .img{
+		left: 0;
+		position: absolute;
+		width: 140px;
+	}
+	.jichulist img{
+		display: block;
+		width: 130px;
+		height: 100px;
+	}
+	.pagination>li>a:focus, .pagination>li>a:hover, .pagination>li>span:focus, .pagination>li>span:hover{
+	    background-color: #2D6ABA;
+	}
+	.jichulist .info{
+		overflow: hidden;
+		color: #21C394;
+		width: 278px;
+float: right;
+	}
+	.jichulist .title{
+		margin: 4px 0;
+		font-size: 16px;
+	}
+	.jichulist .text{
+		font-size: 12px;
+		line-height: 22px;
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+	}
+	.jichulist .info:hover{
+		color: #21C394;
+	}
+	
+	.jichulist .active img{
+		border: 4px solid #21C394;
+	}
+	.jichulist .active .title,
+	.jichulist .active .text{
+		color: #21C394;
+	}
+	
+</style>
+</head>
+<body>
+<header class="monitor-header clearfix">
+	<div class="col-zsr-3 clearfix">
+		<img src="../resource/images/logo.png" class="logo pull-left"/>
+		<div class="title pull-left">基础服务监测</div>
+	</div>
+	<div class="col-zsr-6" style="height: 60px;">
+	</div>
+	<div class="col-zsr-3">
+		<div class="btn btn-icon"><a href="index.html"><i class="icon iconfont">&#xe613;</i></a></div>
+	</div>
+</header>
+<section class="monitor-main es">
+	<!-- left module-->
+	<div class="col-zsr-9 row-1 padrgt">
+		<div class="module module-three">
+			<!-- main container -->
+			<div class="module-three-in" id="mainContainer">
+				<!-- map container -->
+				<div class="leftTab">
+					<div class="man" style="display: block;">
+						
+						<div class="dialog-table">
+							<table id="mapResStatistics">
+								
+							</table>
+						</div>
+						<div class="changeColor">
+							<div class="select" id="colorChange">
+								<p>地图类型<i class="icon iconfont">&#xe618;</i></p>
+								<div class="select-pull">	
+								    <ul id="colors">
+								    	<li data-type="normal">亮色</li>
+								    	<li data-type="dark">深色</li>
+								    	<li data-type="blue_night">夜空蓝</li>
+								    </ul>
+								</div>
+							</div>
+						</div>
+						<div class="map" id="mapContainer"></div>
+					</div>
+				</div>
+				<!-- statistics container-->
+				<div class="tableShow">
+					<table class="table">
+						<thead id="statisticsHeader">
+							<tr>
+								<th></th>
+								<th>景点</th>
+								<th>酒店</th>
+								<th>旅行社</th>
+								<th>娱乐场所</th>
+								<th>餐饮</th>
+								<th>购物</th>
+								<th>游客中心</th>
+								<th>集散中心</th>
+								<th>停车场</th>
+								<th>自行车租赁点</th>
+								<th>旅游巴士车站</th>
+								<th>游船码头</th>
+								<th>wifi</th>
+							</tr>
+						</thead>
+						<tbody id="list5"></tbody>
+					</table>
+					<div class="page" style="margin-top: 20px;">
+						<ul class="pagination" id="pagination5"></ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- right module -->
+	<div class="col-zsr-3 row-1 padleft">
+		<div class="module module-bot tab">
+			<!-- menu tab -->
+			<ul class="title-menu list-unstyled clearfix tab-menu" id="menuTab">
+				<li class="btn btn-light active">
+					<div class="select jichu-select" >
+						<p data-index="0">基础服务<!--  i class="icon iconfont">&#xe618;</i--></p>
+<!-- 						<div class="select-pull">	 -->
+<!-- 						    <ul style="overflow-y:hidden;"> -->
+<!-- 						    	<li>基础服务资源</li> -->
+<!-- 						    	<li>旅游产品线路推荐</li> -->
+<!-- 						    	<li>环城巴士线路</li> -->
+<!-- 						    	<li>游船轨迹线路</li> -->
+<!-- 						    </ul> -->
+<!-- 						</div> -->
+				    </div>
+				</li>
+				<li class="btn btn-light">要素检索</li>
+				<li class="btn btn-light">信息统计</li>
+			</ul>
+			<!-- menu container -->
+			<div id="menuContainer">
+				<div class="es-show tab-show padnei plot-footer2" style="display: block;">
+					<div class="slideshow es" style="display: block;">
+						<div class="jichushow" style="display: block;">
+							<ul class="list-unstyled leftMenu jichu" id="basSerResTab">
+								<li data-type="scenicspot"><a href="javascript:;"><div class="img"></div><p>景点</p></a></li>
+								<li data-type="shop"><a href="javascript:;"><div class="img"></div><p>购物</p></a></li>
+								<li data-type="restaurant"><a href="javascript:;"><div class="img"></div><p>餐饮</p></a></li>
+								<li data-type="entertainment"><a href="javascript:;"><div class="img"></div><p>娱乐场所</p></a></li>
+								<li data-type="hotel"><a href="javascript:;"><div class="img"></div><p>酒店</p></a></li>
+								<li data-type="consult"><a href="javascript:;"><div class="img"></div><p>游客中心</p></a></li>
+								<li data-type="toilet"><a href="javascript:;"><div class="img"></div><p>厕所</p></a></li>
+								<li data-type="park"><a href="javascript:;"><div class="img"></div><p>停车场</p></a></li>
+								<li data-type="bicycle"><a href="javascript:;"><div class="img"></div><p>自行车租赁点</p></a></li>
+								<li data-type="distribution"><a href="javascript:;"><div class="img"></div><p>集散中心</p></a></li>
+								<li data-type="port"><a href="javascript:;"><div class="img"></div><p>游船码头</p></a></li>
+								<li data-type="wifi"><a href="javascript:;"><div class="img"></div><p>wifi</p></a></li>
+							</ul>
+						</div>
+						<div class="jichushow">
+							<ul class="jichulist" id="list1"></ul>
+							<div class="page">
+								<ul class="pagination" id="pagination1"></ul>
+							</div>
+						</div>
+						<div class="jichushow">
+							<table class="table products-table plotUl3">
+								<thead>
+									<tr>
+										<th>线路</th>
+										<th>站点数</th>
+										<th>车辆数</th>
+										<th>轨迹</th>
+									</tr>
+								</thead>
+								<tbody id="list2"></tbody>
+							</table>
+							<div class="page" style="margin-top: 20px;">
+								<ul class="pagination" id="pagination2"></ul>
+							</div>
+						</div>
+						<div class="jichushow" >
+							<table class="table products-table plotUl3">
+								<thead>
+									<tr>
+										<th>名称</th>
+										<th>轨迹</th>
+									</tr>
+								</thead>
+								<tbody id="rowboats"></tbody>
+							</table>
+							<!-- <div class="page" style="margin-top: 20px;">
+								<ul class="pagination" id="pagination3"></ul>
+							</div> -->
+						</div>
+					</div>
+				</div>
+				<div class="es-show tab-show">
+					<div class="search">
+						<div class="report">
+							<div class="select" id="serachTypeSelect">
+								<p>景点<i class="icon iconfont">&#xe618;</i></p>
+								<div class="select-pull">	
+								    <ul id="types">
+								    	<li data-type="scenicspot" class="active">景点</li>
+								    	<li data-type="shop">购物</li>
+								    	<li data-type="restaurant">餐饮</li>
+								    	<li data-type="entertainment">娱乐场所</li>
+								    	<li data-type="hotel">酒店</li>
+								    	<li data-type="consult">游客中心</li>
+								    	<li data-type="distribution">集散中心</li>
+								    	<li data-type="toilet">厕所</li>
+								    	<li data-type="park">停车场</li>
+								    	<li data-type="bicycle">自行车租赁点</li>
+								    	<li data-type="distribution">集散中心</li>
+								    	<li data-type="port">游船码头</li>
+								    	<li data-type="wifi">wifi</li>
+								    </ul>
+								</div>
+							</div>
+						</div>
+						<input type="text" placeholder="请输入搜索名称、资源编号" id="searchText"/>
+						<a href="javascript:;" id="searchBtn">
+							<i class="icon iconfont">&#xe622;</i>
+						</a>
+					</div>
+					<ul class="list" style="list-style: none;" id="serachTwoType">
+						<!-- 
+						<li><div class="btn btn-line active">非A级</div></li> 
+						li x5
+						-->
+					</ul>
+					<table>
+						<thead>
+							<th>名称</th>
+							<th>地址</th>
+							<th>类型</th>
+							<th>地图</th>
+						</thead>
+						<tbody id="list3"></tbody>
+					</table>
+					<div class="page" style="margin-top: 20px;">
+						<ul class="pagination" id="pagination3"></ul>
+					</div>
+				</div>
+				<div class="es-show tab-show padnei plot-footer2">
+					<ul class="list-unstyled tableMenu jichu" id="statisticsTab">
+						<li data-type="scenicspot"><a href="javascript:;"><div class="img"></div><p>景点</p></a></li>
+						<li data-type="shop"><a href="javascript:;"><div class="img"></div><p>购物</p></a></li>
+						<li data-type="restaurant"><a href="javascript:;"><div class="img"></div><p>餐饮</p></a></li>
+						<li data-type="entertainment"><a href="javascript:;"><div class="img"></div><p>娱乐场所</p></a></li>
+						<li data-type="hotel"><a href="javascript:;"><div class="img"></div><p>酒店</p></a></li>
+						<li data-type="consult"><a href="javascript:;"><div class="img"></div><p>游客中心</p></a></li>
+						<li data-type="toilet"><a href="javascript:;"><div class="img"></div><p>厕所</p></a></li>
+						<li data-type="park"><a href="javascript:;"><div class="img"></div><p>停车场</p></a></li>
+						<li data-type="bicycle"><a href="javascript:;"><div class="img"></div><p>自行车租赁点</p></a></li>
+						<li data-type="distribution"><a href="javascript:;"><div class="img"></div><p>集散中心</p></a></li>
+						<li data-type="port"><a href="javascript:;"><div class="img"></div><p>游船码头</p></a></li>
+						<li data-type="wifi"><a href="javascript:;"><div class="img"></div><p>wifi</p></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<script src="../resource/script/lib/jquery-1.11.1.min.js"></script>
+<script src="../resource/script/lib/jquery.nicescroll.min.js"></script>
+<script src="../resource/script/lib/video.min.js"></script>
+<script src="../resource/script/lib/swiper.min.js"></script>
+<script src="../resource/script/lib/jquery.form.js"></script>
+<script src="../resource/script/jquery.ux.public.js"></script>
+<script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=87c76879736327c924636e9a90e0594a"></script>
+<script src="../resource/script/platform.utils.js"></script>
+<script src="../resource/script/lib/bootstrap.min.js"></script>
+<script src="../resource/script/lib/bootstrap-paginator.js"></script>
+
+
+<script>
+	// 页面
+	var operPage = {
+		ajaxTools: null,
+		init: function () {
+			
+			// 初始化页面
+			this.initPage();
+			// 初始化业务
+			this.initServices();
+		},
+		// 初始化页面
+		initPage: function () {
+			var that = this;
+			// menu tab
+			
+			$('#menuTab > li').on('click', function () {
+				$(this).addClass('active').siblings().removeClass('active');
+				var index = $(this).index();
+				
+				// menu
+				$('#menuContainer > div').hide().eq(index).show();
+				
+				// main
+				if (index > 1) { // 统计
+					index = 1;
+				} else { // map
+					// tab切换地图浮层显示/隐藏
+					if(index==0){
+						// 基础服务
+						var basLineSers = ['loadBasSerRes', 'loadLineReco', 'loadBusLine','loadBoatRoutes'];
+						var basIndex=$(this).find('p').attr('data-index');
+						if(basIndex==0){
+							// 加载景点
+							
+							$('#basSerResTab > li:eq(0)').trigger('click');
+							
+						}else{
+							that[basLineSers[basIndex]](1);
+							
+						}
+					}
+					that.resetBasRes();
+					index = 0;
+				}
+				$('#mainContainer > div').hide().eq(index).show();
+			});
+			
+			// 基础服务
+			var basSers = ['loadBasSerRes', 'loadLineReco', 'loadBusLine']
+			$('#basSerTab > li').on('click', function() {
+				$(this).addClass('active').siblings().removeClass('active');
+				var index = $(this).index(),
+					loaded = $(this).attr('data-loaded');
+				if (!loaded) { // 未加载
+					that[basSers[index]](1);
+				
+				}
+				$(this).attr('data-loaded', '1');
+				$('#menuContainer .slideshow').hide().eq(index).show();
+				// 重置
+				that.resetBasRes();
+			});
+			
+			// 基础服务 - 基础服务资源
+			$('#basSerResTab > li').on('click', function () {
+				$(this).addClass('active').siblings().removeClass('active');
+				that[basSers[0]]();
+			});
+			
+			// 要素检索
+			$('#serachTypeSelect').hover(function() {
+				$(this).find('i').html('&#xe619;');
+				$(this).find('.select-pull').filter(':not(:animated)').fadeIn();
+			},function(){ 
+				$(this).find('i').html('&#xe618;');
+				$(this).find('.select-pull').fadeOut();
+			});
+			$('#types > li').on('click', function () {
+				if ($(this).hasClass('active')) {
+					return;
+				}
+			
+				$(this).addClass('active').siblings().removeClass('active');
+				var typeStr = $(this).text();
+				typeStr = typeStr + "<i class='icon iconfont'>&#xe618;</i>";
+				$(this).parent().parent().fadeOut().parent().find('p').html(typeStr);
+				
+				// 加载二级类型
+				that.loadBasSerResTwoTypeForSearch();
+				
+				// 清除下
+				$('#list3').empty();
+				pagination.clear('#pagination3');
+			});
+			
+			// 地图类型
+			$('#colorChange').hover(function() {
+				$(this).find('i').html('&#xe619;');
+				$(this).find('.select-pull').filter(':not(:animated)').fadeIn();
+			},function(){ 
+				$(this).find('i').html('&#xe618;');
+				$(this).find('.select-pull').fadeOut();
+			});
+			$('.jichu-select').hover(function() {
+				$(this).find('i').html('&#xe619;');
+				$(this).find('.select-pull').filter(':not(:animated)').fadeIn();
+			},function(){ 
+				$(this).find('i').html('&#xe618;');
+				$(this).find('.select-pull').fadeOut();
+			});
+			$('.jichu-select li').on('click', function () {
+				// 重置
+				that.resetBasRes();
+				
+				var index=$(this).index();
+				var str = $(this).text();
+				str = str + "<i class='icon iconfont'>&#xe618;</i>";
+				$(this).parent().parent().fadeOut().parent().find('p').html(str).attr('data-index',index);
+				$('.jichushow').hide().eq(index).show();
+				// 基础服务
+				var basSers = ['loadBasSerRes', 'loadLineReco', 'loadBusLine','loadBoatRoutes'];
+				if(index==0){
+					// 加载景点
+					$('#basSerResTab > li:eq(0)').trigger('click');
+				}else{
+					that[basSers[index]](1);
+				}
+			});
+			$('#colors > li').on('click', function () {
+				$(this).addClass('active').siblings().removeClass('active');
+				var typeStr = $(this).text();
+				typeStr = typeStr + "<i class='icon iconfont'>&#xe618;</i>";
+				$(this).parent().parent().fadeOut().parent().find('p').html(typeStr);
+				
+				if (that.mapFaca) {
+					that.mapFaca.setMapStyle($(this).attr('data-type'));
+				}
+			});
+			
+			// search
+			$('#searchBtn').on('click', function () {
+				that.loadBasSerResForSearch(1);
+			});
+				
+			// 信息统计
+			$('#statisticsTab > li').on('click', function () {
+				$(this).addClass('active').siblings().removeClass('active');
+				var type = $(this).attr('data-type');
+				that.loadStatistics(type);
+			});
+		},
+		// 初始化业务
+		initServices: function () {
+			$('#basSerTab > li:eq(0)').attr('data-loaded', '1');
+			// 初始化地图
+			this.initMap();
+			// 加载景点
+			$('#basSerResTab > li:eq(0)').trigger('click');
+			// 加载二级类型
+			this.loadBasSerResTwoTypeForSearch();
+			// 加载默认统计
+			this.loadStatistics();
+		},
+		// 初始化地图
+		initMap: function () {
+			if (!this.mapFaca) {
+				var container = 'mapContainer';
+				var center = PLATFORM_CONSTANS.AREA.getArea()['lnglat'];
+				this.mapFaca = initMap(container, center);	
+				this.mapFaca.clearMap().setDistrict();
+			}
+		},
+		// 重置地图资源
+		resetBasRes: function () {
+			$('#mapResStatistics').empty().parent().hide();
+			$('#basSerResTab li').eq(0).addClass('active').siblings().removeClass('active');
+			$('#list1 > li[class*="active"], #list2 > li[class*="active"]').removeClass('active');
+			this.mapFaca.clearMap().setDistrict();
+			this.loadBasSerResource();
+		},
+		// 基础服务资源
+		loadBasSerRes: function () {
+			this.loadBasSerStatistics();
+			this.loadBasSerResource();
+			
+		},
+		loadBasSerStatistics: function () {
+		var resultHtml='';
+		var data = [["1","非A级"],["2","A级"],["3","2A级"],["4","3A级"],["5","4A级"],["6","5A级"]];
+					
+						resultHtml += '<tr><td>级别</td><td>景点</td></tr>';
+						if (data && data.length > 0) {
+							for (var i = 0, l = data.length; i < l; i += 1) {
+								resultHtml += '<tr>' +
+												'<td>' + data[i][0] + '</td>' +
+												'<td>' + data[i][1] + '</td>';			
+								resultHtml += '</tr>';	
+							}
+							$('#mapResStatistics').empty().append(resultHtml).parent().show();
+						}
+		},
+		loadBasSerResource: function () {
+		
+			
+			//var type = $('#basSerResTab > li.active').attr('data-type');
+			
+			var type='scenicspot';
+			var icon = '../resource/images/mark_bs.png',
+				offset = [-13, -36];
+			var getWifiContent = function (val) {
+				if (val) {
+					var content = '';
+					
+					content +=	'<div class="dialog-blue1">' + 
+									'<div class="main">' + 
+										'<div class="list">'; 
+					if (val.hotspotName) {
+						content += '<p>热点名称：' + val.hotspotName + '</p>';
+					}
+					if (val.wifiName) {
+						content += '<p>WIFI名称：' + val.wifiName + '</p>';
+					}
+					if (val.coverage) {
+						content += '<p>覆盖范围：' + val.coverage + '</p>';
+					}
+					if (val.address) {
+						content += '<p>热点地址：' + val.address + '</p>';
+					}
+					content +=			'</div>' + 
+									'</div>' + 
+								'</div>';
+					
+					return content;
+				}
+				return '';
+			};
+			var getPortContent = function (val) {
+				if (val) {
+					var content = '';
+					
+					content +=	'<div class="dialog-blue1">' + 
+									'<div class="main">' + 
+										'<div class="list">'; 
+					if (val.name) {
+						content += '<p>码头名称：' + val.name + '</p>';
+					}
+					if (val.address) {
+						content += '<p>码头地址：' + val.address + '</p>';
+					}
+					content +=			'</div>' + 
+									'</div>' + 
+								'</div>';
+					
+					return content;
+				}
+				return '';
+			};
+			var data=[{"address":"江苏省南京市江宁区江山风景区","businessHours":"9:00-17:00","level":"非A级","lnglat":["113.616375","36.64079"],"logo":"images/ad.png","name":"将军山风景区","principalName":"","principalPhone":"","type":"人文遗产"},{"address":"南京市江宁区将军路29号","businessHours":"暂未开放","level":"5A级","lnglat":["112.183466","37.204233"],"logo":"img/logo.png","name":"南京航空航天大学将军路校区","principalName":"","principalPhone":"","type":"人文遗产"}];
+						if (data && data.length > 0) {
+							for (var i = 0, l = data.length; i < l; i += 1) {
+								var val = data[i] || {};
+								if (val.lnglat) {
+									var content=getInfoWindownContent(val);
+									if(type=='wifi'){
+										content=getWifiContent(val);
+									}else if(type=='port'){
+										content=getPortContent(val);
+									}
+									this.mapFaca.addMarker({
+										icon: icon,
+										offset: offset,
+										lnglat: val.lnglat,
+										content: content,
+										isSetCenter:'1'//用于区分信息窗体出现后是否设置中心点0：否 1：是
+									});
+								}
+							}
+							this.mapFaca.setFitView();
+						}
+					
+		
+		},
+		// 旅游线路推荐
+		loadLineReco: function (pageNo) {
+			var pageSize = 5;
+			var data={"rows":[{"introduction":"牛首山→将军山→石塘竹海→南山湖","linePicture":"upload/images/logo.png","name":"秦淮经典游","routeId":"20161031152329000100"}],"total":1};
+							var resultHtml=''
+							total = data.total || 0,
+							rows = data.rows || [],
+							firstLineId='';
+						if (total > 0) {
+							for(var i = 0, len = rows.length; i < len; i += 1) {
+								var val = rows[i];
+								if(i==0){
+									firstLineId=val.routeId;
+								}
+								var introduce=val.introduction;
+								introduce=introduce.length>68 ? introduce.substring(0,68):introduce;
+								resultHtml += 	'<li style="margin-bottom:15px;cursor:pointer;" data-id="' + val.routeId + '">' + 
+													'<div class="img">' + 
+														'<img src="images/xiantu4.png"/>' + 
+													'</div>' + 
+													'<div class="info">' + 
+														'<div class="title">' + val.name + '</div>' + 
+														'<div class="text" title="' + val.introduction + '">' + 
+															introduce + 
+														'</div>' + 
+													'</div>' + 
+												'</li>';
+							}
+							// 分页
+							pagination('#pagination1', total, pageSize, this, this.loadLineReco);
+						}
+						// list填充参数 (每页数量，查询出的数量)
+						//resultHtml += PLATFORM_UTILS.listPadding(pageSize, rows.length);
+						$('#list1').empty().append(resultHtml);
+						
+						var that = this;
+						//默认加载第一条
+						if(firstLineId!=''){
+							$('#list1 > li').eq(0).addClass('active');
+							that.loadLineSite(firstLineId);
+						}
+						// 点击
+						$('#list1 > li').on('click', function () {
+							$(this).addClass('active').siblings().removeClass('active');
+							var id = $(this).attr('data-id');
+							that.loadLineSite(id);
+							
+							//var container = 'mapContainer';
+							//var center = PLATFORM_CONSTANS.AREA.getArea()['lnglat'];
+							//myinitMap();
+							//this.mapFaca.clearMap()
+						});
+		},
+		// 旅游线路站点
+		loadLineSite: function (routeId) {
+			this.mapFaca.clearMap();
+			
+			var getContent = function (val) {
+				if (val) {
+					var content = '';
+					
+					content +=	'<div class="dialog-blue1">' + 
+									'<div class="main">' + 
+										'<div class="list">'; 
+					if (val.name) {
+						content += '<p>' + val.name + '</p>';
+					}
+											
+					content +=			'</div>' + 
+									'</div>' + 
+								'</div>';
+					
+					return content;
+				}
+				return '';
+			};
+			
+			var data=[{"desc":"牛首山","isVirtual":"0","lnglat":["113.373675","38.212332"],"name":"牛首山"},{"desc":"银杏湖旅游","isVirtual":"0","lnglat":["113.616375","36.64079"],"name":"银杏湖"},{"desc":"南山湖","isVirtual":"0","lnglat":["118.586114","31.776926"],"name":"南山湖"}];
+						if (data.length > 0) {
+							var lineArr = [],
+								existArr = [], 
+								resultHtml = '', 
+								k = 1;
+							
+							resultHtml += '<tr><td>序号</td><td>名称</td></tr>';
+							
+							for (var i = 0, l = data.length; i < l; i += 1) {
+								var val = data[i], lnglat = val.lnglat;
+								if (lnglat) {
+									// 线
+									lineArr.push(lnglat);
+									// 点
+									if (val.isVirtual != '1') {
+										// HTML
+										resultHtml += 	'<tr>' +
+															'<td>' + k + '</td>' +
+															'<td>' + (val.name || '') + '</td>' +
+														'</tr>';
+										k += 1;
+										
+										// 点
+										existArr.push(val);
+									}
+								}							
+							}
+							
+							// HTML
+							$('#mapResStatistics').empty().append(resultHtml).parent().show();
+							// 点
+							if (existArr.length > 0) {
+								for (var j = 0, l2 = existArr.length; j < l2; j += 1) {
+								
+									var option = {
+										lnglat: existArr[j]['lnglat'],
+										content: getContent(existArr[j])
+									};
+									if (j == 0) {
+										option.icon = 'images/map-icon-start.png';
+										option.offset = [-12, -32];
+									} else if (j == 2) {
+										option.icon = 'images/map-icon-end.png';
+										option.offset = [-12, -32];
+									} else {
+										option.icon = 'images/map-icon-dot.png';
+										option.offset = [-5.5, -5.5];
+										option.infoOffset = [0, -10];
+									}
+									this.mapFaca.addMarker(option);
+								}
+							}
+							// 线
+							this.mapFaca.addLine(lineArr).setFitView().setDistrict();
+						}
+	
+		},
+		// 环城巴士路线
+		loadBusLine: function (pageNo) {
+			var pageSize = 15;
+			this.ajaxTools.singleReq({
+				data: {
+					"reqUrl": "basCityBusRoute",
+					"reqMethod": "queryCityBusRoutes",
+					"pageNo": pageNo,
+					"pageSize": pageSize
+				},
+				success: function (ret) {
+					if (ret.a == GLOBAL_INFO.SUCCESS_CODE) {
+						var data = ret.d || {},
+							resultHtml = '',
+							total = data.total || 0,
+							rows = data.rows || [];
+						if (total > 0) {
+							for(var i = 0, len = rows.length; i < len; i += 1) {
+								var val = rows[i];
+								resultHtml += 	'<tr class="text" style="cursor:pointer;" data-id="' + val.routeId + '">' + 
+													'<td title="' + val.introduction + '">' + val.name + '</td>' + 
+													'<td>' + val.siteCount + '</td>' + 
+													'<td>' + val.busCount + '</td>' + 
+													//'<td class="js-loc"><a href="javascript:;"><i class="icon iconfont">&#xe621;</i></a></td>' + 
+													'<td class="js-trl"><a href="javascript:;"><i class="icon iconfont">&#xe600;</i></a></td>' + 
+												'</tr>';
+							}
+							// 分页
+							pagination('#pagination2', total, pageSize, this, this.loadBusLine);
+						}
+						// table填充参数 (每页数量，查询出的数量，列数)
+						resultHtml += PLATFORM_UTILS.tablePadding(pageSize, rows.length, 4);
+						$('#list2').empty().append(resultHtml);
+						
+						var that = this;
+						// 路线
+						$('#list2 ').delegate('tr', 'click', function () {
+							var id = $(this).attr('data-id');
+							that.loadBusSite(id);
+						});
+						//默认加载第一条
+						that.loadBusSite(rows[0].routeId);
+					} else {
+					}
+				}.bind(this)
+			});
+		},
+		// 环城巴士站点
+		loadBusSite: function (routeId) {
+			this.mapFaca.clearMap();
+			
+			var getContent = function (val) {
+				if (val) {
+					var content = '';
+					
+					content +=	'<div class="dialog-blue1">' + 
+									'<div class="main">' + 
+										'<div class="list">'; 
+					if (val.name) {
+						content += '<p>' + val.name + '</p>';
+					}
+											
+					content +=			'</div>' + 
+									'</div>' + 
+								'</div>';
+					
+					return content;
+				}
+				return '';
+			};
+			
+			this.ajaxTools.singleReq({
+				data: {
+					"reqUrl": "basCityBusSite",
+					"reqMethod": "queryCityBusRouteSites",
+					"routeId": routeId
+				},
+				success: function (ret) {
+					if (ret.a == GLOBAL_INFO.SUCCESS_CODE) {
+						var data = ret.d || [];
+						if (data.length > 0) {
+							var lineArr = [],
+								existArr = [], 
+								resultHtml = '', 
+								k = 1;
+							
+							resultHtml += '<tr><td>序号</td><td>名称</td></tr>';
+							
+							for (var i = 0, l = data.length; i < l; i += 1) {
+								var val = data[i], lnglat = val.lnglat;
+								if (lnglat) {
+									// 线
+									lineArr.push(lnglat);
+									// 点
+									if (val.isVirtual != '1') {
+										// HTML
+										resultHtml += 	'<tr>' +
+															'<td>' + k + '</td>' +
+															'<td>' + (val.name || '') + '</td>' +
+														'</tr>';
+										k += 1;
+										
+										// 点
+										existArr.push(val);
+									}
+								}							
+							}
+							
+							// HTML
+							$('#mapResStatistics').empty().append(resultHtml).parent().show();
+							// 点
+							if (existArr.length > 0) {
+								for (var j = 0, l2 = existArr.length; j < l2; j += 1) {
+									var option = {
+										lnglat: existArr[j]['lnglat'],
+										content: getContent(existArr[j])
+									};
+									if (j == 0) {
+										option.icon = '${res}/resource/images/map-icon-start.png';
+										option.offset = [-12, -32];
+									} else if (j == l2 - 1) {
+										option.icon = '${res}/resource/images/map-icon-end.png';
+										option.offset = [-12, -32];
+									} else {
+										option.icon = '${res}/resource/images/map-icon-dot.png';
+										option.offset = [-5.5, -5.5];
+									}
+									this.mapFaca.addMarker(option);
+								}
+							}
+							// 线
+							this.mapFaca.addLine(lineArr).setFitView().setDistrict();
+						}
+					} else {
+					}
+				}.bind(this)
+			});
+		},
+		// 秦淮画舫轨迹
+		loadBoatRoutes: function (num) {
+			this.ajaxTools.singleReq({
+				data: {
+					"reqUrl": "basBoatRoute",
+					"reqMethod": "queryBoatRoutes",
+				},
+				success: function (ret) {
+					if (ret.a == GLOBAL_INFO.SUCCESS_CODE) {
+						var data = ret.d || [], resultHtml = '',firstId='';
+						if (data.length > 0) {
+							firstId=data[0].routeId;
+							for(var i = 0, len = data.length; i < len; i += 1) {
+								var val = data[i];
+								resultHtml += 	'<tr style="cursor:pointer;" class="text" data-id="' + (val.routeId || '') + '">' +
+													//'<td>' + (val.routeNo || '') + '</td>' +
+													'<td>' + (val.name || '') + '</td>' +
+													'<td class="js-trl"><i class="icon iconfont">&#xe600;</i></td>' +
+												'</tr>';
+							}
+							// 分页
+							//pagination('#pagination3', total, pageSize, this, this.loadBoatRoutes);
+						} else {
+							resultHtml += '<tr><td>-</td><td>-</td></tr>';
+						}
+						$('#rowboats').empty().append(resultHtml);
+						
+						var that = this;
+						//如果有线路默认加载第一条
+						if(firstId!=''){
+							that.loadBoatRouteSite(firstId);
+						}
+						// 轨迹
+						$('#rowboats tr').click(function () {
+							var id = $(this).attr('data-id');
+							that.loadBoatRouteSite(id);
+						});
+					} else {
+					}
+				}.bind(this)
+			});
+		},
+		//秦淮画舫站点
+		loadBoatRouteSite: function (routeId) {
+			this.mapFaca.clearMap();
+			
+			var getContent = function (val) {
+				if (val) {
+					var content = '';
+					
+					content +=	'<div class="dialog-blue1">' + 
+									'<div class="main">' + 
+										'<div class="list">'; 
+					if (val.name) {
+						content += '<p>' + val.name + '</p>';
+					}
+											
+					content +=			'</div>' + 
+									'</div>' + 
+								'</div>';
+					
+					return content;
+				}
+				return '';
+			};
+			
+			this.ajaxTools.singleReq({
+				data: {
+					"reqUrl": "basBoatSite",
+					"reqMethod": "queryBoatRouteSites",
+					"routeId": routeId
+				},
+				success: function (ret) {
+					if (ret.a == GLOBAL_INFO.SUCCESS_CODE) {
+						var data = ret.d || [];
+						if (data.length > 0) {
+							var lineArr = [],
+								existArr = [],
+								resultHtml = '<tr><td>序号</td><td>名称</td></tr>', 
+								k = 1;
+							for (var i = 0, l = data.length; i < l; i += 1) {
+								var val = data[i], lnglat = val.lnglat;
+								if (lnglat) {
+									// 线
+									lineArr.push(lnglat);
+									// 点
+									if (val.isVirtual != '1') {
+										// 点
+										existArr.push(val);
+										// HTML
+										resultHtml += 	'<tr>' +
+															'<td>' + k + '</td>' +
+															'<td>' + (val.name || '') + '</td>' +
+														'</tr>';
+										k += 1;
+									}
+								}								
+							}
+							// HTML
+							$('#mapResStatistics').empty().append(resultHtml).parent().show();
+							// 点
+							if (existArr.length > 0) {
+								for (var j = 0, l2 = existArr.length; j < l2; j += 1) {
+									var option = {
+										lnglat: existArr[j]['lnglat'],
+										content: getContent(existArr[j])
+									};
+									if (j == 0) {
+										option.icon = '${res}/resource/images/map-icon-start.png';
+										option.offset = [-12, -32];
+									} else if (j == l2 - 1) {
+										option.icon = '${res}/resource/images/map-icon-end.png';
+										option.offset = [-12, -32];
+									} else {
+										option.icon = '${res}/resource/images/map-icon-dot.png';
+										option.offset = [-5.5, -5.5];
+										option.infoOffset = [0, -10];
+									}
+									this.mapFaca.addMarker(option);
+								}
+							}
+							// 线
+							this.mapFaca.addLine(lineArr).setFitView().setZoom(14).setDistrict();
+						}
+					} else {
+					}
+				}.bind(this)
+			});
+		},
+		// 检索二级类型
+		loadBasSerResTwoTypeForSearch: function () {
+			$('#serachTwoType').empty();
+			var type = $('#types > li.active').attr('data-type');
+			
+			var data = [["1","非A级"],["2","A级"],["3","2A级"],["4","3A级"],["5","4A级"],["6","5A级"]];
+						if (data && data.length > 0) {
+							var resultHtml = '';
+							for (var i = 0, l = data.length; i < l; i += 1) {
+								resultHtml += '<li data-type="' + data[i][0] + '"><div class="btn btn-line">' + data[i][1] + '</div></li>';
+							}
+							
+							$('#serachTwoType').append(resultHtml);
+							
+							$('#serachTwoType > li').on('click', function () {
+								$(this).children('.btn-line').addClass('active');
+								$(this).siblings().children('.btn-line').removeClass('active');
+								var searchText = $.trim($('#searchText').val());
+								if(searchText==""||searchText==null){
+								    operPage.loadBasSerResForSearch();
+								}
+							});
+						}
+	
+		},
+		// 检索
+		loadBasSerResForSearch: function () {
+			
+			this.searchDatas = [];
+			var type = $('#types > li.active').attr('data-type');
+			var searchText = $.trim($('#searchText').val());
+			var searchType = $('#serachTwoType > li > .btn-line.active').parent().attr('data-type') || '';
+			var data=[{"address":"江苏省南京市江宁区江山风景区","businessHours":"9:00-17:00","level":"非A级","lnglat":["112.183466","37.204233"],"logo":"img/logo.png","name":"将军山风景区","principalName":"","principalPhone":"","type":"人文遗产"}];
+			this.searchDatas = data;
+			this.showBasSerResForSearch(1, 'scenicspot');
+		},
+		showBasSerResForSearch: function (pageNo, type) {
+	
+			this.mapFaca.clearMap().setDistrict();
+			var pageSize = 12;
+			if ($('#serachTwoType').html() != '') {
+				pageSize = 9;
+			}	
+			
+			var	dataList = this.searchDatas.paging(pageNo, pageSize),
+				resultHtml = '';
+			if(dataList && dataList.length > 0) {
+				for(var i = 0, len = dataList.length; i < len; i += 1) {
+		
+					var val = dataList[i];
+					resultHtml += 	'<tr data-index="' + i + '">' + 
+										'<td title="' + (val.name || '') + '">' + ((val.name && val.name.substrwithsuffix(10, '...') ) || '') + '</td>' + 
+										'<td title="' + (val.address || '') + '">' + ((val.address && val.address.substrwithsuffix(10, '...') ) || '')  + '</td>' + 
+										'<td>' + (val.type || '')  + '</td>' + 
+										'<td class="js-loc"><a href="javascript:;"><i class="icon iconfont">&#xe621;</i></a></td>' + 
+									'</tr>';
+					// 地图
+					val.icon = '../resource/images/mark_bs.png';
+					this.mapFaca.addMarker(val);
+					
+				}
+				this.mapFaca.setFitView();
+				// 分页
+				pagination('#pagination3',  dataList.length, pageSize, this, this.showBasSerResForSearch, type);
+			
+			}
+			// 分页
+			resultHtml += PLATFORM_UTILS.tablePadding(pageSize, dataList.length, 4);
+			$('#list3').empty().append(resultHtml);
+				
+			var that = this;
+			
+			var icon = 'images/map-icon-' + type + '.png',
+				offset = [-13, -36];
+			// 定位		
+			$('#list3 > tr').delegate('.js-loc', 'click', function () {
+				//var index = $(this).parent().attr('data-index');
+				var index=0;
+				that.mapFaca.clearMap().setDistrict().addMarker({
+					lnglat: that.searchDatas[index].lnglat,
+					icon: icon,
+					offset: offset,
+					content: getInfoWindownContent(that.searchDatas[index]),
+					infoOpen: true
+				}).setFitView();
+			});
+		},
+		// 统计
+		loadStatistics: function (type) {
+			type = type || 'all'; // 默认全部
+			var data=[["&nbsp;","区域","景点","酒店","餐饮","购物","娱乐","停车场","厕所","游客中心","集散中心","自行车租赁点","游船码头"]];
+						this.showStatistics(data);
+		},
+		showStatistics: function (datas) {
+			datas = datas || [[]];
+			// thead
+			var heads = datas[0] || [], headHtml = '';
+			headHtml += '<tr>';
+			for (var i = 0, l = heads.length; i < l; i += 1) {
+				headHtml += '<th>' + heads[i] + '</th>';
+			}
+			headHtml += '</tr>';
+			$('#list5').prev().html(headHtml);
+			
+			// tbody
+			var bodys = datas.slice(0), bodyHtml = '';
+			if(bodys && bodys.length > 0) {
+				for(var i = 1, len = bodys.length; i < len; i += 1) {
+					var val = bodys[i];
+					bodyHtml += '<tr>';
+					for (var j = 0 ; j < l; j += 1) { //使用 heads的length
+						bodyHtml += '<td>' + val[j] + '</td>';
+					}
+					bodyHtml += '</tr>';
+				}
+			}
+			// 填充
+			bodyHtml += PLATFORM_UTILS.tablePadding(13, bodys.length, l);
+			$('#list5').empty().append(bodyHtml);
+		}
+	};
+	
+	$(document).ready(function () {
+		operPage.init();
+	});
+</script>
+</body>
+</html>

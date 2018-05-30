@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name=renderer content=webkit>
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/world.js"></script>
+		<script type="text/javascript" src="js/china.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+		<script src="js/bmap.js"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0UqXGL98FSmi22w2Rl6HK56I"></script>
+		<script src="semantic/semantic.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/total.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+		<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css" />
+		<link rel="stylesheet" type="text/css" href="semantic/docs.css" />
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+		<title></title>
+		<style type="text/css">
+		.nav-tabs {
+	padding-left: 60px;
+	padding-bottom: 2px;
+	border-bottom: 0px;
+}
+.title_ul{
+	margin-top: 29px;
+}
+.nav {
+    margin-bottom: 0px;
+}
+li a {
+	color: white;
+	background-color: #3E4955;
+	/*border: 5px solid ghostwhite;*/
+	font-size: 14px;
+}
+.times {
+	color: white;
+}
+
+.times_div {
+	float: right;
+	padding: 10px;
+	margin-right: 30px;
+	/*border: 1px solid #759AA0;*/
+	display: inline;
+	padding-top: 0px;
+    margin-top: 30px;
+    padding-bottom: 0px;
+}
+
+.title {
+    margin-top: 29px;
+    float:right;
+    margin-left: 10px;
+    color: white;
+    font-size: 24px;
+    /*font-weight: bold;*/
+}
+.navbar-collapse{
+	padding-right: 5px!important;
+}
+img{
+	margin-left: 5px;
+    margin-top: 5px;
+}
+			#body1 {
+				margin-top: -1px;
+				background-color: #eff1ff;
+			}
+			
+			#main {
+				width: 100%;
+				height: 350px;
+				/*background-color: red;*/
+				margin-top: 5px;
+			}
+			
+			#main1 {
+				float: left;
+				width: 49%;
+				height: 350px;
+				margin: 5px;
+				 border-radius: 5px;
+			}
+			
+			#main2 {
+				float: left;
+				width: 49%;
+				height: 350px;
+					margin: 5px;
+				 border-radius: 5px;
+				/*background-color: green;*/
+			}
+			
+			#foot {
+				width: 100%;
+				height: 310px;
+				/*background-color: yellow;*/
+			}
+			
+			#foot1 {
+				float: left;
+				width: 49%;
+				height: 300px;
+					margin: 5px;
+				 border-radius: 5px;
+			}
+			
+			#foot2 {
+				float: left;
+				width: 49%;
+				height: 300px;
+					margin: 5px;
+				 border-radius: 5px;
+				/*background-color: orange;*/
+			}
+		</style>
+		<!--<script type="text/javascript">
+		$(document).ready(function() {
+				$("#sourceChart").click(function(){
+					window.location.href="source.html"; 
+				})
+				
+				$("#numTopChart").click(function(){
+					window.location.href="num.html"; 
+				})
+				
+				$("#passengerFlowChart").click(function(){
+					window.location.href="passengerflow.html"; 
+				})
+				
+				$("#enterExitChart").click(function(){
+					window.location.href="enterexit.html"; 
+				})
+				
+				$("#sexChart").click(function(){
+					window.location.href="structure_age.html"; 
+				})
+				$("#ageChart").click(function(){
+					window.location.href="structure_age.html"; 
+				})
+				
+				$("#jingChart").click(function(){
+					window.location.href="structure_source_out.html"; 
+				})
+				$(".form_datetime").datetimepicker({
+					format: "yyyy-mm-dd hh:ii",
+					language: 'zh-CN',
+					autoclose: true,
+					todayBtn: true,
+					startDate: "2017-08-01 00:00",
+					minuteStep: 10,
+					todayHighlight: true,
+				});
+				</script>-->
+			<script type="text/javascript">
+				
+			
+			var main2_char;
+			$(document).ready(function() {
+				main2_char = echarts.init(document.getElementById("main2"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '4%',
+						left: '2%',
+						text: '▌旗县游乐项目分析',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b}: {c} ({d}%)"
+					},
+
+					series: [{
+						name: '游乐项目数量（个）',
+						type: 'pie',
+						selectedMode: 'single',
+						radius: ["30%", '55%'],
+						avoidLabelOverlap: false,
+						label: {
+							normal: {
+								position: 'inner'
+							},
+							normal: {
+								show: false,
+								position: 'center'
+							},
+							emphasis: {
+								show: true,
+								textStyle: {
+									fontSize: '18',
+									fontWeight: 'bold'
+								}
+							}
+						},
+						labelLine: {
+							normal: {
+								show: false
+							}
+						},
+						data: [{
+								value: 335,
+								name: '草原风情类',
+								//								selected: true
+							}, {
+								value: 429,
+								name: '宗教文化类',
+								//								selected: true
+							}, {
+								value: 270,
+								name: '民族文化类',
+								//								selected: true
+							}, {
+								value: 735,
+								name: '美食类',
+								//								selected: true
+							}, {
+								value: 279,
+								name: '自然风景类',
+
+							},
+
+						]
+					}, {
+						name: '游乐项目数量（个）',
+						type: 'pie',
+						radius: ['56%', '66%'],
+
+						data: [{
+								value: 89,
+								name: '锡林浩特市',
+								selected: true
+							}, {
+								value: 102,
+								name: '二连浩特市',
+								selected: true
+							}, {
+								value: 75,
+								name: '乌拉盖管理区',
+								selected: true
+							}, {
+								value: 135,
+								name: '多伦县',
+								selected: true
+							}, {
+								value: 128,
+								name: '东乌珠穆沁旗',
+								selected: true
+							}, {
+								value: 211,
+								name: '太仆寺旗',
+								selected: true
+							}, {
+								value: 107,
+								name: '正镶白旗',
+								selected: true
+							}, {
+								value: 102,
+								name: '镶黄旗',
+								selected: true
+							}, {
+								value: 90,
+								name: '苏尼特左旗',
+								selected: true
+							}, {
+								value: 104,
+								name: '苏尼特右旗',
+								selected: true
+							}, {
+								value: 75,
+								name: '阿巴嘎旗',
+								selected: true
+							}, {
+								value: 148,
+								name: '西乌珠穆沁旗',
+								selected: true
+							}, {
+								value: 121,
+								name: '正蓝旗',
+								selected: true
+							},
+
+						]
+					}]
+				};
+var currentIndex = -1;
+
+				setInterval(function() {
+					var dataLen = option.series[0].data.length;
+					// 取消之前高亮的图形
+					main2_char.dispatchAction({
+						type: 'downplay',
+						seriesIndex: 0,
+						dataIndex: currentIndex
+					});
+					currentIndex = (currentIndex + 1) % dataLen;
+					// 高亮当前图形
+					main2_char.dispatchAction({
+						type: 'highlight',
+						seriesIndex: 0,
+						dataIndex: currentIndex
+					});
+					// 显示 tooltip
+					//					touristSourceChartPie.dispatchAction({
+					//						type: 'showTip',
+					//						seriesIndex: 0,
+					//						dataIndex: currentIndex
+					//					});
+				}, 1000);
+				main2_char.setOption(option);
+				
+			})
+		</script>
+		<script type="text/javascript">
+			var main1_char;
+			$(document).ready(function() {
+				main1_char = echarts.init(document.getElementById("main1"));
+				var option = {
+					backgroundColor: 'white',
+					color: ['#3398DB'],
+					title: {
+						top: '4%',
+						left: '2%',
+						text: '▌核心景区游客量TOP5',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					xAxis: [{
+						type: 'value',
+						show: false
+					}],
+					yAxis: [
+
+						{
+							axisLine: {
+								show: false
+							},
+							splitLine: {
+								show: false
+							},
+							axisLabel: {
+								interval: 0,
+								formatter: function(params) {
+									var newParamsName = ""; // 最终拼接成的字符串
+									var paramsNameNumber = params.length; // 实际标签的个数
+									var provideNumber = 5; // 每行能显示的字的个数
+									var rowNumber = Math.ceil((paramsNameNumber) / provideNumber); // 换行的话,需要显示几行，向上取整
+									/**
+									 * 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签
+									 */
+									// 条件等同于rowNumber>1
+									if (paramsNameNumber > provideNumber) {
+										/** 循环每一行,p表示行 */
+										for (var p = 0; p < rowNumber; p++) {
+											var tempStr = ""; // 表示每一次截取的字符串
+											var start = p * provideNumber; // 开始截取的位置
+											var end = start + provideNumber; // 结束截取的位置
+											// 此处特殊处理最后一行的索引值
+											if (p == rowNumber - 1) {
+												// 最后一次不换行
+												tempStr = params.substring(start, paramsNameNumber);
+											} else {
+												// 每一次拼接字符串并换行
+												tempStr = params.substring(start, end) + "\n";
+											}
+											newParamsName += tempStr; // 最终拼成的字符串
+										}
+
+									} else {
+										// 将旧标签的值赋给新标签
+										newParamsName = params;
+									}
+									//将最终的字符串返回
+									return newParamsName
+								}
+							},
+							axisTick: {
+								show: false
+							},
+
+							data: ['蒙古汗城', '元上都遗址', '多伦湖', '贝子庙', '灰腾草原'],
+						}
+					],
+					series: [{
+						itemStyle: {
+							normal: {
+								label: {
+									show: true,
+								},
+								color: function(params) {
+									var colorList = ['#7873AB', '#73B9BC', '#EEDD78', '#EA7E53', '#DD6B66'];
+									return colorList[params.dataIndex]
+								}
+							}
+						},
+						type: 'bar',
+						barWidth: '60%',
+						data: [7440, 8210, 9410, 10450, 12740],
+						name: '人数',
+					}]
+				};
+
+				main1_char.setOption(option);
+			})
+		</script>
+		<script type="text/javascript">
+			var foot1_char;
+			$(document).ready(function() {
+				foot1_char = echarts.init(document.getElementById("foot1"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '4%',
+						left: '2%',
+						text: '▌锡盟旅游阈值',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						formatter: "{a} <br/>{b} : {c}"
+					},
+
+					series: [{
+
+						name: '游客数量（人）',
+						type: 'gauge',
+						max: 140000,
+						detail: {
+							formatter: '{value}人'
+						},
+						radius: '80%',
+						center: ['50%', '55%'],
+						splitNumber: 7,
+						axisTick: { // 坐标轴小标记
+							length: 8, // 属性length控制线长
+							lineStyle: { // 属性lineStyle控制线条样式
+								color: 'auto'
+							}
+						},
+						title: {
+							textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+								fontWeight: 'bolder',
+								fontSize: 14,
+								fontStyle: 'italic'
+							}
+						},
+						detail: {
+							offsetCenter: [0, '60%'],
+							textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+								fontWeight: 'bolder',
+								fontSize: 14,
+							}
+						},
+						data: [{
+							value: 82850,
+							name: ''
+						}]
+					}]
+				};
+
+				setInterval(function() {
+					option.series[0].data[0].value = (Math.random() * 10000 + 90000).toFixed(0) - 0;
+					foot1_char.setOption(option, true);
+				}, 2000);
+				foot1_char.setOption(option);
+			})
+		</script>
+
+		<script type="text/javascript">
+			var foot2_char;
+			$(document).ready(function() {
+				foot2_char = echarts.init(document.getElementById("foot2"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '4%',
+						left: '2%',
+						text: '▌核心景区平均游玩时间',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+
+					series: [{
+						name: '平均游玩时间（分钟）',
+						type: 'pie',
+						radius: '65%',
+						center: ['50%', '52.5%'],
+						data: [{
+							value: 62,
+							name: '多伦湖'
+						}, {
+							value: 84,
+							name: '贝子庙'
+						}, {
+							value: 110,
+							name: '灰腾草原'
+						}, {
+							value: 56,
+							name: '元上都遗址'
+						}, {
+							value: 51,
+							name: '蒙古汗城'
+						}],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				};
+				foot2_char.setOption(option);
+			})
+		</script>
+	</head>
+
+	<body id="body1">
+		
+		<div>
+			<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">核心景区分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					<li>
+						<a href="tourist.html" target="_self">游客量分析</a>
+					</li>
+					<li>
+						<a href="youlexiangmu.html" target="_self"">游乐项目分析</a>
+					</li>
+					<li>
+						<a href="yuzhi1.html" target="_self"">阈值预警分析</a>
+					</li>
+					
+					<li>
+						<a href="/zouyizou_sx_scre/screen/index.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+			<!--<div class="times_div">
+					<div class="times">
+						<p class="ks">开始时间：</p>
+						<span class="input-append date form_datetime start_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<div class="times">&nbsp;&nbsp;
+						<p class="js">结束时间:</p>
+						<span class="input-append date form_datetime end_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<span><a id="search" name="search" href="javascript:void(0)" onclick="doSearch()">&nbsp;&nbsp;查询</a></span>
+				</div>-->
+			</div>
+			<div id="main">
+				<div id="main1" onclick="window.open('tourist.html','_self')"></div>
+				<div id="main2" onclick="window.open('youlexiangmu.html','_self')"></div>
+			</div>
+			<div id="foot">
+				<div id="foot1" onclick="window.open('yuzhi1.html','_self')">
+
+				</div>
+				<div id="foot2" onclick="window.open('yuzhi1.html','_self')">
+
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

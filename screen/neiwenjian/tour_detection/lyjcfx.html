@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name=renderer content=webkit>
+		<title></title>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/echarts.js"></script>
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/world.js"></script>
+		<script type="text/javascript" src="js/china.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+		<script src="js/bmap.js"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0UqXGL98FSmi22w2Rl6HK56I"></script>
+		<script src="semantic/semantic.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/total.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+		<!--<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css" />
+		<link rel="stylesheet" type="text/css" href="semantic/docs.css" />-->
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+		<script type="text/javascript">
+			var myChart;
+			var benzhouhuizong_char;
+			$(document).ready(function() {
+				benzhouhuizong_char = echarts.init(document.getElementById("zhuzhuang"));
+
+				var option = {
+					backgroundColor: 'white',
+					title: {
+               top:10,
+						left: 15,
+						text: '▌当日舆情信息汇总',
+
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						}
+					},
+					color: ['#3398DB'],
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					grid: {
+						left: '3%',
+						right: '3%',
+						bottom: '3%',
+						containLabel: true
+					},
+					xAxis: [{
+
+						type: 'category',
+						data: ['论坛', '博客', '微博', '咨询', 'qq群', '微信', '贴吧', '媒体', '其它'],
+						axisTick: {
+							alignWithLabel: true
+						}
+					}],
+					yAxis: [{
+
+						type: 'value',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+					}],
+					series: [{
+						name: '当日评论信息总量汇总',
+						type: 'bar',
+						barWidth: '40%',
+						data: [200, 350, 400, 234, 135, 300, 400, 500, 800]
+					}]
+				};
+				benzhouhuizong_char.setOption(option);
+			})
+
+			function yuqing() {
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						left: 15,
+						text: '▌当日舆情信息汇总',
+
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						}
+					},
+					color: ['#3398DB'],
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					xAxis: [{
+
+						type: 'category',
+						data: ['论坛', '博客', '微博', '咨询', 'qq群', '微信', '贴吧', '媒体', '其它'],
+						axisTick: {
+							alignWithLabel: true
+						}
+					}],
+					yAxis: [{
+
+						type: 'value',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+					}],
+					series: [{
+						name: '当日评论信息总量汇总',
+						type: 'bar',
+						barWidth: '40%',
+						data: [200, 350, 400, 234, 135, 300, 400, 500, 800]
+					}]
+				};
+				benzhouhuizong_char.setOption(option);
+
+				$("#btn11").css("background-color", "#027AE0");
+				$("#btn11").css("color", "white");
+				$("#btn12").css("background-color", "white");
+				$("#btn12").css("color", "#027AE0");
+			}
+
+			function yulun() {
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						left: 15,
+						text: '▌当日舆论热词汇总',
+
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						}
+					},
+					color: ['#3398DB'],
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '8%',
+						containLabel: true
+					},
+					xAxis: [{
+
+						type: 'category',
+						data: ['票价贵', '游玩设施多', '特产美味', '酒店安静', '部门监管不合理', '服务态度差', '其它'],
+						axisTick: {
+							alignWithLabel: true
+						},
+						axisLabel: {
+							interval: 0,
+							rotate: 15,
+							margin: 10,
+
+						},
+					}],
+					yAxis: [{
+
+						type: 'value',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+					}],
+					series: [{
+						name: '总量',
+						type: 'bar',
+						barWidth: '40%',
+						data: [200, 180, 135, 150, 40, 200, 400]
+					}]
+				};
+				benzhouhuizong_char.setOption(option);
+
+				$("#btn12").css("background-color", "#027AE0");
+				$("#btn12").css("color", "white");
+				$("#btn11").css("background-color", "white");
+				$("#btn11").css("color", "#027AE0");
+
+			}
+		</script>
+
+		<script type="text/javascript">
+			var myChart;
+			$(document).ready(function() {
+				myChart = echarts.init(document.getElementById("main1"));
+
+				var option = {
+					backgroundColor: 'white',
+					
+					title: {
+						top:10,
+						left: 15,
+						text: '▌当日舆情信息采集占比',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+
+					series: [{
+						name: '当日信息总量：',
+						type: 'pie',
+						radius: '55%',
+						center: ['50%', '55%'],
+						data: [
+
+							{
+								value: 350,
+								name: '博客'
+							},
+							{
+								value: 400,
+								name: '微博'
+							},
+							{
+								value: 135,
+								name: 'qq群'
+							},
+							{
+								value: 234,
+								name: '咨询'
+							},
+							{
+								value: 200,
+								name: '论坛'
+							},
+							{
+								value: 300,
+								name: '微信'
+							},
+							{
+								value: 400,
+								name: '贴吧'
+							},
+							{
+								value: 500,
+								name: '媒体'
+							},
+							{
+								value: 800,
+								name: '其它'
+							}
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				};
+				myChart.setOption(option);
+			});
+
+			function yuqingzhanbi() {
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						left: 15,
+						text: '▌当日舆情信息采集占比',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+
+					series: [{
+						name: '当日信息总量：',
+						type: 'pie',
+						radius: '55%',
+						center: ['50%', '55%'],
+						data: [
+
+							{
+								value: 350,
+								name: '博客'
+							},
+							{
+								value: 400,
+								name: '微博'
+							},
+							{
+								value: 135,
+								name: 'qq群'
+							},
+							{
+								value: 234,
+								name: '咨询'
+							},
+							{
+								value: 200,
+								name: '论坛'
+							},
+							{
+								value: 300,
+								name: '微信'
+							},
+							{
+								value: 400,
+								name: '贴吧'
+							},
+							{
+								value: 500,
+								name: '媒体'
+							},
+							{
+								value: 800,
+								name: '其它'
+							}
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				};
+				myChart.setOption(option);
+				$("#btn21").css("background-color", "#027AE0");
+				$("#btn21").css("color", "white");
+				
+				$("#btn22").css("background-color", "white");
+				$("#btn22").css("color", "#027AE0");
+			}
+
+			function yucizhanbi() {
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						left: 15,
+						text: '▌当日舆论热词占比',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+
+					series: [{
+						name: '当日信息总量：',
+						type: 'pie',
+						radius: '55%',
+						center: ['50%', '55%'],
+						data: [
+
+							{
+								value: 200,
+								name: '票价贵'
+							},
+							{
+								value: 180,
+								name: '游玩设施多'
+							},
+							{
+								value: 135,
+								name: '特产美味'
+							},
+							{
+								value: 150,
+								name: '酒店安静'
+							},
+							{
+								value: 40,
+								name: '部门监管不合理'
+							},
+							{
+								value: 200,
+								name: '服务态度差'
+							},
+
+							{
+								value: 400,
+								name: '其它'
+							}
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				};
+				myChart.setOption(option);
+					$("#btn22").css("background-color", "#027AE0");
+				$("#btn22").css("color", "white");
+				$("#btn21").css("background-color", "white");
+				$("#btn21").css("color", "#027AE0");
+			}
+		</script>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var echarts_main = echarts.init(document.getElementById("main2"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: 20,
+						left: 15,
+						text: '▌实时信息采集',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						}
+					},
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: {
+							type: 'cross',
+							label: {
+								backgroundColor: '#283b56'
+							}
+						}
+					},
+					legend: {
+						top: 370,
+						left: 250,
+						data: ['论坛', '博客', '微博', '咨询', 'qq群', '微信', '贴吧', '媒体', '其它']
+					},
+
+					dataZoom: {
+						show: false,
+						start: 0,
+						end: 100
+					},
+					xAxis: [{
+						type: 'category',
+						boundaryGap: false,
+						name: '时间',
+						axisLabel: {
+							interval: 0,
+							//                       rotate:60,
+							margin: 10,
+
+						},
+						data: (function() {
+							var now = new Date();
+							var res = [];
+							var len = 9;
+							while(len--) {
+								res.unshift(now.toLocaleTimeString().replace(/^\D*/, ''));
+								now = new Date(now - 1000 * 60);
+							}
+							return res;
+						})()
+					}],
+					yAxis: [{
+						type: 'value',
+						scale: true,
+						name: '总量',
+						min: 0,
+						boundaryGap: [0.1, 0.1],
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+					}],
+					grid: {
+						top: 80,
+						left: '2%',
+						right: '4%',
+						bottom: '10%',
+						containLabel: true
+					},
+					series: [{
+							name: '论坛',
+							type: 'line',
+                            smooth: true,
+							data: (function() {
+								var res = [];
+								var len = 0;
+								while(len < 9) {
+									res.push((Math.random() * 100 + 200).toFixed(0) - 0);
+									len++;
+								}
+								return res;
+							})()
+						},
+						{
+							name: '微博',
+							type: 'line',
+                         smooth: true,
+							data: (function() {
+								var res = [];
+								var len = 0;
+								while(len < 9) {
+									res.push((Math.random() * 100 + 200).toFixed(0) - 0);
+									len++;
+								}
+								return res;
+							})()
+						},
+						{
+							name: '博客',
+                             smooth: true,
+							type: 'line',
+							data: (function() {
+								var res = [];
+								var len = 0;
+								while(len < 9) {
+									res.push((Math.random() * 100 + 200).toFixed(0) - 0);
+									len++;
+								}
+								return res;
+							})()
+						},
+						{
+							name: 'qq群',
+							type: 'line',
+                             smooth: true,
+							data: (function() {
+								var res = [];
+								var len = 0;
+								while(len < 9) {
+									res.push((Math.random() * 100 + 200).toFixed(0) - 0);
+									len++;
+								}
+								return res;
+							})()
+						},
+						{
+							name: '咨询',
+							type: 'line',
+smooth: true,
+							data: (function() {
+								var res = [];
+								var len = 0;
+								while(len < 9) {
+									res.push((Math.random() * 100 + 200).toFixed(0) - 0);
+									len++;
+								}
+								return res;
+							})()
+						},
+						{
+							name: '微信',
+smooth: true,
+							type: 'line',
+							data: (function() {
+								var res = [];
+								var len = 0;
+								while(len < 9) {
+									res.push((Math.random() * 100 + 200).toFixed(0) - 0);
+									len++;
+								}
+								return res;
+							})()
+						},
+						{
+							name: '贴吧',
+                            smooth: true,
+							type: 'line',
+							data: (function() {
+								var res = [];
+								var len = 0;
+								while(len < 9) {
+									res.push((Math.random() * 100 + 200).toFixed(0) - 0);
+									len++;
+								}
+								return res;
+							})()
+						},
+						{
+							name: '媒体',
+                         smooth: true,
+							type: 'line',
+							data: (function() {
+								var res = [];
+								var len = 0;
+								while(len < 9) {
+									res.push((Math.random() * 100 + 200).toFixed(0) - 0);
+									len++;
+								}
+								return res;
+							})()
+						},
+						{
+							name: '其它',
+							type: 'line',
+                             smooth: true,
+							data: (function() {
+								var res = [];
+								var len = 0;
+								while(len < 9) {
+									res.push((Math.random() * 100 + 200).toFixed(0) - 0);
+									len++;
+								}
+								return res;
+							})()
+						}
+					]
+				};
+
+				setInterval(function() {
+					axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+
+					var data0 = option.series[0].data;
+					data0.shift();
+					data0.push(Math.round(Math.random() * 100 + 100));
+
+					var data1 = option.series[1].data;
+					data1.shift();
+					data1.push(Math.round(Math.random() * 100 + 100));
+
+					var data2 = option.series[2].data;
+					data2.shift();
+					data2.push(Math.round(Math.random() * 100 + 100));
+
+					var data3 = option.series[3].data;
+					data3.shift();
+					data3.push(Math.round(Math.random() * 100 + 100));
+
+					var data3 = option.series[3].data;
+					data3.shift();
+					data3.push(Math.round(Math.random() * 100 + 100));
+
+					var data4 = option.series[4].data;
+					data4.shift();
+					data4.push(Math.round(Math.random() * 100 + 100));
+
+					var data5 = option.series[5].data;
+					data5.shift();
+					data5.push(Math.round(Math.random() * 100 + 100));
+
+					var data6 = option.series[6].data;
+					data6.shift();
+					data6.push(Math.round(Math.random() * 100 + 100));
+
+					var data7 = option.series[7].data;
+					data7.shift();
+					data7.push(Math.round(Math.random() * 100 + 100));
+
+					var data8 = option.series[8].data;
+					data8.shift();
+					data8.push(Math.round(Math.random() * 100 + 100));
+					//  
+					//   var data9 = option.series[9].data;
+					//  data9.shift();
+					//  data9.push(Math.round(Math.random() * 100 +100));
+					//  
+					//   var data10 = option.series[10].data;
+					//  data10.shift();
+					//  data10.push(Math.round(Math.random() * 100 +100));
+					//  
+					//   var data11 = option.series[11].data;
+					//  data11.shift();
+					//  data11.push(Math.round(Math.random() * 100 +100));
+					//  
+					//   var data12 = option.series[12].data;
+					//  data12.shift();
+					//  data12.push(Math.round(Math.random() * 100 +100));
+					//  
+
+					option.xAxis[0].data.shift();
+					option.xAxis[0].data.push(axisData);
+
+					echarts_main.setOption(option);
+				}, 2000);
+				echarts_main.setOption(option);
+
+			});
+		</script>
+
+		<!--<script type="text/javascript">
+			 $(document).ready(function(){	
+			 	
+			 var myChart = echarts.init(document.getElementById("main5"));
+			 
+			 
+			 var option = {
+			 	backgroundColor:'white',
+			  title: {
+			  	left:15,
+			      text: '▌舆论热词监视',
+			       textStyle: {
+										color: '#EEB300',
+										fontSize: 15
+									}
+			  },
+			  tooltip: {
+			      trigger: 'axis'
+			  },
+			  legend: {
+			  	left:200,
+			      data:['票价贵','游玩设施多','特产美味','酒店安静','部门监管不合理','服务态度差','其它']
+			  },
+			  grid: {
+			      left: '3%',
+			      right: '4%',
+			      bottom: '3%',
+			      containLabel: true
+			  },
+			 
+			  xAxis: {
+			      type: 'category',
+			      boundaryGap: false,
+			     
+			//      data: ['周一','周二','周三','周四','周五','周六','周日'],
+			       data: (function (){
+			              var now = new Date();
+			              var res = [];
+			              var len = 7;
+			              while (len--) {
+			                  res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+			                  now = new Date(now - 1000);
+			              }
+			              return res;
+			          })()
+			  },
+			  yAxis: {
+			      type: 'value'
+			  },
+			  series: [
+			      {
+			          name:'票价贵',
+			          type:'line',
+			          stack: '总量',
+			          data:[120, 132, 101, 134, 90, 230, 210]
+			      },
+			      {
+			          name:'游玩设施多',
+			          type:'line',
+			          stack: '总量',
+			          data:[220, 182, 191, 234, 290, 330, 310]
+			      },
+			      {
+			          name:'特产美味',
+			          type:'line',
+			          stack: '总量',
+			          data:[150, 232, 201, 154, 190, 330, 410]
+			      },
+			      {
+			          name:'酒店安静',
+			          type:'line',
+			          stack: '总量',
+			          data:[320, 332, 301, 334, 390, 330, 320]
+			      },
+			      {
+			          name:'部门监管不合理',
+			          type:'line',
+			          stack: '总量',
+			          data:[220, 232, 201, 234, 290, 230, 220]
+			      },
+			       {
+			          name:'服务态度差',
+			          type:'line',
+			          stack: '总量',
+			          data:[120, 132, 101, 134, 190, 130, 120]
+			      },
+			      ,
+			       {
+			          name:'其它',
+			          type:'line',
+			          stack: '总量',
+			          data:[420, 432, 401, 434, 490, 430, 420]
+			      }
+			  ]
+			};
+			setInterval(function (){
+			  axisData = (new Date()).toLocaleTimeString().replace(/^\D*/,'');
+			
+			  var data0 = option.series[0].data;
+			  data0.shift();
+			  data0.push(Math.round(Math.random() * 100+100));
+			
+			   
+			   
+			  var data1 = option.series[1].data;
+			  data1.shift();
+			  data1.push(Math.round(Math.random() * 100 +100));
+			  
+			  
+			   var data2 = option.series[2].data;
+			  data2.shift();
+			  data2.push(Math.round(Math.random() * 100 +100));
+			 
+			  
+			  var data3 = option.series[3].data;
+			  data3.shift();
+			  data3.push(Math.round(Math.random() * 100 +100));
+			  
+			  var data3 = option.series[3].data;
+			  data3.shift();
+			  data3.push(Math.round(Math.random() * 100 +100));
+			  
+			  var data4 = option.series[4].data;
+			  data4.shift();
+			  data4.push(Math.round(Math.random() * 100 +100));
+			  
+			  var data5 = option.series[5].data;
+			  data5.shift();
+			  data5.push(Math.round(Math.random() * 100 +100));
+			  
+			  var data6 = option.series[6].data;
+			  data6.shift();
+			  data6.push(Math.round(Math.random() * 100 +100));
+			  
+			  
+			  var data7 = option.series[7].data;
+			  data7.shift();
+			  data7.push(Math.round(Math.random() * 100 +100));
+			  
+			  
+			  option.xAxis[0].data.shift();
+			  option.xAxis[0].data.push(axisData);
+			  
+			
+			  myChart.setOption(option);
+			}, 2000);
+			
+			 myChart.setOption(option);
+			});
+		</script>-->
+
+		<!--<script type="text/javascript">
+			$(document).ready(function(){
+				var echarts_main = echarts.init(document.getElementById("main6"));	
+					var option = {
+						backgroundColor:'white',
+    title: {
+    	left:15,
+        text: '▌舆论热词监视',
+         textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						}
+    },
+    tooltip: {
+        trigger: 'axis',
+        axisPointer: {
+            type: 'cross',
+            label: {
+                backgroundColor: '#283b56'
+            }
+        }
+    },
+    legend: {
+    	left:260,
+    	top:370,
+        data:['票价贵','游玩设施多','特产美味','酒店安静','景去部门监管不合理','服务态度差','其它']
+    },
+   
+   
+    dataZoom: {
+        show: false,
+        start: 0,
+        end: 100
+    },
+    xAxis: [
+        {
+            type: 'category',
+            boundaryGap: false,
+            name: '时间',
+            axisLabel:{
+                           interval:0,
+//                       rotate:60,
+                         margin:10,
+                         
+                     },
+            data: (function (){
+                var now = new Date();
+                var res = [];
+                var len = 7;
+                while (len--) {
+                    res.unshift(now.toLocaleTimeString().replace(/^\D*/,''));
+                    now = new Date(now - 1000*60*60);
+                }
+                return res;
+            })()
+        }
+    ],
+    yAxis: [
+        {
+            type: 'value',
+            scale: true,
+            name: '每秒评论变化量',
+            min: 0,
+            boundaryGap: [0.2, 0.2]
+        }
+    ],
+    series: [
+        {
+            name:'票价贵',
+            type:'line',
+            
+            data:(function (){
+                var res = [];
+                var len = 0;
+                while (len < 7) {
+                    res.push((Math.random()*100 +200).toFixed(0) - 0);
+                    len++;
+                }
+                return res;
+            })()
+        },
+        {
+            name:'游玩设施多',
+            type:'line',
+            
+            data:(function (){
+                var res = [];
+                var len = 0;
+                while (len < 7) {
+                    res.push((Math.random()*100 + 200).toFixed(0) - 0);
+                    len++;
+                }
+                return res;
+            })()
+        },
+        {
+            name:'特产美味',
+             
+            type:'line',
+            data:(function (){
+                var res = [];
+                var len = 0;
+                while (len < 7) {
+                    res.push((Math.random()*100 + 200).toFixed(0) - 0);
+                    len++;
+                }
+                return res;
+            })()
+        },
+        {
+            name:'酒店安静',
+            type:'line',
+             
+            data:(function (){
+                var res = [];
+                var len = 0;
+                while (len < 7) {
+                    res.push((Math.random()*100 + 200).toFixed(0) - 0);
+                    len++;
+                }
+                return res;
+            })()
+        },
+         {
+            name:'景去部门监管不合理',
+            type:'line',
+             
+            data:(function (){
+                var res = [];
+                var len = 0;
+                while (len < 7) {
+                    res.push((Math.random()*100 + 200).toFixed(0) - 0);
+                    len++;
+                }
+                return res;
+            })()
+        },
+        {
+            name:'服务态度差',
+            type:'line',
+             
+            data:(function (){
+                var res = [];
+                var len = 0;
+                while (len < 7) {
+                    res.push((Math.random()*100 + 200).toFixed(0) - 0);
+                    len++;
+                }
+                return res;
+            })()
+        },
+        {
+            name:'其它',
+            type:'line',
+             
+            data:(function (){
+                var res = [];
+                var len = 0;
+                while (len < 7) {
+                    res.push((Math.random()*100 + 200).toFixed(0) - 0);
+                    len++;
+                }
+                return res;
+            })()
+        }
+    ]
+};
+
+setInterval(function (){
+    axisData = (new Date()).toLocaleTimeString().replace(/^\D*/,'');
+
+    var data0 = option.series[0].data;
+    data0.shift();
+    data0.push(Math.round(Math.random() * 100+100));
+
+     
+     
+    var data1 = option.series[1].data;
+    data1.shift();
+    data1.push(Math.round(Math.random() * 100 +100));
+    
+    
+     var data2 = option.series[2].data;
+    data2.shift();
+    data2.push(Math.round(Math.random() * 100 +100));
+   
+    
+    var data3 = option.series[3].data;
+    data3.shift();
+    data3.push(Math.round(Math.random() * 100 +100));
+    
+   
+    var data4 = option.series[4].data;
+    data4.shift();
+    data4.push(Math.round(Math.random() * 100 +100));
+    
+    var data5 = option.series[5].data;
+    data5.shift();
+    data5.push(Math.round(Math.random() * 100 +100));
+    
+    var data6 = option.series[6].data;
+    data6.shift();
+    data6.push(Math.round(Math.random() * 100 +100));
+    
+    var data7 = option.series[7].data;
+    data7.shift();
+    data7.push(Math.round(Math.random() * 100 +100));
+    
+    
+    option.xAxis[0].data.shift();
+    option.xAxis[0].data.push(axisData);
+
+    echarts_main.setOption(option);
+}, 2000);
+		echarts_main.setOption(option);			
+					
+			});
+		</script>-->
+
+		<style type="text/css">
+			#main1 {
+				width: 34.5%;
+    height: 280px;
+    float: left;
+    left: 1.5%;
+    top: -2%;
+   
+    margin-top: 0px;
+     border-radius: 5px;
+
+			}
+			/*#main1 > div:nth-child(1){
+				    margin-top: -19px !important;
+			}*/
+			/*#zhuzhuang > div:nth-child(1) > canvas{
+
+				width: 90% !important;
+
+			}
+
+			#zhuzhuang > div:nth-child(1){
+
+				width: 90% !important;
+
+				
+
+			}*/
+			#main2 {
+				   width: 98.3%;
+    height: 350px;
+    float: left;
+    top: -1%;
+    left: 1.2%;
+     border-radius: 5px;
+
+			}
+			
+			
+			
+			.container1 {
+				float: left;
+				height: 660px;
+				width: 100%;
+				background-color: #eff1ff;
+			}
+			
+			#zhuzhuang {
+				    float: left;
+    width: 63.5%;
+    top: 2%;
+    height: 280px;
+    left: 1.1%;
+     border-radius: 5px;
+
+			}
+			
+			
+			
+			#btn11 {
+				top: 5%;
+    left: -15%;
+    /* bottom: -110px; */
+    width: 6%;
+    margin-bottom: 3px;
+    font-size: 12px;
+    color: white;
+    background-color: #027AE0;
+    border: 1px solid #027AE0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    position: relative;
+			}
+			
+			#btn12 {
+				position: relative;
+    top: 5%;
+    left: -15.3%;
+    /* bottom: 295px; */
+    width: 6%;
+    margin-bottom: 3px;
+    font-size: 12px;
+    color: #027AE0;
+    background-color: white;
+    border: 1px solid #027AE0;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+			}
+			
+			
+			
+			#btn21 {
+				top: 5%;
+    left: 11%;
+    /* bottom: -110px; */
+    width: 6%;
+    
+    font-size: 12px;
+    color: white;
+    background-color: #027AE0;
+    border: 1px solid #027AE0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    position: relative;
+			}
+			#main1 > div:nth-child(1) > canvas
+			{
+				top:-30px;
+				
+			}
+			#btn22 {
+				position: relative;
+    top: 5%;
+    left: 10.7%;
+    /* bottom: 295px; */
+    width: 6%;
+   
+    font-size: 12px;
+    color: #027AE0;
+    background-color: white;
+    border: 1px solid #027AE0;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+			}
+			/*头部导航栏*/
+.nav-tabs {
+	padding-left: 60px;
+	padding-bottom: 2px;
+	border-bottom: 0px;
+}
+.title_ul{
+	margin-top: 29px;
+}
+.nav {
+    margin-bottom: 0px;
+}
+li a {
+	color: white;
+	background-color: #3E4955;
+	/*border: 5px solid ghostwhite;*/
+	font-size: 14px;
+}
+.times {
+	color: white;
+}
+
+.times_div {
+	float: right;
+	padding: 10px;
+	margin-right: 30px;
+	/*border: 1px solid #759AA0;*/
+	display: inline;
+	padding-top: 0px;
+    margin-top: 30px;
+    padding-bottom: 0px;
+}
+
+.title {
+    margin-top: 29px;
+    float:right;
+    margin-left: 10px;
+    color: white;
+    font-size: 24px;
+}
+.navbar-collapse{
+	padding-right: 5px!important;
+}
+img{
+	margin-left: 19px;
+    margin-top: 5px;
+}
+/*-------------------------------------------------*/
+html{
+	height: 660px;
+}
+		</style>
+	</head>
+
+	<body>
+		<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">旅游监测分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					
+					<li>
+						<a href="huizong.html" target="_self" style="margin-right: 20px;">返回</a>
+					</li>
+				</ul>
+			</div>
+			<!--<div class="times_div">
+					<div class="times">
+						<p class="ks">开始时间：</p>
+						<span class="input-append date form_datetime start_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<div class="times">&nbsp;&nbsp;
+						<p class="js">结束时间:</p>
+						<span class="input-append date form_datetime end_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<span><a id="search" name="search" href="javascript:void(0)" onclick="doSearch()">&nbsp;&nbsp;查询</a></span>
+				</div>-->
+			</div>
+		<div class="container1">
+
+			
+				<div id="zhuzhuang"></div>
+				<button type="button" id="btn11" onclick="yuqing()">舆情信息</button>
+				<button type="button" id="btn12" onclick="yulun()">舆论热词</button>
+			
+
+			
+				<div id="main1"></div>
+				<button id="btn21" onclick="yuqingzhanbi()">舆情信息</button>
+				<button id="btn22" onclick="yucizhanbi()">舆论热词</button>
+			
+
+			<div id="main2"></div>
+			
+
+		</div>
+	</body>
+
+</html>

@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name=renderer content=webkit>
+		<title></title>
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/world.js"></script>
+		<script type="text/javascript" src="js/china.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+		<script src="js/bmap.js"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0UqXGL98FSmi22w2Rl6HK56I"></script>
+		<script src="semantic/semantic.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/total.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+		<!--<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css" />
+		<link rel="stylesheet" type="text/css" href="semantic/docs.css" />-->
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+		<script>
+			$(document).ready(function() {
+				var echarts_main = echarts.init(document.getElementById("main1"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '3%',
+						left: '2%',
+						text: '▌核心景区实时游客数',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: {
+							type: 'cross',
+							label: {
+								backgroundColor: '#283b56'
+							}
+						}
+					},
+					legend: {
+						orient: 'horizontal',
+						//						top: 'bottom',
+						bottom: '3%',
+						data: ['', '', '', '元上都遗址', '多伦湖', '贝子庙', '蒙古汗城']
+					},
+
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '13%',
+						containLabel: true
+					},
+					dataZoom: {
+						show: false,
+						start: 0,
+						end: 100
+					},
+					xAxis: [{
+						type: 'category',
+						boundaryGap: false,
+						data: (function() {
+							var now = new Date();
+							var res = [];
+							var len = 5;
+							while (len--) {
+								res.unshift(now.toLocaleTimeString().replace(/^\D*/, ''));
+								now = new Date(now - 2000);
+							}
+							return res;
+						})()
+					}],
+					yAxis: [{
+						type: 'value',
+						scale: true,
+						name: '数量（人）',
+						min: 0,
+						boundaryGap: [0.2, 0.2],
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+					}],
+					series: [{
+						name: '元上都遗址',
+						type: 'line',
+
+						data: (function() {
+							var res = [];
+							var len = 0;
+							while (len < 5) {
+								res.push((Math.random() * 100 + 2055).toFixed(0) - 0);
+								len++;
+							}
+							return res;
+						})()
+					}, {
+						name: '多伦湖',
+						type: 'line',
+
+						data: (function() {
+							var res = [];
+							var len = 0;
+							while (len < 5) {
+								res.push((Math.random() * 100 + 2055).toFixed(0) - 0);
+								len++;
+							}
+							return res;
+						})()
+					}, {
+						name: '贝子庙',
+
+						type: 'line',
+						data: (function() {
+							var res = [];
+							var len = 0;
+							while (len < 5) {
+								res.push((Math.random() * 100 + 2055).toFixed(0) - 0);
+								len++;
+							}
+							return res;
+						})()
+					}, {
+						name: '蒙古汗城',
+						type: 'line',
+
+						data: (function() {
+							var res = [];
+							var len = 0;
+							while (len < 5) {
+								res.push((Math.random() * 100 + 2055).toFixed(0) - 0);
+								len++;
+							}
+							return res;
+						})()
+					}]
+				};
+
+				setInterval(function() {
+					axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+
+					var data0 = option.series[0].data;
+					data0.shift();
+					data0.push(Math.round(Math.random() * 3200 + 5443));
+
+					var data1 = option.series[1].data;
+					data1.shift();
+					data1.push(Math.round(Math.random() * 3500 + 5343));
+
+					var data2 = option.series[2].data;
+					data2.shift();
+					data2.push(Math.round(Math.random() * 3500 + 5243));
+
+					var data3 = option.series[3].data;
+					data3.shift();
+					data3.push(Math.round(Math.random() * 3500 + 5543));
+					option.xAxis[0].data.shift();
+					option.xAxis[0].data.push(axisData);
+
+					echarts_main.setOption(option);
+				}, 2000);
+				echarts_main.setOption(option);
+
+			});
+		</script>
+		<style>
+		.nav-tabs {
+	padding-left: 60px;
+	padding-bottom: 2px;
+	border-bottom: 0px;
+}
+.title_ul{
+	margin-top: 29px;
+}
+.nav {
+    margin-bottom: 0px;
+}
+li a {
+	color: white;
+	background-color: #3E4955;
+	/*border: 5px solid ghostwhite;*/
+	font-size: 14px;
+}
+.times {
+	color: white;
+}
+
+.times_div {
+	float: right;
+	padding: 10px;
+	margin-right: 30px;
+	/*border: 1px solid #759AA0;*/
+	display: inline;
+	padding-top: 0px;
+    margin-top: 30px;
+    padding-bottom: 0px;
+}
+
+.title {
+    margin-top: 29px;
+    float:right;
+    margin-left: 10px;
+    color: white;
+    font-size: 24px;
+    /*font-weight: bold;*/
+}
+.navbar-collapse{
+	padding-right: 5px!important;
+}
+img{
+	margin-left: 5px;
+    margin-top: 5px;
+}
+			#body1 {
+				margin-top: -1px;
+				background-color: #eff1ff;
+			}
+			
+			#main {
+				width: 100%;
+				height: 350px;
+				margin-top: 5px;
+			}
+			
+			#main3 {
+				float: left;
+				width: 35%;
+				height: 350px;
+					margin: 5px;
+				 border-radius: 5px;
+			}
+			
+			#main1 {
+				float: left;
+				width: 63%;
+				height: 350px;
+					margin: 5px;
+				 border-radius: 5px;
+			}
+			
+			#main2 {
+				float: left;
+				width:98.8%;
+				height: 346px;
+				margin-top: 15px;
+				margin-left: 5px;
+				 border-radius: 5px;
+
+			}
+			
+			#foot {
+				width: 100%;
+				height: 500px;
+			}
+			
+			#foot1 {
+				float: left;
+				width: 100%;
+				height: 500px;
+			}
+			
+			/*#foot2 {
+				float: left;
+				width: 600px;
+				height: 500px;
+			}*/
+			
+			#foot11 {
+				float: left;
+				width: 100%;
+				height: 240px;
+			}
+			
+			/*#foot12 {
+				float: left;
+				width: 700px;
+				height: 250px;
+			}*/
+			
+			#foot111 {
+				float: left;
+				width: 19.1%;
+				height: 240px;
+				margin: 5px;
+				 border-radius: 5px;
+			}
+			
+			#foot112 {
+				float: left;
+				width: 19.1%;
+				height: 240px;
+				margin: 5px;
+				 border-radius: 5px;
+			}
+			
+			#foot122 {
+				float: left;
+				width: 19.2%;
+				height: 240px;
+				margin: 5px;
+				 border-radius: 5px;
+			}
+			
+			#foot121 {
+				float: left;
+				width: 19.2%;
+				height: 240px;
+				margin: 5px;
+				 border-radius: 5px;
+			}
+			
+			#foot123 {
+				float: left;
+				width: 19.2%;
+				height: 240px;
+				margin: 5px;
+				 border-radius: 5px;
+			}
+		</style>
+		<script type="text/javascript">
+			$(document).ready(function() {
+
+				var echarts_main = echarts.init(document.getElementById("main3"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '3%',
+						left: '2%',
+						text: '▌核心景区平均浏览时间',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '3%',
+						containLabel: true
+					},
+					xAxis: {
+
+						type: 'category',
+						data: ['元上都遗址', '多伦湖', '蒙古汗城', '贝子庙', '灰腾草原']
+					},
+					yAxis: {
+						type: 'value',
+						name: '数量（人）',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+
+					},
+					series: [{
+							name: '平均浏览时间',
+							type: 'bar',
+							stack: '总量',
+							barWidth: '40%',
+							data: [56, 62, 51, 84, 110]
+						},
+
+					]
+				};
+				echarts_main.setOption(option);
+
+			})
+		</script>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var echarts_main = echarts.init(document.getElementById("main2"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '3%',
+						left: '1%',
+						text: '▌景区每日游客数',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						orient: 'horizontal',
+						//						top: 'bottom',
+						bottom: '3%',
+						data: ['', '', ' ', '元上都遗址', '多伦湖', '蒙古汗城', '贝子庙']
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '13%',
+						containLabel: true
+					},
+
+					xAxis: {
+						type: 'category',
+                         axisLabel: {
+							interval: 0,
+							rotate: 35,
+							margin: 8,
+
+						},
+						boundaryGap: false,
+						data: ['6月12号', '6月13号', '6月14号', '6月15号', '6月16号', '6月17号', '6月18号','6月19号','6月20号','6月21号', '6月22号', '6月23号', '6月24号', '6月25号', '6月26号', '6月27号', '6月28号', '6月29号', '6月30号', '7月1号', '7月2号', '7月3号']
+					},
+					yAxis: {
+                             
+						min: 9000,
+					name: '数量（人）',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+					},
+					series: [{
+							name: '元上都遗址',
+							type: 'line',
+
+							data: [13120, 14132, 14101, 13634, 16090, 14230, 14210,14569,15254,15690,15985,16039,15890,15678,16203,16490,16509,16890,16758,17203,16894,16503]
+						}, {
+							name: '多伦湖',
+							type: 'line',
+
+							data: [14220, 14182, 13191, 15234, 14990, 13330, 14310,14675,14789,15034,15308,15609,15840,16094,15894,16503,16903,17209,17402,17092,16890,16699]
+						}, {
+							name: '蒙古汗城',
+							type: 'line',
+
+							data: [14150, 15232, 13901, 14154, 13190, 15330, 13410,13789,13654,14374,15098,15203,14509,15409,15378,15803,16003,15646,15409,15321,15094,14890]
+						}, {
+							name: '贝子庙',
+							type: 'line',
+
+							data: [15320, 16332, 13301, 15334, 16020, 15330, 15520,15609,16043,16409,16604,16720,17023,16709,16552,17203,17330,16940,17002,17409,17560,17679]
+						},
+
+					]
+				};
+
+				echarts_main.setOption(option);
+
+			})
+		</script>
+		<script>
+			$(document).ready(function() {
+				var echarts_main = echarts.init(document.getElementById("foot111"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '4%',
+						left: '2%',
+						text: '▌元上都阈值',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						formatter: "{a} <br/>{b} : {c}"
+					},
+
+					series: [{
+						name: '游客流量',
+						type: 'gauge',
+						max: 14000,
+						detail: {
+							formatter: '{value}人'
+						},
+						radius: '80%',
+						center: ['50%','55%'],
+						splitNumber: 7,
+						axisTick: { // 坐标轴小标记
+							length: 8, // 属性length控制线长
+							lineStyle: { // 属性lineStyle控制线条样式
+								color: 'auto'
+							}
+						},
+						title: {
+							textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+								fontWeight: 'bolder',
+								fontSize: 14,
+								fontStyle: 'italic'
+							}
+						},
+						detail: {
+							offsetCenter: [0, '60%'],
+							textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+								fontWeight: 'bolder',
+								fontSize: 14,
+							}
+						},
+						data: [{
+							value: 10550,
+							name: ''
+						}]
+					}]
+				};
+
+				setInterval(function() {
+					option.series[0].data[0].value = (Math.random() * 10000).toFixed(0) - 0;
+					echarts_main.setOption(option, true);
+				}, 2000);
+				echarts_main.setOption(option);
+
+			})
+		</script>
+		<script>
+			$(document).ready(function() {
+				var echarts_main = echarts.init(document.getElementById("foot112"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '4%',
+						left: '2%',
+						text: '▌贝子庙阈值',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						formatter: "{a} <br/>{b} : {c}"
+					},
+
+					series: [{
+						name: '游客流量',
+						type: 'gauge',
+						max: 14000,
+						detail: {
+							formatter: '{value}人'
+						},
+						radius: '80%',
+						center: ['50%','55%'],
+						splitNumber: 7,
+						axisTick: { // 坐标轴小标记
+							length: 8, // 属性length控制线长
+							lineStyle: { // 属性lineStyle控制线条样式
+								color: 'auto'
+							}
+						},
+						title: {
+							textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+								fontWeight: 'bolder',
+								fontSize: 14,
+								fontStyle: 'italic'
+							}
+						},
+						detail: {
+							offsetCenter: [0, '60%'],
+							textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+								fontWeight: 'bolder',
+								fontSize: 14,
+							}
+						},
+						data: [{
+							value: 5750,
+							name: ''
+						}]
+					}]
+				};
+				setInterval(function() {
+					option.series[0].data[0].value = (Math.random() * 10000).toFixed(0) - 0;
+					echarts_main.setOption(option, true);
+				}, 2000);
+				echarts_main.setOption(option);
+			});
+		</script>
+		<script>
+			$(document).ready(function() {
+				var echarts_main = echarts.init(document.getElementById("foot121"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '4%',
+						left: '2%',
+						text: '▌多伦湖阈值',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						formatter: "{a} <br/>{b} : {c}"
+					},
+
+					series: [{
+						name: '游客流量',
+						type: 'gauge',
+						max: 14000,
+						detail: {
+							formatter: '{value}人'
+						},
+						radius: '80%',
+						center: ['50%','55%'],
+						splitNumber: 7,
+						axisTick: { // 坐标轴小标记
+							length: 8, // 属性length控制线长
+							lineStyle: { // 属性lineStyle控制线条样式
+								color: 'auto'
+							}
+						},
+						title: {
+							textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+								fontWeight: 'bolder',
+								fontSize: 14,
+								fontStyle: 'italic'
+							}
+						},
+						detail: {
+							offsetCenter: [0, '60%'],
+							textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+								fontWeight: 'bolder',
+								fontSize: 14,
+							}
+						},
+
+						data: [{
+							value: 7550,
+							name: ''
+						}]
+					}]
+				};
+
+				setInterval(function() {
+					option.series[0].data[0].value = (Math.random() * 10000).toFixed(0) - 0;
+					echarts_main.setOption(option, true);
+				}, 2000);
+				echarts_main.setOption(option);
+
+			})
+		</script>
+		<script>
+			$(document).ready(function() {
+				var echarts_main = echarts.init(document.getElementById("foot122"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '4%',
+						left: '2%',
+						text: '▌蒙古汗城阈值',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						formatter: "{a} <br/>{b} : {c}"
+					},
+
+					series: [{
+
+						name: '游客流量',
+						type: 'gauge',
+						max: 14000,
+						detail: {
+							formatter: '{value}人'
+						},
+						radius: '80%',
+						center: ['50%','55%'],
+						splitNumber: 7,
+						axisTick: { // 坐标轴小标记
+							length: 8, // 属性length控制线长
+							lineStyle: { // 属性lineStyle控制线条样式
+								color: 'auto'
+							}
+						},
+						title: {
+							textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+								fontWeight: 'bolder',
+								fontSize: 14,
+								fontStyle: 'italic'
+							}
+						},
+						detail: {
+							offsetCenter: [0, '60%'],
+							textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+								fontWeight: 'bolder',
+								fontSize: 14,
+							}
+						},
+						data: [{
+							value: 9850,
+							name: ''
+						}]
+					}]
+				};
+
+				setInterval(function() {
+					option.series[0].data[0].value = (Math.random() * 10000).toFixed(0) - 0;
+					echarts_main.setOption(option, true);
+				}, 2000);
+				echarts_main.setOption(option);
+
+			})
+		</script>
+		<script>
+			$(document).ready(function() {
+				var foot123_char = echarts.init(document.getElementById("foot123"));
+				var option = {
+					backgroundColor: 'white',
+					title: {
+						top: '4%',
+						left: '2%',
+						text: '▌灰腾草原阈值',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						formatter: "{a} <br/>{b} : {c}"
+					},
+
+					series: [{
+
+						name: '游客流量',
+						type: 'gauge',
+						max: 14000,
+						detail: {
+							formatter: '{value}人'
+						},
+						radius: '80%',
+						center: ['50%','55%'],
+						splitNumber: 7,
+						axisTick: { // 坐标轴小标记
+							length: 8, // 属性length控制线长
+							lineStyle: { // 属性lineStyle控制线条样式
+								color: 'auto'
+							}
+						},
+						title: {
+							textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+								fontWeight: 'bolder',
+								fontSize: 14,
+								fontStyle: 'italic'
+							}
+						},
+						detail: {
+							offsetCenter: [0, '60%'],
+							textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+								fontWeight: 'bolder',
+								fontSize: 14,
+							}
+						},
+						data: [{
+							value: 9850,
+							name: ''
+						}]
+					}]
+				};
+
+				setInterval(function() {
+					option.series[0].data[0].value = (Math.random() * 10000).toFixed(0) - 0;
+					foot123_char.setOption(option, true);
+				}, 2000);
+				foot123_char.setOption(option);
+
+			})
+		</script>
+
+	</head>
+
+	<body id="body1">
+		  <div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">阈值预警分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					
+					
+					<li>
+						<a href="huizong.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+			<!--<div class="times_div">
+					<div class="times">
+						<p class="ks">开始时间：</p>
+						<span class="input-append date form_datetime start_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<div class="times">&nbsp;&nbsp;
+						<p class="js">结束时间:</p>
+						<span class="input-append date form_datetime end_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<span><a id="search" name="search" href="javascript:void(0)" onclick="doSearch()">&nbsp;&nbsp;查询</a></span>
+				</div>-->
+			</div>
+		<div id="main">
+			<div id="main3"></div>
+			<div id="main1"></div>
+
+		</div>
+		<div id="foot">
+			<div id="foot1">
+				<div id="foot11">
+					<div id="foot111">
+					</div>
+					<div id="foot112">
+					</div>
+					<div id="foot121">
+					</div>
+					<div id="foot122">
+					</div>
+					<div id="foot123">
+					</div>
+				</div>
+				<div id="main2">
+
+				</div>
+
+			</div>
+	</body>
+
+</html>

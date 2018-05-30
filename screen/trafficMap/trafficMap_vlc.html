@@ -1,0 +1,448 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>景点监测</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="author" content="">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link rel="stylesheet" href="../../resource/css/lib/bootstrap.min.css" />
+<link rel="stylesheet" href="../../resource/css/common.css" />
+<style>
+.monitor-main {
+	padding: 0;
+	position: relative;
+}
+
+.monitor-main .traffic {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 999999;
+	overflow: hidden;
+}
+
+.monitor-main .video {
+	display: none;
+}
+
+.title-menu {
+	overflow: hidden;
+}
+
+.title-menu .btn {
+	float: left;
+	width: 50%;
+	box-sizing: border-box;
+}
+
+.traffic-show {
+	display: none;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.traffic-show .state {
+	padding: 0 10px 5px 10px;
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	z-index: 9999;
+	color: #3678D8;
+	border: 1px solid #255A9E;
+	background-color: rgba(0, 16, 15, .4)
+}
+
+.traffic-show .state .du {
+	margin-left: 30px
+}
+
+.traffic-show .intro {
+	margin-top: 9px;
+	float: left;
+}
+
+.traffic-show .comfort {
+	margin: 0;
+	float: left;
+	z-index: 99999;
+	list-style: none;
+	color: #fff;
+	font-size: 12px;
+}
+
+.traffic-show .comfort li {
+	margin-right: 4px;
+	float: left;
+	text-align: center;
+}
+
+.traffic-show .comfort span {
+	display: inline-block;
+	width: 52px;
+	height: 4px;
+}
+
+.traffic-show .comfort .shun {
+	background-color: #33AF00;
+}
+
+.traffic-show .comfort .huan {
+	background-color: #FECB00;
+}
+
+.traffic-show .comfort .yong {
+	background-color: #DF0100;
+}
+
+.traffic-show .comfort .none {
+	background-color: #B6B6B6;
+}
+
+.traffic-show .comfort p {
+	margin: 0
+}
+
+.white {
+	color: #fff;
+}
+
+.traffic-show .videoMenu {
+	top: 8px;
+	left: 620px;
+	position: absolute;
+	z-index: 9999;
+	width: 80px;
+	height: 41px;
+	line-height: 39px;
+	text-align: center;
+	border: 1px solid #255A9E;
+	background-color: rgba(0, 16, 15, .4);
+	color: #2C86FF;
+}
+
+.traffic-show .videoMenu i {
+	font-size: 36px;
+}
+
+.traffic-show .dialog {
+	position: absolute;
+	top: 200px;
+	left: 300px;
+	padding: 10px;
+	z-index: 99999999;
+	width: 360px;
+	height: 360px;
+	border: 1px solid #1E7AF5;
+	background-color: rgba(30, 122, 255, .2);
+}
+
+.traffic-show .dialog img {
+	display: block;
+	width: 100%;
+	height: 100%
+}
+
+.title-list {
+	display: none
+}
+
+.module {
+	height: 450px;
+	overflow: hidden;
+	border: 1px solid #3E82CD;
+}
+
+.control {
+	padding: 8px 0;
+	margin: 8px 0;
+	position: relative;
+	overflow: hidden;
+}
+
+.control>div {
+	cursor: pointer;
+}
+
+.control .left {
+	position: absolute;
+	top: 8px;
+	left: 60px;
+}
+
+.control .mid {
+	margin: 0 auto;
+	width: 32px;
+	height: 32px;
+}
+
+.control .right {
+	position: absolute;
+	top: 8px;
+	right: 60px;
+}
+
+.layout {
+	margin-top: 20px;
+}
+
+.layout .col-zsr-6 {
+	margin-top: 16px;
+	padding-left: 10px;
+	box-sizing: border-box;
+	text-align: center;
+	cursor: pointer;
+}
+
+.layout .screen {
+	padding: 0 4px;
+	float: left;
+	width: 146px;
+	height: 70px;
+	box-sizing: border-box;
+	border: 1px solid #26599B;
+}
+
+.layout .screen i {
+	display: block;
+	box-sizing: border-box;
+	border: 1px solid #26599B;
+}
+
+.layout .one i {
+	margin-top: 4px;
+	width: 100%;
+	height: 60px;
+}
+
+.layout .four i {
+	margin-top: 4px;
+	width: 66px;
+	height: 28px;
+	float: left;
+}
+.dialog-blue1, .dialog-blue2 {
+		position: static;
+	}
+	
+	.dialog-blue2 .main {
+		height: 180px;
+		width: 350px;
+		box-sizing: border-box;
+		padding-left: 120px;
+	}
+	.dialog-blue3 {
+		width: 660px;
+		border: 1px solid;
+		background-color: #0c0732;
+		text-align: center;
+	
+	}
+	.dialog-blue3 .main {
+		height: 380px;
+		width: 650px;
+		box-sizing: border-box;
+	}
+	.dialog-blue3 .main iframe{
+		width: 100%;
+		height: 100%;
+	
+	}
+	.dialog-blue2 .img {
+		position: absolute;
+    	left: 5px;
+    	float: none;
+	}
+	.dialog-blue2 .list {
+		
+	}
+	.dialog-blue3 .list {
+		color:white;
+			float: none;
+		margin-left: 20px;
+		overflow: hidden;
+		height: 100%;
+		padding-top:10px;
+	}
+.dialog-blue3 .list p{
+	width:290px;
+	float:left;
+	text-align: left;
+
+}
+
+.layout .four i:nth-child(2n) {
+	margin-left: 4px;
+}
+
+.layout .six i {
+	margin-top: 4px;
+	width: 42px;
+	height: 28px;
+	float: left;
+}
+
+.layout .six i:nth-child(3n-1),.layout .six i:nth-child(3n) {
+	margin-left: 4px;
+}
+
+.layout .nine i {
+	margin-top: 4px;
+	width: 42px;
+	height: 17px;
+	float: left;
+}
+
+.layout .nine i:nth-child(3n-1),.layout .nine i:nth-child(3n) {
+	margin-left: 4px;
+}
+
+.layout .title {
+	margin-left: 5px;
+	float: left;
+	line-height: 70px;
+	color: #066085;
+	font-size: 18px;
+}
+
+.layout .active i {
+	background-color: #066085;
+}
+
+.layout .active .title {
+	color: #3B81D7;
+}
+
+.panel-body {
+	padding: 0 15px;
+}
+
+.panel a {
+	color: #0071C7
+}
+
+.panel a:hover,.panel a:link,.panel a:focus {
+	color: #0071C7;
+	text-decoration: none;
+}
+
+.list-group-item,.panel,.panel-default>.panel-heading {
+	background-color: transparent;
+	border: none;
+	color: #fff
+}
+
+.panel-group .panel-heading+.panel-collapse>.list-group,.panel-group .panel-heading+.panel-collapse>.panel-body {
+	border: none
+}
+</style>
+</head>
+<body>
+	<header class="monitor-header clearfix">
+		<div class="col-zsr-3 clearfix">
+			<img src="../../resource/images/logo.png" class="logo pull-left" />
+			<div class="title pull-left">景点监测</div>
+		</div>
+<!-- 		<div class="col-zsr-6" style="height: 60px;"></div> -->
+		<div class="col-zsr-6  addBtn" id="mainTab">
+			<div class="btn btn-line" onclick="return alert('正在建设中...');">重点景区监测</div>
+			<div class="btn btn-line" onclick="return alert('正在建设中...');">景区综合分析</div>
+			<div class="btn btn-line  active">景区视频监控</div>
+			<div class="btn btn-line" onclick="return alert('正在建设中...');">景区收入分析</div>
+	    </div>
+	    <div class="col-zsr-3">
+	<div class="btn btn-icon"><a href="../index.html" title="首页"><i class="icon iconfont">&#xe613;</i></a></div>
+</div>
+	</header>
+	<section class="monitor-main" id="main-container">
+		<div class="col-zsr-3" style="position: absolute;right: 5px;top: 0;z-index: 9999;">
+			<div class="title-menu" id="mainTab">
+				<li class="btn btn-light active">地图模式</li>
+				<a href="trafficMonitor_vlc.html"><li class="btn btn-light">监控模式</li></a>
+			</div>
+		</div>
+		<div class="traffic-show" style="display: block;">
+			<div id="mapContainer" style="width: 100%; height: 100%;"></div>
+<!-- 			<div class="state"> -->
+<!-- 				<div class="intro"> -->
+<!-- 					<span class="time">采集时间：2016-25 11:25</span> <span class="du">拥堵情况：<span class="white">顺畅</span> </span> -->
+<!-- 				</div> -->
+<!-- 				<ul class="comfort"> -->
+<!-- 					<li><span class="shun"></span><p>顺畅</p></li> -->
+<!-- 					<li><span class="huan"></span><p>缓慢</p></li> -->
+<!-- 					<li><span class="yong"></span><p>拥堵</p></li> -->
+<!-- 					<li><span class="none"></span><p>无数据</p></li> -->
+<!-- 				</ul> -->
+<!-- 			</div> -->
+<!-- 			<div href="javascript:;" class="videoMenu" id="videoBtn"> -->
+<!-- 				<i class="icon iconfont">&#xe637;</i> -->
+<!-- 			</div> -->
+		</div>
+	</section>
+	
+	<script src="../../resource/script/lib/jquery-1.11.1.min.js"></script>
+	<script src="../../resource/script/lib/bootstrap.min.js"></script>
+	<script src="http://webapi.amap.com/maps?v=1.3&key=170937c95195a7dfe45e31ab5740d596"></script>
+	<!-- platform -->
+	<script src="../../resource/script/jquery.ux.public.js"></script>
+	<script src="../../resource/script/platform.utils.js"></script>
+	<script>
+		var operPage = {
+			ajaxTools: null,
+			init: function () {
+			// 初始化业务
+				this.initServices();	
+				// 初始化页面
+				this.initPage();
+				
+			},
+			initPage: function () {
+				var that = this;
+				that.loadList();
+				
+			},
+			initServices: function () {
+				// 初始化地图
+				this.initMap();
+			},
+			// 初始化地图
+			initMap: function () {
+				if (!this.mapFaca) {
+					var container = 'mapContainer';
+					var center = PLATFORM_CONSTANS.AREA.getArea()['lnglat'];
+					this.mapFaca = initMap(container, center);
+					
+					this.mapFaca.setMapStyle("blue_night");
+				}
+			},
+			// 加载列表
+			loadList: function () {
+				var data = [{"name":"殊像寺","address":"忻州市五台县台怀镇杨柏峪村","lnglat":["113.590726","38.968639"],"monitorName":"五台山风景名胜区","rtspUrlPc":"http://www.nju.gov.cn/web_info/scenic/video/Video.aspx?target=7.html","panoramicTour":"","principalName":"王先生","principalPhone":"4000350236","scenicLevel":"5A级","scenicType":"风景名胜"},	{"name":"太原动物园","address":"太原市杏花岭区东山马路2号","lnglat":["112.583295","37.910688"],"rtspUrlPc":"http://www.nju.gov.cn/web_info/scenic/video/Video.aspx?target=7.html","panoramicTour":"","principalName":"李先生","principalPhone":"4000350236","scenicLevel":"4A级","scenicType":"风景名胜"},
+				{"name":"毛泽东纪念馆","address":"长治市潞城市店上镇常庄村 ","lnglat":["112.68174648","37.67121897"],"monitorName":"毛泽东纪念馆","rtspUrlPc":"http://www.nju.gov.cn/web_info/scenic/video/Video.aspx?target=7.html","panoramicTour":"","principalName":"孙先生","principalPhone":"4000350236","scenicLevel":"3A级","scenicType":"文化遗产"}];
+				if (data && data.length > 0) {
+					for (var i = 0, l = data.length; i < l; i += 1) {
+					var val = data[i] || {};
+					var content=getInfoWindownContent(val);
+					this.mapFaca.addMarker({
+						lnglat: val.lnglat,
+						content: content,
+						isSetCenter:'1'//用于区分信息窗体出现后是否设置中心点0：否 1：是
+					});
+				}
+			}
+					
+
+		}
+		};
+		
+		$(document).ready(function () {
+			operPage.init();
+		});
+	</script>
+	
+</body>
+</html>

@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name=renderer content=webkit>
+		<title>游客结构分析（年龄、性别）</title>
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/world.js"></script>
+		<script type="text/javascript" src="js/china.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+		<script src="js/bmap.js"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0UqXGL98FSmi22w2Rl6HK56I"></script>
+		<script src="semantic/semantic.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+		
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/stucture_age.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+		<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css" />
+		<link rel="stylesheet" type="text/css" href="semantic/docs.css" />
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+
+		<script type="text/javascript">
+			var option_sex;
+			var option_jq_sex;
+			var sexChartPie;
+			var sexJqChartLine;
+			var currentIndex = -1;
+			/*			option_sex = {
+							title: {
+								text: '▌各旗县男女人数',
+								top: '4%',
+								left: '2%',
+								textStyle: {
+									color: '#EEB300',
+									fontSize: 15
+								},
+							},
+							tooltip: {
+								trigger: 'axis',
+								axisPointer: {
+									type: 'shadow'
+								}
+							},
+							legend: {
+								data: ['男', '女'],
+								top:'5%',
+								right:'20%',
+							},
+							grid: {
+								left: '3%',
+								right: '4%',
+								bottom: '3%',
+								containLabel: true
+							},
+							xAxis: {
+								type: 'value',
+								boundaryGap: [0, 0.01]
+							},
+							yAxis: {
+								type: 'category',
+								data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗'],
+							},
+							series: [{
+									name: '男',
+									type: 'bar',
+									data: [18203, 23489, 29034, 104970, 131744, 630230, 18203, 23489, 29034, 104970, 131744, 630230, 225157]
+								},
+								{
+									name: '女',
+									type: 'bar',
+									data: [19325, 23438, 31000, 121594, 134141, 681807, 19325, 23438, 31000, 121594, 134141, 681807, 475482]
+								}
+							]
+						};*/
+
+			option_jq_sex = {
+				title: {
+					text: '▌锡林浩特市内景区男女人数',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						type: 'shadow'
+					}
+				},
+				legend: {
+					data: ['男', '女'],
+					top: '5%',
+					right: '20%',
+				},
+				grid: {
+					left: '3%',
+					right: '7%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					name:"人数（人）",
+					type: 'value',
+					boundaryGap: [0, 0.01]
+				},
+				yAxis: {
+					type: 'category',
+					data: ['镶黄旗马文化博物馆', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '贝子庙'],
+				},
+				series: [{
+						name: '男',
+						type: 'bar',
+						data: [1823, 2389, 2934, 1470, 1144, 4023, 2820, 2348, 2903, 3497, 5374]
+					},
+					{
+						name: '女',
+						type: 'bar',
+						data: [1925, 2338, 3100, 1594, 1441, 4887, 2932, 2343, 3100, 3259, 5114]
+					}
+				]
+			};
+			$(document).ready(function() {
+				init();
+				$(".form_datetime").datetimepicker({
+					format: "yyyy-mm-dd hh:ii",
+					language: 'zh-CN',
+					autoclose: true,
+					todayBtn: true,
+					startDate: "2017-08-01 00:00",
+					minuteStep: 10,
+					todayHighlight: true,
+				});
+			});
+
+			function flesh() {
+				sexChartPie.setOption(option_sex);
+			}
+
+			function flesh2() {
+				sexJqChartLine.setOption(option_jq_sex);
+			}
+
+			function init() {
+
+				/*年龄分析折线图*/
+				var ageChartLine = echarts.init(document.getElementById('ageChartLine'));
+				option = {
+					title: {
+						text: '▌锡林浩特市各年龄阶段变化分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						top: 'bottom',
+						data: ['0-2岁', '3-5岁', '6-11岁', '12-17岁', '18-59岁', '60-79岁', '80-89岁', '90以上']
+
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '10%',
+						containLabel: true
+					},
+					toolbox: {
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+					},
+					yAxis: {
+						name:"人数（人）",
+						nameGap: 10,
+						type: 'value'
+					},
+					series: [{
+							name: '0-2岁',
+							type: 'line',
+							smooth:'true',
+							data: [1200, 1320, 1010, 1340, 900, 2300, 2100, 1200, 1320, 1010, 1340, 900]
+						},
+						{
+							name: '3-5岁',
+							type: 'line',
+							smooth:'true',
+							data: [2200, 1820, 1910, 2340, 2900, 3300, 3100, 2200, 1820, 1910, 2340, 2900]
+						},
+						{
+							name: '6-11岁',
+							type: 'line',
+							smooth:'true',
+							data: [1500, 2320, 2010, 1540, 2200, 1820, 1910, 2340, 2900, 1900, 3300, 4100]
+						},
+						{
+							name: '12-17岁',
+							type: 'line',
+							smooth:'true',
+							data: [3200, 3320, 3010, 3340, 2200, 1820, 1910, 2340, 2900, 3900, 3300, 3200]
+						},
+						{
+							name: '18-59岁',
+							type: 'line',
+							smooth:'true',
+							data: [2820, 1932, 1901, 2200, 1820, 1910, 2340, 1290, 1934, 1290, 1330, 1320]
+						},
+						{
+							name: '60-79岁',
+							type: 'line',
+							smooth:'true',
+							data: [1500, 2320, 2200, 1820, 1910, 2340, 2900, 2010, 1540, 1900, 3300, 4100]
+						},
+						{
+							name: '80-89岁',
+							type: 'line',
+							smooth:'true',
+							data: [3200, 3320, 2200, 1820, 1910, 2234, 1290, 3010, 3340, 3900, 3300, 3200]
+						},
+						{
+							name: '90以上',
+							type: 'line',
+							smooth:'true',
+							data: [1820, 2932, 2200, 1820, 1910, 2340, 2900, 3010, 1934, 3290, 2330,2320]
+						}
+					]
+				};
+
+				ageChartLine.setOption(option);
+				/*年龄分析饼图*/
+				var ageChartPie = echarts.init(document.getElementById('ageChartPie'));
+				option_age = {
+					title: {
+						text: '▌锡林浩特市各年龄阶段占比分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+
+					},
+					toolbox: {
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b}: {c} ({d}%)"
+					},
+					legend: {
+						orient: 'horizontal',
+						top: 'bottom',
+						data: ['0-2岁', '3-5岁', '6-11岁', '12-17岁', '18-59岁', '60-79岁', '80-89岁', '90岁以上']
+					},
+					series: [{
+						name: '年龄阶段',
+						type: 'pie',
+						radius: ['35%', '60%'],
+						avoidLabelOverlap: false,
+						label: {
+							normal: {
+								show: false,
+								position: 'center',
+								formatter: "{b}:\n ({d}%)",
+								textStyle: {
+									fontSize: '20',
+									fontWeight: 'bold'
+								}
+							},
+							emphasis: {
+								show: true,
+								textStyle: {
+									fontSize: '20',
+									fontWeight: 'bold'
+								}
+							}
+						},
+						labelLine: {
+							normal: {
+								show: true,
+
+							}
+						},
+						data: [{
+								value: 17000,
+								name: '0-2岁'
+							},
+							{
+								value: 25000,
+								name: '3-5岁'
+							},
+							{
+								value: 18000,
+								name: '6-11岁'
+							},
+							{
+								value: 10000,
+								name: '12-17岁'
+							},
+							{
+								value: 17000,
+								name: '18-59岁'
+							},
+							{
+								value: 25000,
+								name: '60-79岁'
+							},
+							{
+								value: 18000,
+								name: '80-89岁'
+							},
+							{
+								value: 10000,
+								name: '90岁以上'
+							},
+						]
+					}]
+				};
+
+				setInterval(function() {
+					var dataLen = option_age.series[0].data.length;
+					// 取消之前高亮的图形
+					ageChartPie.dispatchAction({
+						type: 'downplay',
+						seriesIndex: 0,
+						dataIndex: currentIndex
+					});
+					currentIndex = (currentIndex + 1) % dataLen;
+					// 高亮当前图形
+					ageChartPie.dispatchAction({
+						type: 'highlight',
+						seriesIndex: 0,
+						dataIndex: currentIndex
+					});
+					// 显示 tooltip
+					//					touristSourceChartPie.dispatchAction({
+					//						type: 'showTip',
+					//						seriesIndex: 0,
+					//						dataIndex: currentIndex
+					//					});
+				}, 1000);
+				ageChartPie.setOption(option_age);
+
+				/*性别分析饼图*/
+				sexChartPie = echarts.init(document.getElementById('sexChartPie'));
+				option2 = {
+						title: {
+							text: '▌锡林浩特市男女比例',
+							top: '4%',
+							left: '2%',
+							textStyle: {
+								color: '#EEB300',
+								fontSize: 15
+							},
+
+						},
+						tooltip: {
+							trigger: 'item',
+							formatter: "{a} <br/>{b} : {c} ({d}%)"
+						},
+						series: [{
+									name: '人数',
+									type: 'pie',
+									radius: '55%',
+									center: ['50%', '60%'],
+									label: {
+										normal: {
+											show: true,
+											position: 'outside',
+											formatter: "{b} ({d}%)",
+											textStyle: {
+												fontSize: 18,
+											},
+										}
+									},
+											data: [{
+													value: 9350,
+													name: '男'
+												},
+												{
+													value: 9100,
+													name: '女'
+												},
+											],
+											itemStyle: {
+												emphasis: {
+													shadowBlur: 10,
+													shadowOffsetX: 0,
+													shadowColor: 'rgba(0, 0, 0, 0.5)'
+												}
+											}
+										}]
+								};
+								sexChartPie.setOption(option2);
+
+								/*锡林浩特市内某个景点性别分析*/
+								sexJqChartLine = echarts.init(document.getElementById('sexJqChartLine'));
+								sexJqChartLine.setOption(option_jq_sex);
+								sexJqChartLine.on('click', function(parmas) {
+										option3 = {
+											title: {
+												text: '▌贝子庙男女比例',
+												top: '4%',
+												left: '2%',
+												textStyle: {
+													color: '#EEB300',
+													fontSize: 15
+												},
+
+											},
+											tooltip: {
+												trigger: 'item',
+												formatter: "{a} <br/>{b} : {c} ({d}%)"
+											},
+											series: [{
+													name: '人数',
+													type: 'pie',
+													radius: '55%',
+													center: ['50%', '60%'],
+													label: {
+														normal: {
+															show: true,
+															position: 'outside',
+															formatter: "{b} ({d}%)",
+															textStyle: {
+																fontSize: 18,
+															},
+														}
+													},
+															data: [{
+																	value: 5374,
+																	name: '男'
+																},
+																{
+																	value: 5114,
+																	name: '女'
+																},
+															],
+															itemStyle: {
+																emphasis: {
+																	shadowBlur: 10,
+																	shadowOffsetX: 0,
+																	shadowColor: 'rgba(0, 0, 0, 0.5)'
+																}
+															}
+														}]
+												};
+												sexJqChartLine.setOption(option3, true);
+											});
+
+										/*性别分析折线图*/
+										var sexChartLine = echarts.init(document.getElementById('sexChartLine'));
+										var option = {
+											title: {
+												text: '▌锡林浩特市性别变化分析',
+												top: '4%',
+												left: '2%',
+												textStyle: {
+													color: '#EEB300',
+													fontSize: 15
+												},
+											},
+											tooltip: {
+												trigger: 'axis'
+											},
+											legend: {
+												top: 'bottom',
+												data: ['男', '女']
+
+											},
+											grid: {
+												left: '3%',
+												right: '4%',
+												bottom: '10%',
+												containLabel: true
+											},
+											toolbox: {
+												feature: {
+													saveAsImage: {}
+												}
+											},
+											xAxis: {
+												type: 'category',
+												boundaryGap: false,
+												data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+											},
+											yAxis: {
+												name:"人数（人）",
+												nameGap: 10,
+												type: 'value'
+											},
+											series: [{
+													name: '男',
+													type: 'line',
+													smooth:'true',
+													data: [7200, 7320, 6010, 7340, 6900, 9300, 9100, 6900, 6390, 6010, 7340, 9350]
+												},
+												{
+													name: '女',
+													type: 'line',
+													smooth:'true',
+													data: [6200, 6820, 6910, 9340, 6900, 5300, 7100, 9200, 6820, 7910, 7340, 9110]
+												}
+											]
+										};
+
+										sexChartLine.setOption(option);
+									}
+		</script>
+	</head>
+
+	<body>
+		<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">年龄、性别分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					<li>
+						<a href="structure_total.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+			</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 padding-bottom10">
+					<div class="row border-color">
+						<div class="row">
+							<div class="city">全盟游客性别比例</div>
+						</div>
+						<div class="row">
+							<div class="col-md-1">
+								<div class="bgd-img">
+								</div>
+							</div>
+							<div class="col-md-5 padding-left40"><span class="num padding-top5 color_man">52.5% </span><span class="num">345,845 </span>人</div>
+							<div class="col-md-1">
+								<div class="bgd-img2">
+								</div>
+							</div>
+							<div class="col-md-5 padding-left40"><span class="num padding-top5 color_fman">47.5% </span><span class="num">312,907 </span>人</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6 padding-bottom10">
+					<div class="row border-color">
+						<div class="row">
+							<div class="city">全盟游客年龄比例</div>
+						</div>
+						<div class="row">
+							<div class="col-md-1">
+								<div class="bgd-img3">
+								</div>
+							</div>
+							<div class="col-md-3 padding-left40"><span class="num padding-top5 color_green">78.7% </span></div>
+							<div class="col-md-1">
+								<div class="bgd-img5">
+								</div>
+							</div>
+							<div class="col-md-3 padding-left40"><span class="num padding-top5 color_blue">11.2% </span></div>
+							<div class="col-md-1">
+								<div class="bgd-img4">
+								</div>
+							</div>
+							<div class="col-md-3 padding-left40"><span class="num padding-top5 color_yellow">10.1% </span></div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="row padding-leftright5 container_div">
+				<div class="row select">
+					<span class="times_div">
+						<span class="times">选择旗县：
+							<!--<input type="text" readonly="" value="锡林浩特市" size="16" class="imput_sigle">&nbsp;&nbsp;-->
+						<select class="ui dropdown">
+							<option value="1">锡林浩特市</option>
+							<option value="2">二连浩特市</option>
+							<option value="3">乌拉盖管理区</option>
+							<option value="4">多伦县</option>
+							<option value="1">正蓝旗</option>
+							<option value="2">太仆寺旗</option>
+							<option value="3">正镶白旗</option>
+							<option value="4">镶黄旗</option>
+							<option value="1">苏尼特左旗</option>
+							<option value="2">苏尼特右旗</option>
+							<option value="3">阿巴嘎旗</option>
+							<option value="4">西乌珠穆沁旗</option>
+					</select>&nbsp;&nbsp;&nbsp;&nbsp;	
+						</span>
+					<span class="times">时间日期：&nbsp;&nbsp;
+						<span class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
+							<input size="16" type="text" value="2016-01-01" readonly>
+							<span class="add-on add-on-remove"><i class="icon-remove"></i></span>
+							<span class="add-on"><i class="icon-calendar"></i></span>
+						</span>
+					</span>
+					<span class="times">&nbsp;&nbsp;&nbsp;至：
+						<span class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
+							<input size="16" type="text" value="2016-12-31" readonly>
+							<span class="add-on add-on-remove"><i class="icon-remove"></i></span>
+							<span class="add-on"><i class="icon-calendar"></i></span>
+						</span>
+					</span>
+					<span>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" class="search_btn">查询</button>
+					</span>
+					</span>
+					<!--<a id="search" name="search" href="javascript:void(0)" onclick="doSearch()">&nbsp;&nbsp;查询</a>-->
+				</div>
+				<div class="row select_div">
+					<div class="row">
+						<div class="col-md-6 padding-top0">
+							<div id="ageChartLine"></div>
+						</div>
+						<div class="col-md-6 padding-top0">
+							<div id="ageChartPie"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6 padding-top0">
+							<div id="sexChartLine"></div>
+						</div>
+						<div class="col-md-6 padding-top0">
+							<div id="sexChartPie"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div id="sexJqChartLine"></div>
+						<button onclick="flesh2()" id="return_button">返回</button>
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</body>
+
+</html>

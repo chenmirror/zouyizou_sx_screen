@@ -1,0 +1,56 @@
+.container {
+	padding: 10px 10px 0 10px;
+	margin: 0;
+	width: 100%;
+	background-color: #eff1ff;
+}
+
+.row {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+}
+
+.widthheight {
+	/*width: 100%;*/
+	height: 500px;
+}
+.special_height{
+	height: 245px;
+}
+/*tab标签*/
+.tab-content>.tab-pane,
+.pill-content>.pill-pane {
+	display: block;
+	height: 0;
+	overflow-y: hidden;
+}
+
+.tab-content>.active,
+.pill-content>.active {
+	height: auto;
+}
+.tab-pane{
+	padding: 0px 5px 0px 5px;
+}
+.charts-style{
+	/*border: 1px solid #EBEBEB;*/
+	border-radius: 4px;
+	background-color: white!important;
+	/*padding:5px 5px 10px 5px;*/
+}
+.div-padding{
+	padding:0px 0px 10px 10px;
+}
+.div-padding-year-left{
+	padding:0px 5px 10px 0px;
+}
+.div-padding-year-mid{
+	padding:0px 5px 10px 5px;
+}
+.div-padding-year-right{
+	padding:0px 0px 10px 5px;
+}
+.margin-top10{
+	margin-top: 10px;
+}

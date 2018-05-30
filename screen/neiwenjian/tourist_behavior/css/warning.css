@@ -1,0 +1,50 @@
+.container {
+	padding: 10px 0px 0 0px!important;
+	margin: 0;
+	width: 100%;
+	background-color: #eff1ff;
+}
+
+.row {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+}
+
+#hotmapChart {
+	width: 50%;
+	height: 570px;
+	border: 4px solid #1F3247;
+}
+
+.widthheight {
+	/*width: 100%;*/
+	height: 500px;
+}
+
+.mapwidthheight {
+	width: 100%;
+	height: 500px;
+}
+.special_height{
+	height: 245px;
+}
+.mapstyle{
+	border:#ccc solid 1px;
+	font-size:12px;
+	margin-left: 15px;
+}
+/*th {
+	border:1px solid black !important;
+}
+td{
+	border:1px solid black !important;
+}*/
+.relation{
+	/*width: 100%;*/
+	width: 500px;
+	height: 500px;
+	border-radius: 4px;
+	margin-bottom: 10px;
+	/*border-top: 5px solid #EFF1FF;*/
+}

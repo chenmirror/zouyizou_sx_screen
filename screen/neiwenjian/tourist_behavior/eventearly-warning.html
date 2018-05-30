@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<title>游客行为分析-突发事件预警</title>
+		<meta name=renderer content=webkit>
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css " rel="stylesheet ">
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css " rel="stylesheet ">
+		<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+		<link href="css/bootstrap-table.min.css" rel="stylesheet ">
+		<link href="css/navstyle.css" rel="stylesheet " />
+		<script src="js/bootstrap-table.min.js"></script>
+		<script src="js/bootstrap-table-zh-CN.js"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="js/echarts.js"></script>
+		<!--<script src="js/china.js"></script>-->
+		<!--<script src="js/xilinguolemeng.js"></script>-->
+		<link rel="stylesheet" href="css/warning.css">
+		<!--引用百度地图API-->
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0BHOFVd4GhCNDquSmn5RIZi0OB4L0WGw"></script>
+		<script type="text/javascript" src="../tourist_preference/js/dataTool.js"></script>
+		<!--<script type="text/javascript" src="http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js"></script>-->
+	</head>
+
+	<body>
+		<div class="row" style="background-color: #3f3d3e;padding: 6px 10px;">
+			<div class="navbar-header" style="padding-left: 15px;">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="nav_title">游客轨迹分析</span>
+			</div>
+			<div class="navbar-collapse collapse nav_title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist" style="padding-bottom: 0px;">
+					<li style="margin-bottom: -5px;margin-right: 20px;">
+						<a href="tourbehavior.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row container">
+			<!--<div id="hotmapChart" class="col-xs-7 col-lg-7 col-md-7">
+
+			</div>-->
+			<!--百度地图容器-->
+			<div id="map" class="col-xs-7 col-lg-7 col-md-7 widthheight mapstyle">
+
+			</div>
+			<!--<div style="width:700px;height:550px;border:#ccc solid 1px;font-size:12px" id="map"></div>-->
+			<div class="col-md-5 col-xs-5 col-sm-5 relation" id="relation" style="margin-left: 10px;"></div>
+		</div>
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var relation = echarts.init(document.getElementById("relation"));
+
+				relation.showLoading();
+				$.get('./xml/yibingles-miserables.gexf', function(xml) {
+					relation.hideLoading();
+
+					var graph = echarts.dataTool.gexf.parse(xml);
+					var categories = [];
+					categories[0] = {
+						name: "卫生局"
+					};
+					categories[1] = {
+						name: "医院"
+					};
+					categories[2] = {
+						name: "交通局"
+					};
+					categories[3] = {
+						name: "酒店/旅馆"
+					};
+					categories[4] = {
+						name: "景点"
+					};
+					categories[5] = {
+						name: "疾病信息"
+					};
+					categories[6] = {
+						name: "接触人群"
+					};
+					graph.nodes.forEach(function(node) {
+						node.itemStyle = null;
+						node.value = node.symbolSize;
+						node.symbolSize /= 1.5;
+						node.label = {
+							normal: {
+								show: node.symbolSize > 10
+							}
+						};
+						node.category = node.attributes.modularity_class;
+					});
+					option = {
+						backgroundColor: 'white',
+						title: {
+							text: '▌疫情防控关系图',
+							top: '4%',
+							left: '2%',
+							textStyle: {
+								color: '#EEB300',
+								fontSize: 15
+							}
+						},
+						tooltip: {},
+//						legend: [{
+//							// selectedMode: 'single',
+//							data: categories.map(function(a) {
+//								console.log(a);
+//								return a.name;
+//							}),
+//							orient: 'horizontal',
+//							//						top: 'bottom',
+//							top: 'bottom',
+//						}],
+						animationDurationUpdate: 1500,
+						animationEasingUpdate: 'quinticInOut',
+						series: [{
+							name: '疫病关系图',
+							type: 'graph',
+							layout: 'circular',
+							circular: {
+								rotateLabel: true
+							},
+							data: graph.nodes,
+							links: graph.links,
+							categories: categories,
+							roam: 'scale',
+							bottom:'1%',
+							right:'1%',
+							label: {
+								normal: {
+									position: 'right',
+									formatter: '{b}'
+								}
+							},
+							lineStyle: {
+								normal: {
+									color: 'source',
+									curveness: 0.3
+								}
+							}
+						}]
+					};
+
+					relation.setOption(option);
+				}, 'xml');
+
+		
+//				var relationChart = echarts.init(document.getElementById('relationChart'));
+//				var renderData = {
+//					curNode: "1234code5826",
+//					edges: [{
+//							source: "卫生局",
+//							target: "交通局"
+//						},
+//						{
+//							source: "卫生局",
+//							target: "酒店"
+//						},
+//						{
+//							source: "卫生局",
+//							target: "景点"
+//						},
+//						{
+//							source: "卫生局",
+//							target: "医院"
+//						},
+//						{
+//							source: "酒店",
+//							target: "接触人群"
+//						},
+//						{
+//							source: "景点",
+//							target: "接触人群"
+//						},
+//						{
+//							source: "交通局",
+//							target: "来往地方"
+//						},
+//						{
+//							source: "景点",
+//							target: "景点位置"
+//						},
+//						{
+//							source: "医院",
+//							target: "疾病信息"
+//						},
+//					],
+//					nodes: [{
+//							name: "卫生局"
+//						},
+//						{
+//							name: "交通局"
+//						},
+//						{
+//							name: "酒店"
+//						},
+//						{
+//							name: "景点"
+//						},
+//						{
+//							name: "医院"
+//						},
+//						{
+//							name: "接触人群"
+//						},
+//						{
+//							name: "来往地方"
+//						},
+//						{
+//							name: "景点位置"
+//						},
+//						{
+//							name: "疾病信息"
+//						}
+//					]
+//				}
+//				var relationoption = {
+//					tooltip: {
+//						show: false
+//					},
+//					series: [{
+//						type: 'graph',
+//						layout: 'force',
+//						symbol: 'path://M19.300,3.300 L253.300,3.300 C262.136,3.300 269.300,10.463 269.300,19.300 L269.300,21.300 C269.300,30.137 262.136,37.300 253.300,37.300 L19.300,37.300 C10.463,37.300 3.300,30.137 3.300,21.300 L3.300,19.300 C3.300,10.463 10.463,3.300 19.300,3.300 Z',
+//						symbolSize: [80, 30],
+//						symbolRotate: 0,
+//						roam: false,
+//						draggable: true,
+//						hoverAnimation: true,
+//						focusNodeAdjacency: true,
+//						edgeSymbol: ['none', 'none'],
+//						edgeSymbolSize: [10, 10],
+//						markPoint: {
+//							symbol: "triangle",
+//							symbolSize: 120
+//						},
+//						itemStyle: {
+//							normal: {
+//								color: "#2d8cf0"
+//							}
+//						},
+//						lineStyle: {
+//							normal: {
+//								opacity: 1,
+//								width: 2,
+//								curveness: 0.5,
+//								color: "#19be6b"
+//							}
+//						},
+//						// 圆圈内的文字
+//						label: {
+//							normal: {
+//								show: true,
+//								textStyle: {
+//									color: "#fff"
+//								}
+//							}
+//						},
+//						force: {
+//							repulsion: 800
+//						},
+//						nodes: renderData.nodes,
+//						edges: renderData.edges
+//					}]
+//				};
+				//				relationChart.setOption(relationoption);
+
+				var yiqingContent = "<table class='table table-border'><thead><tr><th>疫情种类</th><th>病名</th><th>发病数</th><th>死亡数</th><th>传播方式</th><th>预防措施</th></tr></thead>" +
+					"<tbody><tr><td>丙类</td><td>手足口病</td><td>1231</td><td>12</td><td>消化道、呼吸道、接触</td><td>保持家庭环境卫生，居室要经常通风，勤晒衣被。</td></tr></tbody></table>";
+				var baoliContent = "<table class='table table-border'><thead><tr><th>事件类型</th><th>参与人数</th><th>危险等级</th><th>是否可控</th><th>安保人数</th><th>预防措施</th></tr></thead>" +
+					"<tbody><tr><td>恐怖袭击</td><td>4人</td><td>二级</td><td>可控</td><td>12人</td><td>要保持镇静，紧急判断自身位置和逃生方向。</td></tr></tbody></table>";
+				var zhiliuContent = "<table class='table table-border'><thead><tr><th>滞留原因</th><th>承载能力</th><th>滞留人数</th><th>危险等级</th><th>是否可控</th><th>安保人数</th></tr></thead>" +
+					"<tbody><tr><td>天气原因</td><td>1000人</td><td>460人</td><td>5级</td><td>不可控</td><td>10人</td></tr></tbody></table>";
+
+				//				var sContent = "<h4 style='margin:0 0 5px 0;padding:0.2em 0'>贝子庙</h4>" +
+				//					"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'>景区密度：1500人</p>" +
+				//					"<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'>景区密度：1500人</p>" +
+				//					"</div>";				
+				//创建和初始化地图函数：
+				function initMap() {
+					createMap(); //创建地图
+					setMapEvent(); //设置地图事件
+					addMapControl(); //向地图添加控件
+					addMapOverlay(); //向地图添加覆盖物
+				}
+
+				function createMap() {
+					map = new BMap.Map("map", {
+						mapType: BMAP_HYBRID_MAP
+					});
+					//					map.centerAndZoom(new BMap.Point(116.054273, 43.939407), 15);
+					map.centerAndZoom("锡林郭勒盟", 13); // 初始化地图，设置中心点坐标和地图级别
+					map.enableScrollWheelZoom(); // 允许滚轮缩放
+
+					function setGradient() {
+
+						var gradient = {};
+						var colors = document.querySelectorAll("input[type='color']");
+						colors = [].slice.call(colors, 0);
+						colors.forEach(function(ele) {
+							gradient[ele.getAttribute("data-key")] = ele.value;
+						});
+						heatmapOverlay.setOptions({
+							"gradient": gradient
+						});
+					}
+					//判断浏览区是否支持canvas
+					function isSupportCanvas() {
+						var elem = document.createElement('canvas');
+						return !!(elem.getContext && elem.getContext('2d'));
+					}
+				}
+
+				function setMapEvent() {
+					map.enableScrollWheelZoom();
+					map.enableKeyboard();
+					map.enableDragging();
+					map.enableDoubleClickZoom()
+				}
+
+				function addClickHandler(target, window) {
+					target.addEventListener("click", function() {
+						target.openInfoWindow(window);
+					});
+				}
+
+				function addMapOverlay() {}
+				//向地图添加控件
+				function addMapControl() {
+					var scaleControl = new BMap.ScaleControl({
+						anchor: BMAP_ANCHOR_BOTTOM_LEFT
+					});
+					scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+					map.addControl(scaleControl);
+					var navControl = new BMap.NavigationControl({
+						anchor: BMAP_ANCHOR_TOP_LEFT,
+						type: BMAP_NAVIGATION_CONTROL_LARGE
+					});
+					map.addControl(navControl);
+					var overviewControl = new BMap.OverviewMapControl({
+						anchor: BMAP_ANCHOR_BOTTOM_RIGHT,
+						isOpen: true
+					});
+					map.addControl(overviewControl);
+				}
+				var map;
+				initMap();
+
+				//贝子庙
+				var json_data1 = [
+					[116.053422, 43.939525],
+					[111.93747, 43.65645],
+					[116.076419, 43.957387]
+				];
+				var pointArray1 = new Array();
+				//		var myIcon1 = new BMap.Icon("http://lbsyun.baidu.com/jsdemo/img/fox.gif", new BMap.Size(300, 157));
+				var myIcon1 = new BMap.Icon("img/yibingfangkong.png", new BMap.Size(29, 34));
+				for(var i = 0; i < json_data1.length; i++) {
+					var marker1 = new BMap.Marker(new BMap.Point(json_data1[i][0], json_data1[i][1]), {
+						icon: myIcon1
+					}); // 创建点
+					var infoWindow = new BMap.InfoWindow(yiqingContent); // 创建信息窗口对象
+					map.addOverlay(marker1); //增加点
+					pointArray1[i] = new BMap.Point(json_data1[i][0], json_data1[i][1]);
+					marker1.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+					marker1.addEventListener("click", attribute);
+				}
+				map.setViewport(pointArray1);
+				//获取覆盖物位置
+				function attribute(e) {
+					this.openInfoWindow(infoWindow);
+					//					//图片加载完毕重绘infowindow
+					//					document.getElementById('imgDemo').onload = function() {
+					//						infoWindow.redraw(); //防止在网速较慢，图片未加载时，生成的信息框高度比图片的总高度小，导致图片部分被隐藏
+					//
+					//					}
+					//					relationChart.setOption(relationoption);
+				}
+				//  116.080012,43.928515 生态植物园  116.061399,43.935059博物馆 116.07243,43.951182 清真寺
+
+				var json_data2 = [
+					[116.080012, 43.928515],
+					[116.061399, 43.935059],
+					[116.07243, 43.951182]
+					//					[113.63, 43.863],
+					//					[116.061399, 43.935059],
+					//					[117.6, 44.58]
+				];
+				var pointArray2 = new Array();
+				var myIcon2 = new BMap.Icon("img/baolishijian.png", new BMap.Size(29, 33));
+				for(var i = 0; i < json_data2.length; i++) {
+					var marker2 = new BMap.Marker(new BMap.Point(json_data2[i][0], json_data2[i][1]), {
+						icon: myIcon2
+					}); // 创建点
+					var infoWindow1 = new BMap.InfoWindow(baoliContent); // 创建信息窗口对象
+					map.addOverlay(marker2); //增加点
+					pointArray2[i] = new BMap.Point(json_data2[i][0], json_data2[i][1]);
+					marker2.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+					marker2.addEventListener("click", attribute1);
+				}
+				map.setViewport(pointArray2);
+
+				function attribute1(e) {
+					this.openInfoWindow(infoWindow1);
+				}
+
+				var json_data3 = [
+					[116.089355, 43.944043],
+					[116.119753, 43.97462],
+					[116.47, 42.18] //旅游度假村
+				];
+				var pointArray3 = new Array();
+				var myIcon3 = new BMap.Icon("img/renqunzhiliu.png", new BMap.Size(29, 33));
+				for(var i = 0; i < json_data3.length; i++) {
+					var marker3 = new BMap.Marker(new BMap.Point(json_data3[i][0], json_data3[i][1]), {
+						icon: myIcon3
+					}); // 创建点
+					var infoWindow2 = new BMap.InfoWindow(zhiliuContent); // 创建信息窗口对象
+					map.addOverlay(marker3); //增加点
+					pointArray3[i] = new BMap.Point(json_data3[i][0], json_data3[i][1]);
+					marker3.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+					marker3.addEventListener("click", attribute2);
+				}
+				map.setViewport(pointArray3);
+
+				function attribute2(e) {
+					this.openInfoWindow(infoWindow2);
+				}
+				//		var local = new BMap.LocalSearch(map, {
+				//			renderOptions: {
+				//				map: map
+				//			}
+				//		});
+				//		local.searchInBounds("景区", map.getBounds());
+				//
+				//		map.addEventListener("dragend", function() {
+				//			map.clearOverlays();
+				//			local.searchInBounds("景区", map.getBounds());
+				//		});
+			})
+		</script>
+
+	</body>
+
+	<!--//				var hotmapChart = echarts.init(document.getElementById('hotmapChart'));
+//				$.getJSON('js/xilinguolemeng.json', function(json) {
+//					echarts.registerMap('xilinguolemeng', json);
+//					hotmapChart.setOption({
+//						geo: [{
+//							map: 'xilinguolemeng',
+//							itemStyle: {
+//								normal: {
+//									borderWidth: 2,
+//									shadowBlur: 50,
+//									shadowColor: 'rgba(0, 0, 0, 0.2)'
+//								}
+//							}
+//						}, {
+//							map: 'xilinguolemeng',
+//							itemStyle: {
+//								normal: {
+//									borderColor: '#aaa'
+//								}
+//							}
+//						}]
+//					});
+//				});
+//				var geoCoordMap = {
+//					'锡林浩特市': [114.951536, 44.03109],
+//					'二连浩特市': [111.93747, 43.65645],
+//					'乌拉盖管理区': [118.830294, 45.714463],
+//					'苏尼特左旗': [113.63, 43.863],
+//					'苏尼特右旗': [112.65, 42.75],
+//					'东乌珠穆沁旗': [116.97, 45.52],
+//					'西乌珠穆沁旗': [117.6, 44.58],
+//					'太仆寺旗': [115.28, 41.9],
+//					'镶黄旗': [113.83, 42.23],
+//					'正镶白旗': [115.0, 42.3],
+//					'正蓝旗': [116.0, 42.25],
+//					'多伦县': [116.47, 42.18],
+//					'阿巴嘎旗': [114.951536, 44.03109],
+//				};
+//
+//				var convertData = function(data) {
+//					var res = [];
+//					for(var i = 0; i < data.length; i++) {
+//						var geoCoord = geoCoordMap[data[i].name];
+//						if(geoCoord) {
+//							res.push(geoCoord.concat(data[i].value));
+//						}
+//					}
+//					return res;
+//				};
+//
+//				var hotmapoption = {
+//					title: {
+//						text: '锡林郭勒盟突发事件热力分布',
+//						left: 'center',
+//						textStyle: {
+//							color: '#fff'
+//						}
+//					},
+//					//					backgroundColor: '#404a59',
+//					visualMap: {
+//						min: 0,
+//						max: 5,
+//						splitNumber: 5,
+//						inRange: {
+//							color: ['#d94e5d', '#eac736', '#50a3ba'].reverse()
+//						},
+//						textStyle: {
+//							color: '#fff'
+//						}
+//					},
+//					geo: {
+//						map: 'xilinguolemeng',
+//						label: {
+//							normal: {
+//								show: true
+//							},
+//							emphasis: {
+//								show: false
+//							}
+//						},
+//						roam: true,
+//						itemStyle: {
+//							normal: {
+//								areaColor: '#323c48',
+//								borderColor: '#111'
+//							},
+//							emphasis: {
+//								areaColor: '#2a333d'
+//							}
+//						}
+//					},
+//					series: [{
+//						name: 'AQI',
+//						type: 'heatmap',
+//						coordinateSystem: 'geo',
+//						data: convertData([{
+//								name: '苏尼特左旗',
+//								value: 80
+//							},
+//							{
+//								name: '苏尼特右旗',
+//								value: 98
+//							},
+//							{
+//								name: '东乌珠穆沁旗',
+//								value: 20
+//							},
+//							{
+//								name: '西乌珠穆沁旗',
+//								value: 12
+//							},
+//							{
+//								name: '太仆寺旗',
+//								value: 70
+//							},
+//							{
+//								name: '镶黄旗',
+//								value: 60
+//							},
+//							{
+//								name: '正镶白旗',
+//								value: 50
+//							},
+//							{
+//								name: '正蓝旗',
+//								value: 40
+//							},
+//							{
+//								name: '多伦县',
+//								value: 30
+//							},
+//							{
+//								name: '乌拉盖管理区',
+//								value: 30
+//							},
+//							{
+//								name: '阿巴嘎旗',
+//								value: 10
+//							}
+//
+//						])
+//					}]
+//				};
+//				hotmapChart.setOption(hotmapoption);-->
+
+</html>

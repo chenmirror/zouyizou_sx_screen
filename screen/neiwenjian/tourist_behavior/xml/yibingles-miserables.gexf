@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf xmlns="http://www.gexf.net/1.2draft" version="1.2" xmlns:viz="http://www.gexf.net/1.2draft/viz" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd">
+  <meta lastmodifieddate="2014-01-30">
+    <creator>Gephi 0.8.1</creator>
+    <description></description>
+  </meta>
+  <graph defaultedgetype="undirected" mode="static">
+    <attributes class="node" mode="static">
+      <attribute id="modularity_class" title="Modularity Class" type="integer"></attribute>
+    </attributes>
+    <nodes>
+      <node id="0" label="卫生局">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="65.685715"></viz:size>
+        <viz:position x="-266.82776" y="299.6904" z="0.0"></viz:position>
+         <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="1" label="医院">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="64.0"></viz:size>
+        <viz:position x="-215.08344" y="230.8853" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="3" label="酒店">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="39.485714"></viz:size>
+        <viz:position x="-212.76357" y="245.29176" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="2" label="交通局">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="17"></viz:size>
+        <viz:position x="-242.82404" y="235.26283" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+     <node id="4" label="景点">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="24"></viz:size>
+        <viz:position x="-242.82404" y="235.26283" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+       <node id="5" label="疾病信息">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="44"></viz:size>
+        <viz:position x="-242.82404" y="235.26283" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+      <node id="6" label="接触人群">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="51"></viz:size>
+        <viz:position x="-242.82404" y="235.26283" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+       <node id="7" label="来往地方">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="23"></viz:size>
+        <viz:position x="-242.82404" y="235.26283" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+       <node id="8" label="详情">
+        <attvalues>
+          <attvalue for="modularity_class" value="0"></attvalue>
+        </attvalues>
+        <viz:size value="33"></viz:size>
+        <viz:position x="-242.82404" y="235.26283" z="0.0"></viz:position>
+        <viz:color r="236" g="81" b="72"></viz:color>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="0" source="0" target="1">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="1" source="0" target="2" weight="8.0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="2" source="0" target="3" weight="10.0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="3" source="0" target="4" weight="6.0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="4" source="3" target="5" weight="6.0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="5" source="3" target="6" weight="6.0">
+        <attvalues></attvalues>
+      </edge>
+      <edge id="6" source="4" target="6" weight="6.0">
+        <attvalues></attvalues>
+      </edge>
+       <edge id="7" source="4" target="8" weight="6.0">
+        <attvalues></attvalues>
+      </edge>
+       <edge id="8" source="2" target="7" weight="6.0">
+        <attvalues></attvalues>
+      </edge>
+    </edges>
+  </graph>
+</gexf>

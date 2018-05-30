@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name=renderer content=webkit>
+	    <script type="text/javascript" src="js/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="../tour_crowd/js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="../tour_crowd/js/bootstrap-table-zh-CN.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+		<link rel="stylesheet" href="css/youkexiaofei.css">
+		<link rel="stylesheet" href="../tour_crowd/css/passengerflow.css" />
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<title>游客消费偏好分析</title>
+		<style type="text/css">
+	.row{
+		    padding: 0;
+    margin: 0;
+    width: 100%;
+	}
+			.nav-tabs {
+	padding-left: 60px;
+	padding-bottom: 2px;
+	border-bottom: 0px;
+	    position: relative;
+    top: 35px;
+}
+.title_ul{
+	margin-top: 29px;
+}
+.nav {
+    margin-bottom: 0px;
+}
+li a {
+	color: white;
+	background-color: #3E4955;
+	/*border: 5px solid ghostwhite;*/
+	font-size: 14px;
+}
+.times {
+	color: white;
+}
+
+.times_div {
+	float: right;
+	padding: 10px;
+	  margin-top: 6px;
+	margin-right: 30px;
+	/*border: 1px solid #759AA0;*/
+	display: inline;
+	padding-top: 0px;
+    /*margin-top: 6px;*/
+    padding-bottom: 0px;
+}
+
+.title {
+    margin-top: 29px;
+    float:right;
+    margin-left: 10px;
+    color: white;
+    font-size: 24px;
+    /*font-weight: bold;*/
+}
+.navbar-collapse{
+	padding-right: 5px!important;
+}
+img{
+	margin-left: 5px;
+    margin-top: 5px;
+}
+	
+	</style>
+	</head>
+	<script>
+		
+		function change_qx() {;
+				$("#jq_button").css("background-color","white");
+				$("#jq_button").css("color","#027AE0");
+				$("#qx_button").css("background-color","#027AE0");
+				$("#qx_button").css("color","white");
+			}
+			
+			function change_jq() {
+				$("#jq_button").css("background-color","#027AE0");
+				$("#jq_button").css("color","white");
+				$("#qx_button").css("background-color","white");
+				$("#qx_button").css("color","#027AE0");
+			}
+		$(document).ready(function() {
+			
+			
+			
+			var xiaofei_guonei=echarts.init(document.getElementById("xiaofei_guonei"));
+			
+			var option = {
+			    title:{
+			        text: '▌国内主要城市游客消费偏好',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					}
+			    },
+			    tooltip : {
+			        trigger: 'axis',
+			        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+			            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			        }
+			    },
+			    legend: {
+			        orient: 'horizontal',
+									//						top: 'bottom',
+					bottom: '5%',
+			        data:['酒店', '景区','餐饮','娱乐','购物','交通']
+			    },
+			    grid: {
+			    	top:'20%',
+			        left: '2%',
+			        right: '4%',
+			        bottom: '10%',
+			        containLabel: true
+			    },
+			    xAxis : [
+			        {
+			            data : ['北京','上海','杭州','深圳','广州','南京','苏州']
+			        }
+			    ],
+			    yAxis : [
+			        {
+			            type : 'value',
+			            axisLabel: {
+										textStyle: {
+											color: "#646464"
+										}
+									},
+									splitLine: {
+										show: true,
+										lineStyle: {
+											// 使用深浅的间隔色
+											color: ['#d9d9d9'],
+											type: 'dashed',
+										}
+									},
+									axisLine: {
+										lineStyle: {
+											color: '#999999'
+										}
+									},
+									name:"百分比"
+			        }
+			    ],
+			    series : [
+			        {
+			            name:'酒店',
+			            type:'bar',
+			            data:[20, 10, 21, 10, 20, 10, 20],
+			        },
+			        {
+			            name:'景区',
+			            type:'bar',
+			            data:[10, 10, 10, 13, 12, 23, 21],
+			        },
+			        {
+			            name:'餐饮',
+			            type:'bar',
+			            data:[15, 18, 19, 23, 10,12, 15],
+			        },
+			        {
+			            name:'娱乐',
+			            type:'bar',
+			            data:[20, 10, 19, 23, 29, 12, 10],
+			        },
+			        {
+			            name:'购物',
+			            type:'bar',
+			            data:[15, 20, 21, 14, 19, 13, 21],
+			        },
+			        {
+			            name:'交通',
+			            type:'bar',
+			            data:[20, 32, 10,17, 10, 30, 13],
+			        }
+			    ]
+			};
+
+			xiaofei_guonei.setOption(option);
+			
+			var xiaofei_guowai = echarts.init(document.getElementById("xiaofei_guowai"));
+			
+			var option = {
+			    title:{
+			        text: '▌主要囯家游客消费偏好',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					}
+			    },
+			    tooltip : {
+			        trigger: 'axis',
+			        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+			            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			        }
+			    },
+			    legend: {
+			        orient: 'horizontal',
+									//						top: 'bottom',
+					bottom: '5%',
+			        data:['酒店', '景区','餐饮','娱乐','购物','交通']
+			    },
+			    grid: {
+			    	top:'20%',
+			        left: '3%',
+			        right: '4%',
+			        bottom: '10%',
+			        containLabel: true
+			    },
+			    xAxis : [
+			        {
+			            data : ['英国', '美国','俄罗斯','法国','德国','日本','韩国']
+			        }
+			    ],
+			    yAxis : [
+			        {
+			            type : 'value',
+			            axisLabel: {
+										textStyle: {
+											color: "#646464"
+										}
+									},
+									splitLine: {
+										show: true,
+										lineStyle: {
+											// 使用深浅的间隔色
+											color: ['#d9d9d9'],
+											type: 'dashed',
+										}
+									},
+									axisLine: {
+										lineStyle: {
+											color: '#999999'
+										}
+									},
+									name:"百分比"
+			        }
+			    ],
+			    series : [
+			        {
+			            name:'酒店',
+			            type:'bar',
+			            data:[15, 20, 21, 14, 19, 13, 21],
+			        },
+			        {
+			            name:'景区',
+			            type:'bar',
+			            data:[20, 32, 10,17, 10, 30, 13],
+			        },
+			        {
+			            name:'餐饮',
+			            type:'bar',
+			            data:[20, 10, 19, 23, 29, 12, 10],
+			        },
+			        {
+			            name:'娱乐',
+			            type:'bar',
+			            data:[15, 18, 19, 23, 10,12, 15],
+			        },
+			        {
+			            name:'购物',
+			            type:'bar',
+			            data:[20, 10, 21, 10, 20, 10, 20],
+			        },
+			        {
+			            name:'交通',
+			            type:'bar',
+			            data:[10, 10, 10, 13, 12, 23, 21],
+			        }
+			    ]
+			};
+			
+			xiaofei_guowai.setOption(option);
+			
+			var xiaofei_zongti = echarts.init(document.getElementById("xiaofei_zongti"));
+			
+			var option = {
+			    title : {
+			        text: '▌总体游客消费偏好',
+					top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{b} : {c} ({d}%)"
+			    },
+			    legend: {
+			      orient: 'horizontal',
+						//						top: 'bottom',
+				  bottom: '5%',
+			      data: ['酒店', '景区','餐饮','娱乐','购物','交通']
+			    },
+			    series : [
+			        {
+			            type: 'pie',
+			            radius: ['30%', '55%'],
+			            data:[
+			                {value:30, name:'酒店'},
+			                {value:25, name:'景区'},
+			                {value:15, name:'餐饮'},
+			                {value:7, name:'娱乐'},
+			                {value:20, name:'购物'},
+			                {value:3, name:'交通'}
+			            ],
+			            itemStyle: {
+			                emphasis: {
+			                    shadowBlur: 10,
+			                    shadowOffsetX: 0,
+			                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                },
+			                normal:{
+			                	label: {
+									show: true,
+								},
+								color: function(params) {
+									var colorList = ['#7873AB', '#7289AB', '#73B9BC', '#759AA0', '#90C98B', '#EEDD78', '#F49F42'];
+									return colorList[params.dataIndex]
+								}
+			                }
+			            }
+			        }
+			    ]
+			};
+			
+			xiaofei_zongti.setOption(option);
+			
+			$(".btn-guonei").click(function(){
+		        $(this).addClass("active");
+		        $(this).siblings().removeClass("active");
+		        $("#xiaofei_guonei").css('display','block');
+		        $("#xiaofei_guowai").css('display','none');
+		    });
+		    
+		    $(".btn-guowai").click(function(){
+		        $(this).addClass("active");
+		        $(this).siblings().removeClass("active");
+		        $("#xiaofei_guonei").css('display','none');
+		        $("#xiaofei_guowai").css('display','block');
+		    });
+		    
+		    $("#xiaofei_guowai").css('display','none');
+		    
+		    var xiaofeiTop10 = echarts.init(document.getElementById("xiaofeiTop10"));
+		    
+		    var option = {
+					title: {
+						text: '▌消费类型价格排名',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						}
+					},
+					tooltip: {
+						trigger: 'item',
+						//confine:true,
+						position: 'right'
+					},
+					calculable: true,
+					grid: {
+						top: '15%',
+						left: '3%',
+						right: '3%',
+						bottom: '1%',
+						containLabel: true
+					},
+					xAxis: [{
+						type: 'value',
+						show: false
+					}],
+					yAxis: [{
+						axisLine: {
+							show: false
+						},
+						splitLine: {
+							show: false
+						},
+						axisLabel: {
+							interval: 0,
+							formatter: function(params) {
+								var newParamsName = ""; // 最终拼接成的字符串
+								var paramsNameNumber = params.length; // 实际标签的个数
+								var provideNumber = 4; // 每行能显示的字的个数
+								var rowNumber = Math.ceil((paramsNameNumber) / provideNumber); // 换行的话,需要显示几行，向上取整
+								/**
+								 * 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签
+								 */
+								// 条件等同于rowNumber>1
+								if(paramsNameNumber > provideNumber) {
+									/** 循环每一行,p表示行 */
+									for(var p = 0; p < rowNumber; p++) {
+										var tempStr = ""; // 表示每一次截取的字符串
+										var start = p * provideNumber; // 开始截取的位置
+										var end = start + provideNumber; // 结束截取的位置
+										// 此处特殊处理最后一行的索引值
+										if(p == rowNumber - 1) {
+											// 最后一次不换行
+											tempStr = params.substring(start, paramsNameNumber);
+										} else {
+											// 每一次拼接字符串并换行
+											tempStr = params.substring(start, end) + "\n";
+										}
+										newParamsName += tempStr; // 最终拼成的字符串
+									}
+
+								} else {
+									// 将旧标签的值赋给新标签
+									newParamsName = params;
+								}
+								//将最终的字符串返回
+								return newParamsName
+							}
+						},
+						axisTick: {
+							show: false
+						},
+
+						data: [ '交通', '娱乐', '餐饮', '购物', '景区', '酒店']
+					}],
+					series: [{
+						itemStyle: {
+							normal: {
+								label: {
+									show: true,
+								},
+								color: function(params) {
+									var colorList = ['#90C98B', '#EEDD78', '#F49F42', '#EA7E53', '#E69D87', '#DD6B66'];
+									return colorList[params.dataIndex]
+								}
+							}
+						},
+						type: 'bar',
+						barWidth: '60%',
+						data: [333000, 444000, 521000, 541000, 745000, 874000],
+						name: '价格(元)',
+					}]
+				};
+				
+				xiaofeiTop10.setOption(option);
+		})
+	</script>
+	<body>
+			<div>
+			<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">游客消费偏好分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+			
+					<li>
+						<a href="tourist_preference.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+			<!--<div class="times_div">
+					<div class="times">
+						<p class="ks">开始时间：</p>
+						<span class="input-append date form_datetime start_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<div class="times">&nbsp;&nbsp;
+						<p class="js">结束时间:</p>
+						<span class="input-append date form_datetime end_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<span><a id="search" name="search" href="javascript:void(0)" onclick="doSearch()">&nbsp;&nbsp;查询</a></span>
+				</div>-->
+			</div>
+		<div class="container1">
+			
+			<div class="row">
+				
+				<div class="col-md-6">
+					<div class="xiaofei_zongti" id="xiaofei_zongti"></div>
+				</div>
+				<div class="col-md-6">
+					<div class="xiaofeiTop10" id="xiaofeiTop10"></div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-12" id="xiaofeipianhao_fenlei">
+					<div class="xiaofei_guonei" id="xiaofei_guonei"></div>
+					<div class="xiaofei_guowai" id="xiaofei_guowai" ></div>
+				</div>
+				<button onclick="change_qx()" class="btn-guonei" id="qx_button">国内</button>
+				<button onclick="change_jq()" class="btn-guowai" id="jq_button">国外</button>
+			</div>
+			
+		</div>
+	</body>
+</html>

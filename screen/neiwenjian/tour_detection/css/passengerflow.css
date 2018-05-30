@@ -1,0 +1,134 @@
+/*头部导航栏*/
+.nav-tabs {
+	padding-left: 920px;
+	padding-bottom: 2px;
+	border-bottom: 0px;
+	margin-top: -38px;
+}
+.title_ul{
+	margin-top: 29px;
+}
+.nav {
+    margin-bottom: 0px;
+}
+li a {
+	color: white;
+	background-color: #3E4955;
+	/*border: 5px solid ghostwhite;*/
+	font-size: 14px;
+}
+.title {
+    margin-top: 29px;
+    float:right;
+    margin-left: 10px;
+    color: white;
+    font-size: 24px;
+}
+.navbar-collapse{
+	padding-right: 5px!important;
+}
+img{
+	margin-left: 5px;
+    margin-top: 5px;
+}
+/*---------------------------------------------------------*/
+#touristNumChartBar {
+	width: 100%;
+	height: 300px;
+	background-color: white!important;
+	border-radius: 4px;
+}
+
+#touristNumChartPie {
+	width: 100%;
+	height: 300px;
+	background-color: white!important;
+	border-radius: 4px;
+}
+
+#touristNumChartLine {
+	width: 100%;
+	height: 350px;
+	background-color: white!important;
+	border-radius: 4px;
+}
+
+#touristNumChartTable {
+	width: 96%;
+	height: 305px;
+	background-color: white!important;
+	border-radius: 4px;
+}
+
+.container {
+	padding: 0px 15px 0 15px;
+	margin: 0;
+	width: 100%;
+	background-color: #eff1ff;
+}
+.container_div{
+	border-radius: 4px;
+	background-color: #EFF1FF;
+}
+.row {
+	padding: 0;
+	margin: 0;
+	width: 100%;
+}
+.col-md-7{
+	padding-left: 0;
+	padding-right:5px;
+	padding-bottom: 10px;
+}
+.col-md-5{
+	padding-left: 5px;
+	padding-right:0px;
+}
+input {
+	width: 100px;
+}
+
+.total_title {
+	font-size: 24px;
+}
+
+.tab-content>.tab-pane,
+.pill-content>.pill-pane {
+	display: block;
+	height: 0;
+	overflow-y: hidden;
+}
+
+.tab-content>.active,
+.pill-content>.active {
+	height: auto;
+}
+.table_title{
+	color: #EEB300;
+	font-size:15px;
+	margin-bottom: 10px;
+	margin-top: 16px;
+	font-weight: bold;
+}
+.tab_style{
+	height: 15px;
+    background-color: #EFF1FF;
+}
+.backgroundColor{
+	background-color: white;
+	border-radius: 4px;
+	width: 544px;
+    margin-left: 5px;
+    padding-left: 19px;
+}
+/*表格按钮*/
+.pagination ul>.active>a, .pagination ul>.active>span {
+    background-color: #337ab7!important;
+}
+.pagination ul>.active>a, .pagination ul>.active>span {
+    color: white;
+    cursor: default;
+}
+th{
+	background: #d7dcff;
+}

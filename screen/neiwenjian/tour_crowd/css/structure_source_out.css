@@ -1,0 +1,66 @@
+/*头部导航栏*/
+.nav-tabs {
+	/*padding-left: 1120px;*/
+	padding-bottom: 15px;
+	border-bottom: 0px;
+	margin-top: -48px;
+	padding-right: 5px;
+	float: right;
+}
+.title_ul{
+	margin-top: 29px;
+}
+.nav {
+    margin-bottom: 0px;
+}
+li a {
+	color: white;
+	background-color: #3E4955;
+	/*border: 5px solid ghostwhite;*/
+	font-size: 14px;
+}
+.title {
+    margin-top: 29px;
+    float:right;
+    margin-left: 10px;
+    color: white;
+    font-size: 24px;
+}
+.navbar-collapse{
+	padding-right: 5px!important;
+}
+/*---------------------------------------------------------*/
+.container{
+	padding: 10px 0px;
+}
+#newmap{
+	height: 527px;
+}
+.charts-style{
+	padding-top: 0px;border-radius: 4px;
+}
+.div-347{
+	height: 247px;border-radius: 4px;
+}
+.div-370{
+	height: 270px;margin-top: 10px;border-radius: 4px;
+	overflow:hidden;
+}
+.tab-content>.tab-pane,
+.pill-content>.pill-pane {
+	display: block;
+	height: 0;
+	overflow-y: hidden;
+}
+
+.tab-content>.active,
+.pill-content>.active {
+	height: auto;
+}
+#newmap2{
+	height: 527px;
+}
+#newmap3{
+	height: 527px;
+}
+

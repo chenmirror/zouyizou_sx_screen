@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name=renderer content=webkit>
+		<title>酒店/牧人之家分析</title>
+		<script src="../echarts/echarts.js"></script>
+    	<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    	<script src="../js/jquery.min.js"></script>
+    	<script src="../bootstrap/js/bootstrap.min.js"></script>
+    	<link rel="stylesheet" href="../css/main.css">
+    	
+	</head>
+	<body>
+		<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            	</button>
+				<img class="logo" src="../img/logo1.jpg" alt="logo" />
+				<span class="title">酒店/牧人之家分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					<li>
+						<a href="hotel_order.html" target="_self">预订分析</a>
+					</li>
+					<li>
+						<a href="rate.html" target="_self"">入住率分析</a>
+					</li>
+					<li>
+						<a href="hotel_satisfaction.html" target="_self"">客户满意度分析</a>
+					</li>
+					<li>
+						<a href="facility.html" target="_self"">住宿设施分析</a>
+					</li>
+					<li>
+						<a href="/zouyizou_sx_screen/screen/index.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		
+		
+		<div class="container">
+			<div class="order" id="order" onclick="change_order()"></div>
+			<div class="button">
+				<button type="button" onclick="three()" class="three" id="three">近三个月</button>
+		   		<button type="button" onclick="halfyear()" class="halfyear" id="halfyear">近半年</button>
+		    	<button type="button" onclick="year()" class="year" id="year">近一年</button>   
+			</div>
+		    
+			<div class="rate" id="rate" onclick="change_rate()"></div>
+			<div class="facility" id="facility" onclick="change_facility()"></div>
+			<div class="satisfaction" id="satisfaction" onclick="change_satisfaction()"></div>
+		</div>
+		<script>
+		
+					
+			 var myChart_order = echarts.init(document.getElementById('order'));
+   			 var myChart_rate = echarts.init(document.getElementById('rate'));
+   			 var myChart_facility = echarts.init(document.getElementById('facility'));
+    		 var myChart_satisfaction = echarts.init(document.getElementById('satisfaction'));
+    		 var a=0;
+    		 function three(){
+			        $("#three").css("background-color","#027AE0");
+			        $("#three").css("color","white");
+			        $("#three").siblings().css("background-color","white");
+			        $("#three").siblings().css("color","#027AE0");
+			    	a='0';
+			        initjiagezhishu();
+			    }
+			 function halfyear(){
+			        $("#halfyear").css("background-color","#027AE0");
+			        $("#halfyear").css("color","white");
+			        $("#halfyear").siblings().css("background-color","white");
+			        $("#halfyear").siblings().css("color","#027AE0");
+			    	a='1';
+			        initjiagezhishu();
+			    }
+			 function year(){
+			        $("#year").css("background-color","#027AE0");
+			        $("#year").css("color","white");
+			        $("#year").siblings().css("background-color","white");
+			        $("#year").siblings().css("color","#027AE0");
+			    	a='2';
+					initjiagezhishu();
+			    }
+			 function initjiagezhishu(){
+			 	if(a=='0'){
+			 		data1=[47, 55, 55, 67, 81];
+    				data2=[48, 67, 58, 63, 72];
+			 	}if(a=='1'){
+			 		data1=[220, 244, 243, 212, 250];
+    				data2=[240, 270, 250, 230, 252];
+			 	}if(a=='2'){
+			 		data1=[420, 643, 624, 623, 645];
+    				data2=[624, 637, 625, 620, 625];
+			 	}
+			 	
+			 	option_order={
+			  		backgroundColor:'white',
+			  		title: {
+			  			text: '▌预订情况分析',
+			            x: 'center',
+			            top: '2%',
+			            left: '2%',
+			            textStyle: {
+			                color: '#EEB300',
+			                fontSize: 15
+			            }
+				    },
+				    tooltip: {
+				        trigger: 'axis'
+				    },
+				     legend: {
+			            data:['酒店','牧人之家'],
+			            orient: 'horizontal',
+			            top: '3%',
+			            left:'130'
+			        },
+				    grid: {
+				        left: '3%',
+				        right: '4%',
+				        bottom: '3%',
+				        containLabel: true
+				    },
+				    xAxis: {
+				        type: 'category',
+				        boundaryGap: false,
+				        data:['OTA协议价','官方直销价','公司协议价','会展活动价','门市价'],
+				    },
+				    yAxis: {
+				    	type: 'value',
+				        name:"数量(万)",
+				        
+				        axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+
+				    },
+				    series: [
+				        {
+				            name:'酒店',
+				            type:'line',
+				            stack: '总量',
+				            data:data1
+				        },
+				        {
+				            name:'牧人之家',
+				            type:'line',
+				            stack: '总量',
+				            data:data2
+				        },
+				    ]
+			  	},
+			  	 myChart_order.setOption(option_order); 
+			 }
+			 
+			 
+			  	option_order={
+			  		backgroundColor:'white',
+			  		title: {
+			  			text: '▌预订情况分析',
+			            x: 'center',
+			            top: '2%',
+			            left: '2%',
+			            textStyle: {
+			                color: '#EEB300',
+			                fontSize: 15
+			            }
+				    },
+				    tooltip: {
+				        trigger: 'axis'
+				    },
+				     legend: {
+			            data:['酒店','牧人之家'],
+			            orient: 'horizontal',
+			            top: '3%',
+			            left:'130'
+			        },
+				    grid: {
+				        left: '3%',
+				        right: '4%',
+				        bottom: '3%',
+				        containLabel: true
+				    },
+				    xAxis: {
+				        type: 'category',
+				        boundaryGap: false,
+				        data:['OTA协议价','官方直销价','公司协议价','会展活动价','门市价'],
+				    },
+				    yAxis: {
+				        type: 'value',
+				        name:"数量(万)",
+				         axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					}
+				    },
+				    series: [
+				        {
+				            name:'酒店',
+				            type:'line',
+				            stack: '总量',
+				            data:[420, 643, 624, 623, 645]
+    				
+				        },
+				        {
+				            name:'牧人之家',
+				            type:'line',
+				            stack: '总量',
+				            data:[624, 637, 625, 620, 625]
+				        },
+				    ]
+			  	},
+  			 	option_rate={
+  			 	backgroundColor:'white',
+			        title : {
+			            text: '▌入住率占比',
+			            x: 'center',
+			            top: '2%',
+			            left: '2%',
+			            textStyle: {
+			                color: '#EEB300',
+			                fontSize: 15
+			            }
+			    },
+			        tooltip : {
+			            trigger: 'item',
+			            formatter: "{a} <br/>{b} : {c} ({d}%)"
+			        },
+			        legend: {
+					        orient: 'vertical',
+		
+					        data: ['一星','二星','三星','四星','五星'],
+					        x: 'center',
+				            orient: 'horizontal',
+				            bottom: '5%',
+				            top:'bottom'
+					    },
+			        series : [
+			            {
+			                name: '数量',
+			                type: 'pie',
+			                radius : '55%',
+			                center: ['50%', '50%'],
+			                data:[
+			                    {value:335, name:'一星'},
+			                    {value:310, name:'二星'},
+			                    {value:234, name:'三星'},
+			                    {value:135, name:'四星'},
+			                    {value:68, name:'五星'}
+			                ],
+			                itemStyle: {
+			                    emphasis: {
+			                        shadowBlur: 10,
+			                        shadowOffsetX: 0,
+			                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                    }
+			                }
+			            }
+			        ]};
+			 	option_satisfaction={
+			 	backgroundColor:'white',
+			 	 title : {
+			            text: '▌评价率',
+			            x: 'center',
+			            top: '2%',
+			            left: '2%',
+			            textStyle: {
+			                color: '#EEB300',
+			                fontSize: 15
+			            }
+			    },
+				tooltip: {
+			        trigger: 'axis',
+			        axisPointer: {
+			            type: 'cross',
+			            crossStyle: {
+			                color: '#999'
+			            }
+			        }
+			   },
+			    legend: {
+			        data:['酒店','牧人之家','平均评价率'],
+			        top:"10"
+			    },
+			    xAxis: [
+			        {
+			            type: 'category',
+			            data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+			            axisPointer: {
+			                type: 'shadow'
+			            }
+			        }
+			    ],
+			    yAxis: [
+			        {
+			            type: 'value',
+			            name: '入住量(万)',
+			             axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					},
+			            min: 0,
+			            max: 200,
+			            interval: 50,
+			            axisLabel: {
+			                formatter: '{value} '
+			            }
+			            
+			        },
+			        {
+			        	 axisLabel: {
+						textStyle: {
+						color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+					lineStyle: {
+						// 使用深浅的间隔色
+						color: ['#d9d9d9'],
+						type: 'dashed',
+					}
+					},
+					axisLine: {
+					lineStyle: {
+						color: '#999999'
+						}
+					},
+			            type: 'value',
+			            name: '入住率',
+			            min: 0,
+			            max: 1,
+			            /*interval: 5,*/
+			            axisLabel: {
+			                formatter: '{value} '
+			            }
+			        }
+			    ],
+			    series: [
+			        {
+			            name:'牧人之家',
+			            type:'bar',
+			            data:[22.0, 25.9, 38.0, 53.4, 56.6, 88.7, 156.6, 162.2, 122.6, 50.0, 40.4, 30.3]
+			        },
+			        {
+			            name:'酒店',
+			            type:'bar',
+			            data:[30.6, 24.9, 40.0, 48.4, 50.7, 79.7, 135.6, 125.2, 117.7, 63.8, 33.0, 20.3]
+			        },
+			        {
+			            name:'平均评价率',
+			            type:'line',
+			            yAxisIndex: 1,
+			            data:[0.21, 0.17, 0.25, 0.36, 0.39, 0.43, 0.69, 0.79, 0.75, 0.43, 0.32, 0.21]
+			        }
+			    ]
+			  };
+			 option_facility={
+  			 	backgroundColor:'white',
+			        title : {
+			            text: '▌住宿设施占比',
+			            x: 'center',
+			            top: '2%',
+			            left: '2%',
+			            textStyle: {
+			                color: '#EEB300',
+			                fontSize: 15
+			            }
+			    },
+			        tooltip : {
+			            trigger: 'item',
+			            formatter: "{a} <br/>{b} : {c} ({d}%)"
+			        },
+			        legend: {
+					        orient: 'vertical',
+		
+					        data: ['游泳池','棋牌室','卡拉OK房','会议室','投影仪','音响设备'],
+					        x: 'center',
+				            orient: 'horizontal',
+				            bottom: '5%',
+				            top:'bottom'
+					    },
+			        series : [
+			            {
+			                name: '数量',
+			                type: 'pie',
+			                radius : '55%',
+			                center: ['50%', '50%'],
+			                data:[
+			                    {value:335, name:'游泳池'},
+			                    {value:310, name:'棋牌室'},
+			                    {value:234, name:'卡拉OK房'},
+			                    {value:135, name:'会议室'},
+			                    {value:68, name:'投影仪'},
+			                    {value:368, name:'音响设备'}
+			                ],
+			                itemStyle: {
+			                    emphasis: {
+			                        shadowBlur: 10,
+			                        shadowOffsetX: 0,
+			                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+			                    }
+			                }
+			            }
+			        ]};
+			 myChart_rate.setOption(option_rate);     
+			 myChart_facility.setOption(option_facility);
+ 			 myChart_satisfaction.setOption(option_satisfaction);
+ 			 myChart_order.setOption(option_order); 
+ 			 
+ 			 function change_order(){
+ 			 	window.open("hotel_order.html",'_self');
+ 			 }
+ 			 function change_rate(){
+ 			 	window.open("rate.html",'_self');
+ 			 }
+ 			 function change_satisfaction(){
+ 			 	window.open("hotel_satisfaction.html",'_self');
+ 			 }
+ 			 function change_facility(){
+ 			 	window.open("facility.html",'_self');
+ 			 }
+		</script>
+	</body>
+</html>

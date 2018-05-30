@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name=renderer content=webkit>
+		<title>重点客源地分析</title>
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/world.js"></script>
+		<script type="text/javascript" src="js/china.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<script src="js/bmap.js"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0UqXGL98FSmi22w2Rl6HK56I"></script>
+
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/source.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+		<link rel="stylesheet" type="text/css" href="css/structure_total_out.css"/>
+		<!--<style>
+			div{
+				border: solid red 1px;
+			}
+		</style>-->
+	</head>
+	<body>
+		<div class="row" style="background-color: #3f3d3e;height: 70px;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">重点客源地分析</span>
+			</div>
+			</div>
+		<div class="container" >
+			<ul class="nav nav-tabs" role="tablist" id="feature-tab">
+				<li class="active">
+					<a href="#tab-day" role="tab" data-toggle="tab">当天</a>
+				</li>
+				<li>
+					<a href="#tab-week" role="tab" data-toggle="tab">当月</a>
+				</li>
+				<li>
+					<a href="#tab-month" role="tab" data-toggle="tab">当年</a>
+				</li>
+				<li>
+					<a href="structure_total.html" target="_self">返回</a>
+				</li>
+			</ul>
+			<div class="tab-content" style="width: 100%;">
+				<div class="tab-pane active" id="tab-day">
+					<div class="row">
+						<div class="col-md-12 top-div">
+							<div class="charts-style height-300" id="mainchart" ></div>
+							<div class="charts-style height-300" id="mainchart2" style="display: none;"></div>
+							<input type="hidden" id="hidden_div"/>
+							<button onclick="change_qx()" id="qx_button">各旗县</button>
+							<button onclick="change_jq()" id="jq_button">各景区</button>
+							<button onclick="displace(this)" id="jq_button">切换</button>
+						</div>
+						<div class="col-md-3 div-padding-right " >
+							<div class="widthheight charts-style " id="teamchart"></div>
+						</div>
+						<div class="col-md-3 div-padding-right " >
+							<div class="widthheight charts-style " id="edchart"></div>
+						</div>
+						<div class="col-md-3 div-padding-right " >
+							<div class="widthheight charts-style " id="agechart"></div>
+						</div>
+						<div class="col-md-3 div-padding-right " >
+							<div class="widthheight charts-style " id="sexchart"></div>
+						</div>
+							<!--<div class="col-md-3 div-padding-right " id="edchart" style="height: 350px;"></div>
+							<div class="col-md-3 div-padding-right " id="agechart" style="height: 350px;"></div>
+							<div class="col-md-3 div-padding-right " id="sexchart" style="height: 350px;"></div>-->
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			
+			var mainchart=echarts.init(document.getElementById("mainchart"));
+			var mainchart2=echarts.init(document.getElementById("mainchart2"));
+			var teamchart=echarts.init(document.getElementById("teamchart"));
+			var edchart=echarts.init(document.getElementById("edchart"));
+			var agechart=echarts.init(document.getElementById("agechart"));
+			var sexchart=echarts.init(document.getElementById("sexchart"));
+				option12 = {
+					backgroundColor: 'white',
+					title: {
+						text: '▌最多人数客源地游客分布图',
+						top: '1%',
+						left: '0.5%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+				    tooltip : {
+				        trigger: 'axis'
+				    },
+				    legend: {
+				    	top:'14%',
+				        data:['北京','上海','广州']
+				    },
+				    grid: {
+				        top:'30%',
+				        bottom: '7%',
+				        containLabel: true
+				    },
+				    calculable : true,
+				    xAxis : [
+				        {
+				            type : 'category',
+				            data : ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+				            axisLabel: {
+								interval: 0,
+								rotate: 10, //倾斜度 -90 至 90 默认为0  
+								margin: 5,
+								textStyle: {
+								color: "#646464"
+							}
+						},
+				        }
+				    ],
+				    yAxis : [
+				        {
+				        	splitLine: {
+								show: true,
+								lineStyle: {
+									// 使用深浅的间隔色
+									color: ['#d9d9d9'],
+									type: 'dashed',
+								}
+							},
+				            type : 'value',
+				            name:'人数（人）'
+				        }
+				    ],
+				    series : [
+				        {
+				            name:'北京',
+				            type:'bar',
+				            barWidth : 10,
+				            data:[3.0, 8.9, 6.0, 2.2, 9.6, 13.7, 2.6, 19.2, 11.6, 6.0, 6.4],
+				            markPoint : {
+				                data : [
+				                    {type : 'max', name: '最大值'}
+				                ]
+				            },
+				            markLine : {
+				                data : [
+				                ]
+				            }
+				        },
+				        {
+				            name:'上海',
+				            type:'bar',
+				            barWidth : 10,
+				            data:[5.0, 10.9, 1.0, 7.2, 21.6, 9.7, 14.6, 4.2, 1.6, 8.0, 2.4],
+				            markPoint : {
+				                data : [
+									{type : 'max', name: '最大值'}
+				                ]
+									
+				            },
+				            markLine : {
+				                data : [
+				                ]
+				            }
+				        },
+				        {
+				            name:'广州',
+				            type:'bar',
+				            barWidth : 10,
+				            data:[3.5, 7.4, 2.0, 20.2, 9.6, 4.7, 5.6, 16.2, 11.6, 6.0, 4.4],
+				            markPoint : {
+				                data : [
+				                    {type : 'max', name: '最大值'}
+				                ]
+				            },
+				            markLine : {
+				                data : [
+				                ]
+				            }
+				        }
+				    ]
+				};
+				mainchart2.setOption(option12);
+				option1 = {
+					backgroundColor: 'white',
+					title: {
+						text: '▌最多人数客源地游客分布图',
+						top: '1%',
+						left: '0.5%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+				    tooltip : {
+				        trigger: 'axis'
+				    },
+				    legend: {
+				    	top:'14%',
+				        data:['北京','上海','广州']
+				    },
+				    grid: {
+				    	top:'30%',
+				        bottom: '7%',
+				        containLabel: true
+				    },
+				    calculable : true,
+				    xAxis : [
+				        {
+				            type : 'category',
+				            data : ['锡林浩特市','二连浩特市','乌拉盖管理区','多伦县','正蓝旗','太仆寺旗','正镶白旗','镶黄旗','苏尼特左旗','苏尼特右旗','阿巴嘎旗','西乌珠穆沁旗','东乌珠穆沁旗'],
+				            axisLabel: {
+								interval: 0,
+								rotate: 10, //倾斜度 -90 至 90 默认为0  
+								margin: 5,
+								textStyle: {
+								color: "#646464"
+							}
+						},
+				        }
+				    ],
+				    yAxis : [
+				        {
+				        	splitLine: {
+								show: true,
+								lineStyle: {
+									// 使用深浅的间隔色
+									color: ['#d9d9d9'],
+									type: 'dashed',
+								}
+							},
+				            type : 'value',
+				            name:'人数（人）'
+				        }
+				    ],
+				    series : [
+				        {
+				            name:'北京',
+				            type:'bar',
+				            barWidth : 10,
+				            barGap: '40%',
+				            data:[4.0, 4.9, 9.0, 11.2, 7.6, 6.7, 5.6, 16.2, 15.6, 4.0, 4.4, 5.8, 5],
+				            markPoint : {
+				                data : [
+				                    {type : 'max', name: '最大值'}
+				                ]
+				            },
+				            markLine : {
+				                data : [
+				                ]
+				            }
+				        },
+				        {
+				            name:'上海',
+				            type:'bar',
+				            barWidth : 10,
+				            data:[9.0, 9.9, 3.0, 17.2, 9.6, 8.7, 16.6, 3.2, 3.6, 6.0, 7.4, 2.8, 3],
+				            markPoint : {
+				                data : [
+									{type : 'max', name: '最大值'}
+				                ]
+									
+				            },
+				            markLine : {
+				                data : [
+				                ]
+				            }
+				        },
+				        {
+				            name:'广州',
+				            type:'bar',
+				            data:[4.0, 4.9, 7.0, 18.2, 11.6, 2.7, 15.6, 11.2, 6.6, 2.0, 6.4, 3.8, 6],
+				            barWidth : 10,
+				            markPoint : {
+				                data : [
+				                    {type : 'max', name: '最大值'}
+				                ]
+				            },
+				            markLine : {
+				                data : [
+				                ]
+				            }
+				        }
+				    ]
+				};
+			mainchart.setOption(option1);
+			option2 = {
+					backgroundColor: 'white',
+				    title: {
+						text: '▌多伦县团散比率情况',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+				    tooltip : {
+				        trigger: 'item',
+				        formatter: "{a} <br/>{b} : {c} ({d}%)"
+				    },
+				    legend: {
+				        orient: 'horizontal',
+				        left: '4%',
+				        bottom: '10%',
+				        data: ['团体', '个人']
+				    },
+				    series : [
+				        {
+				            name: '访问来源',
+				            type: 'pie',
+				            radius : '55%',
+				            center: ['50%', '50%'],
+				            data:[
+				                {value:7321, name:'团体'},
+				                {value:2251, name:'个人'},
+				            ],
+				            itemStyle: {
+				                emphasis: {
+				                    shadowBlur: 10,
+				                    shadowOffsetX: 0,
+				                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+				                }
+				            }
+				        }
+				    ]
+				};
+
+			teamchart.setOption(option2);
+			option3 = {
+					backgroundColor: 'white',
+				    title: {
+						text: '▌多伦县游客学历架构情况',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+				    tooltip : {
+				        trigger: 'item',
+				        formatter: "{a} <br/>{b} : {c} ({d}%)"
+				    },
+				    legend: {
+				        orient: 'horizontal',
+				        left: '4%',
+				        bottom: '4%',
+				        data: ['小学以下', '初中','高中','大学','硕士及以上']
+				    },
+				    series : [
+				        {
+				            name: '访问来源',
+				            type: 'pie',
+				            radius : '55%',
+				            center: ['53.3%', '50%'],
+				            data:[
+				                {value:12, name:'小学以下'},
+				                {value:16, name:'初中'},
+				                {value:5, name:'高中'},
+				                {value:43, name:'大学'},
+				                {value:26, name:'硕士及以上'}
+				            ],
+				            itemStyle: {
+				                emphasis: {
+				                    shadowBlur: 10,
+				                    shadowOffsetX: 0,
+				                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+				                }
+				            }
+				        }
+				    ]
+				};
+			edchart.setOption(option3);
+			option4 = {
+					backgroundColor: 'white',
+				    title: {
+						text: '▌多伦县游客年龄架构情况',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+				    tooltip : {
+				        trigger: 'item',
+				        formatter: "{a} <br/>{b} : {c} ({d}%)"
+				    },
+				    legend: {
+				        orient: 'horizontal',
+				        left: '4%',
+				        bottom: '4%',
+				        data: ['0-2', '3-5','6-10','12-17','18-59','60-79','80-90','90以上']
+				    },
+				    series : [
+				        {
+				            name: '访问来源',
+				            type: 'pie',
+				            radius : '55%',
+				            center: ['50%', '50%'],
+				            data:[
+				                {value:0.5, name:'0-2'},
+				                {value:16, name:'3-5'},
+				                {value:11.5, name:'6-10'},
+				                {value:12, name:'12-17'},
+				                {value:53, name:'18-59'},
+				                {value:6.4, name:'60-79'},
+				                {value:0.3, name:'80-90'},
+				                {value:0.3, name:'90以上'}
+				            ],
+				            itemStyle: {
+				                emphasis: {
+				                    shadowBlur: 10,
+				                    shadowOffsetX: 0,
+				                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+				                }
+				            }
+				        }
+				    ]
+				};
+			agechart.setOption(option4);
+			option5 = {
+					backgroundColor: 'white',
+				    title: {
+						text: '▌多伦县游客性别架构情况',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+				    tooltip : {
+				        trigger: 'item',
+				        formatter: "{a} <br/>{b} : {c} ({d}%)"
+				    },
+				    legend: {
+				        orient: 'horizontal',
+				        left: '4%',
+				        bottom: '10%',
+				        data: ['男', '女','其他']
+				    },
+				    series : [
+				        {
+				            name: '访问来源',
+				            type: 'pie',
+				            radius : '55%',
+				            center: ['50%', '50%'],
+				            data:[
+				                {value:4820, name:'女'},
+				                {value:5160, name:'男'},
+				            ],
+				            itemStyle: {
+				                emphasis: {
+				                    shadowBlur: 10,
+				                    shadowOffsetX: 0,
+				                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+				                }
+				            }
+				        }
+				    ]
+				};
+			sexchart.setOption(option5);
+			var state="qx";
+			function change_qx() {
+				$("#mainchart2").css("display", "none");
+				$("#mainchart").css("display", "block");
+				$("#jq_button").css("background-color","white");
+				$("#jq_button").css("color","#027AE0");
+				$("#qx_button").css("background-color","#027AE0");
+				$("#qx_button").css("color","white");
+				var hidden_div = document.getElementById("hidden_div");
+				state="qx";
+			}
+			function change_jq() {
+				$("#mainchart2").css("display", "block");
+				$("#mainchart").css("display", "none");
+				$("#jq_button").css("background-color","#027AE0");
+				$("#jq_button").css("color","white");
+				$("#qx_button").css("background-color","white");
+				$("#qx_button").css("color","#027AE0");
+				var hidden_div = document.getElementById("hidden_div");
+				state="jq";
+				                	var titletext3='▌最活跃客源地游客分布图';
+				                	var legend3 = {
+				    					top:'14%',
+				       					data:['郑州','深圳','广州']
+				  					};
+									var	series3 = [
+									        {
+									            name:'郑州',
+									            barWidth : 10,
+									            type:'bar',
+									            data:[4.0, 4.9, 9.0, 21.2, 7.6, 6.7, 5.6, 6.2, 15.6, 4.0, 4.4],
+									            markPoint : {
+									                data : [
+									                    {type : 'max', name: '最大值'}
+									                ]
+									            },
+									            markLine : {
+									                data : [
+					//				                    {type : 'average', name: '平均值'}
+									                ]
+									            }
+									        },
+									        {
+									            name:'深圳',
+									            barWidth : 10,
+									            type:'bar',
+									            data:[9.0, 9.9, 16.0, 10.2, 9.6, 8.7, 10.6, 3.2, 3.6, 6.0, 7.4,],
+									            markPoint : {
+									                data : [
+														{type : 'max', name: '最大值'}
+									                ]
+														
+									            },
+									            markLine : {
+									                data : [
+									                ]
+									            }
+									        },
+									        {
+									            name:'广州',
+									            type:'bar',
+									            barWidth : 10,
+									            data:[4.0, 4.9, 14.0, 12.2, 11.6, 2.7, 15.6, 11.2, 6.6, 2.0, 6.4],
+									            markPoint : {
+									                data : [
+									                    {type : 'max', name: '最大值'}
+									                ]
+									            },
+									            markLine : {
+									                data : [
+									                ]
+									            }
+									        }
+									    ];
+								    	option12.legend=legend3;
+								   		option12.series=series3;
+								   		option12.title.text=titletext3;
+				                	mainchart2.dispose();
+				                	mainchart2=echarts.init(document.getElementById("mainchart2"));
+				                    mainchart2.setOption(option12);
+			}
+				
+			function displace(i){
+					if(state!='jq'){
+				                	var titletext1='▌最多人数客源地游客分布图';
+				                	var titletext2='▌最活跃客源地游客分布图';
+				                	var legend1 = {
+				    					top:'14%',
+				       					data:['郑州','深圳','广州']
+				  					};
+				                	var legend2 = {
+				    					top:'14%',
+				       					data:['北京','上海','广州']
+				  					};
+									var	series1 = [
+									        {
+									            name:'北京',
+									            type:'bar',
+									            barWidth : 10,
+									            data:[4.0, 4.9, 9.0, 11.2, 7.6, 6.7, 5.6, 16.2, 15.6, 4.0, 4.4, 5.8, 5],
+									            markPoint : {
+									                data : [
+									                    {type : 'max', name: '最大值'}
+									                ]
+									            },
+									            markLine : {
+									                data : [
+					//				                    {type : 'average', name: '平均值'}
+									                ]
+									            }
+									        },
+									        {
+									            name:'上海',
+									            type:'bar',
+									            barWidth : 10,
+									            data:[9.0, 9.9, 3.0, 17.2, 9.6, 8.7, 16.6, 3.2, 3.6, 6.0, 7.4, 2.8, 3],
+									            markPoint : {
+									                data : [
+														{type : 'max', name: '最大值'}
+									                ]
+														
+									            },
+									            markLine : {
+									                data : [
+									                ]
+									            }
+									        },
+									        {
+									            name:'广州',
+									            type:'bar',
+									            barWidth : 10,
+									            data:[4.0, 4.9, 7.0, 18.2, 11.6, 2.7, 15.6, 11.2, 6.6, 2.0, 6.4, 3.8, 6],
+									            markPoint : {
+									                data : [
+									                    {type : 'max', name: '最大值'}
+									                ]
+									            },
+									            markLine : {
+									                data : [
+									                ]
+									            }
+									        }
+									    ];
+									var series2=[
+								        {
+								            name:'郑州',
+								            barWidth : 10,
+								            type:'bar',
+								            data:[3.0, 8.9, 6.0, 2.2, 9.6, 13.7, 2.6, 12.2, 11.6, 4.0, 3.4, 5, 7],
+								            markPoint : {
+								                data : [
+								                    {type : 'max', name: '最大值'}
+								                ]
+								            },
+								            markLine : {
+								                data : [
+								                ]
+								            }
+								        },
+								        {
+								            name:'深圳',
+								            type:'bar',
+								            barWidth : 10,
+								            data:[5.0, 10.9, 1.0, 7.2, 16.1, 9.7, 11.6, 4.2, 1.6, 8.0, 2.4, 3,1.5],
+								            markPoint : {
+								                data : [
+													{type : 'max', name: '最大值'}
+								                ]
+													
+								            },
+								            markLine : {
+								                data : [
+								                ]
+								            }
+								        },
+								        {
+								            name:'广州',
+								            type:'bar',
+								            barWidth : 10,
+								            data:[3.5, 7.4, 2.0, 20.2, 9.6, 4.7, 5.6, 12.2, 6.6, 6.0, 4.4, 5.5, 4.5],
+								            markPoint : {
+								                data : [
+								                    {type : 'max', name: '最大值'}
+								                ]
+								            },
+								            markLine : {
+								                data : [
+								                ]
+								            }
+								        }];
+								    if(option1.title.text==('▌最多人数客源地游客分布图')){
+								    	option1.legend=legend1;
+								   		option1.series=series2;
+								   		option1.title.text=titletext2;
+								    }else{
+								    	option1.legend=legend2;
+								   		option1.series=series1;
+								   		option1.title.text=titletext1;
+							}
+								    
+				                	mainchart.dispose();
+				                	mainchart=echarts.init(document.getElementById("mainchart"));
+				                    mainchart.setOption(option1);
+				                }
+								else{
+				                	var titletext3='▌最多人数客源地游客分布图';
+				                	var titletext4='▌最活跃客源地游客分布图';
+				                	var legend3 = {
+				    					top:'14%',
+				       					data:['郑州','深圳','广州']
+				  					};
+				                	var legend4 = {
+				    					top:'14%',
+				       					data:['北京','上海','广州']
+				  					};
+									var	series3 = [
+									        {
+									            name:'郑州',
+									            barWidth : 10,
+									            type:'bar',
+									            data:[4.0, 4.9, 9.0, 21.2, 7.6, 6.7, 5.6, 6.2, 15.6, 4.0, 4.4],
+									            markPoint : {
+									                data : [
+									                    {type : 'max', name: '最大值'}
+									                ]
+									            },
+									            markLine : {
+									                data : [
+					//				                    {type : 'average', name: '平均值'}
+									                ]
+									            }
+									        },
+									        {
+									            name:'深圳',
+									            barWidth : 10,
+									            type:'bar',
+									            data:[9.0, 9.9, 16.0, 10.2, 9.6, 8.7, 10.6, 3.2, 3.6, 6.0, 7.4,],
+									            markPoint : {
+									                data : [
+														{type : 'max', name: '最大值'}
+									                ]
+														
+									            },
+									            markLine : {
+									                data : [
+									                ]
+									            }
+									        },
+									        {
+									            name:'广州',
+									            type:'bar',
+									            barWidth : 10,
+									            data:[4.0, 4.9, 14.0, 12.2, 11.6, 2.7, 15.6, 11.2, 6.6, 2.0, 6.4],
+									            markPoint : {
+									                data : [
+									                    {type : 'max', name: '最大值'}
+									                ]
+									            },
+									            markLine : {
+									                data : [
+									                ]
+									            }
+									        }
+									    ];
+									var series4=[
+								        {
+								            name:'北京',
+								            barWidth : 10,
+								            type:'bar',
+								            data:[3.0, 8.9, 6.0, 2.2, 9.6, 20.7, 2.6, 12.2, 11.6, 6.0, 6.4],
+								            markPoint : {
+								                data : [
+								                    {type : 'max', name: '最大值'}
+								                ]
+								            },
+								            markLine : {
+								                data : [
+								                ]
+								            }
+								        },
+								        {
+								            name:'上海',
+								            type:'bar',
+								            barWidth : 10,
+								            data:[5.0, 10.9, 1.0, 13.2, 15.6, 9.7, 14.6, 4.2, 1.6, 8.0, 2.4],
+								            markPoint : {
+								                data : [
+													{type : 'max', name: '最大值'}
+								                ]
+													
+								            },
+								            markLine : {
+								                data : [
+								                ]
+								            }
+								        },
+								        {
+								            name:'广州',
+								            barWidth : 10,
+								            type:'bar',
+								            data:[3.5, 7.4, 2.0, 20.2, 9.6, 4.7, 5.6, 12.2, 15.6, 6.0, 4.4],
+								            markPoint : {
+								                data : [
+								                    {type : 'max', name: '最大值'}
+								                ]
+								            },
+								            markLine : {
+								                data : [
+								                ]
+								            }
+								        }];
+								    if(option12.title.text=='▌最多人数客源地游客分布图'){
+								    	option12.legend=legend3;
+								   		option12.series=series3;
+								   		option12.title.text=titletext4;
+								    }else{
+								    	option12.legend=legend4;
+								   		option12.series=series4;
+								   		option12.title.text=titletext3;
+								    }
+				                	mainchart2.dispose();
+				                	mainchart2=echarts.init(document.getElementById("mainchart2"));
+				                    mainchart2.setOption(option12);
+				                }		
+			}
+		</script>
+	</body>
+</html>

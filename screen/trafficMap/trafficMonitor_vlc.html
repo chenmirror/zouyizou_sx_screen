@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>监控</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="author" content="">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link rel="stylesheet" href="../../resource/css/lib/bootstrap.min.css" />
+<link rel="stylesheet" href="../../resource/css/common.css" />
+<style>
+.monitor-main {
+	padding: 0;
+	position: relative;
+}
+.layout .screen{
+width: 148px !important;
+}
+.monitor-main .traffic {
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 999999;
+	overflow: hidden;
+}
+
+.monitor-main .video {
+	display: none;
+}
+
+.title-menu {
+	overflow: hidden;
+}
+
+.title-menu .btn {
+	float: left;
+	width: 50%;
+	box-sizing: border-box;
+}
+
+.traffic-show {
+	display: none;
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+.traffic-show .state {
+	padding: 0 10px 5px 10px;
+	position: absolute;
+	top: 8px;
+	left: 8px;
+	z-index: 9999;
+	color: #3678D8;
+	border: 1px solid #255A9E;
+	background-color: rgba(0, 16, 15, .4)
+}
+
+.traffic-show .state .du {
+	margin-left: 30px
+}
+
+.traffic-show .intro {
+	margin-top: 9px;
+	float: left;
+}
+
+.traffic-show .comfort {
+	margin: 0;
+	float: left;
+	z-index: 99999;
+	list-style: none;
+	color: #fff;
+	font-size: 12px;
+}
+
+.traffic-show .comfort li {
+	margin-right: 4px;
+	float: left;
+	text-align: center;
+}
+
+.traffic-show .comfort span {
+	display: inline-block;
+	width: 52px;
+	height: 4px;
+}
+
+.traffic-show .comfort .shun {
+	background-color: #33AF00;
+}
+
+.traffic-show .comfort .huan {
+	background-color: #FECB00;
+}
+
+.traffic-show .comfort .yong {
+	background-color: #DF0100;
+}
+
+.traffic-show .comfort .none {
+	background-color: #B6B6B6;
+}
+
+.traffic-show .comfort p {
+	margin: 0
+}
+
+.white {
+	color: #fff;
+}
+
+.traffic-show .videoMenu {
+	top: 8px;
+	left: 620px;
+	position: absolute;
+	z-index: 9999;
+	width: 80px;
+	height: 41px;
+	line-height: 39px;
+	text-align: center;
+	border: 1px solid #255A9E;
+	background-color: rgba(0, 16, 15, .4);
+	color: #2C86FF;
+}
+
+.traffic-show .videoMenu i {
+	font-size: 36px;
+}
+
+.traffic-show .dialog {
+	position: absolute;
+	top: 200px;
+	left: 300px;
+	padding: 10px;
+	z-index: 99999999;
+	width: 360px;
+	height: 360px;
+	border: 1px solid #1E7AF5;
+	background-color: rgba(30, 122, 255, .2);
+}
+
+.traffic-show .dialog img {
+	display: block;
+	width: 100%;
+	height: 100%
+}
+
+.title-list {
+	display: none
+}
+
+.module {
+	height: 450px;
+	overflow: hidden;
+	border: 1px solid #3E82CD;
+}
+
+.control {
+	padding: 8px 0;
+	margin: 8px 0;
+	position: relative;
+	overflow: hidden;
+}
+
+.control>div {
+	cursor: pointer;
+}
+
+.control .left {
+	position: absolute;
+	top: 8px;
+	left: 60px;
+}
+
+.control .mid {
+	margin: 0 auto;
+	width: 32px;
+	height: 32px;
+}
+
+.control .right {
+	position: absolute;
+	top: 8px;
+	right: 60px;
+}
+
+.layout {
+	margin-top: 20px;
+}
+
+.layout .col-zsr-6 {
+	margin-top: 16px;
+	padding-left: 10px;
+	box-sizing: border-box;
+	text-align: center;
+	cursor: pointer;
+}
+
+.layout .screen {
+	padding: 0 4px;
+	float: left;
+	width: 146px;
+	height: 70px;
+	box-sizing: border-box;
+	border: 1px solid #26599B;
+}
+
+.layout .screen i {
+	display: block;
+	box-sizing: border-box;
+	border: 1px solid #26599B;
+}
+
+.layout .one i {
+	margin-top: 4px;
+	width: 100%;
+	height: 60px;
+}
+
+.layout .four i {
+	margin-top: 4px;
+	width: 66px;
+	height: 28px;
+	float: left;
+}
+
+.layout .four i:nth-child(2n) {
+	margin-left: 4px;
+}
+
+.layout .six i {
+	margin-top: 4px;
+	width: 42px;
+	height: 28px;
+	float: left;
+}
+
+.layout .six i:nth-child(3n-1),.layout .six i:nth-child(3n) {
+	margin-left: 4px;
+}
+
+.layout .nine i {
+	margin-top: 4px;
+	width: 42px;
+	height: 17px;
+	float: left;
+}
+
+.layout .nine i:nth-child(3n-1),.layout .nine i:nth-child(3n) {
+	margin-left: 4px;
+}
+
+.layout .title {
+	margin-left: 5px;
+	float: left;
+	line-height: 70px;
+	color: #066085;
+	font-size: 18px;
+}
+
+.layout .active i {
+	background-color: #066085;
+}
+
+.layout .active .title {
+	color: #3B81D7;
+}
+
+.panel-body {
+	padding: 0 15px;
+}
+
+.panel a {
+	color: #0071C7
+}
+
+.panel a:hover,.panel a:link,.panel a:focus {
+	color: #0071C7;
+	text-decoration: none;
+}
+
+.list-group-item,.panel,.panel-default>.panel-heading {
+	background-color: transparent;
+	border: none;
+	color: #fff
+}
+.list-group li{
+	cursor: pointer;
+}
+.panel-group .panel-heading+.panel-collapse>.list-group,.panel-group .panel-heading+.panel-collapse>.panel-body {
+	border: none
+}
+.col-zsr-9 .module{
+	height: 100%;
+}
+</style>
+
+</head>
+<body>
+	<header class="monitor-header clearfix">
+		<div class="col-zsr-3 clearfix">
+			<img src="../../resource/images/logo.png" class="logo pull-left" />
+			<div class="title pull-left">景点监测</div>
+		</div>
+		<div class="col-zsr-6  addBtn" id="mainTab">
+			<div class="btn btn-line" onclick="return alert('正在建设中...');">重点景区监测</div>
+			<div class="btn btn-line" onclick="return alert('正在建设中...');">景区综合分析</div>
+			<div class="btn btn-line  active">景区视频监控</div>
+			<div class="btn btn-line" onclick="return alert('正在建设中...');">景区收入分析</div>
+	    </div>
+	    	    <div class="col-zsr-3">
+	<div class="btn btn-icon"><a href="../index.html" title="首页"><i class="icon iconfont">&#xe613;</i></a></div>
+</div>
+	</header>
+	<section class="monitor-main" id="main-container">
+		<div class="col-zsr-3" style="position: absolute;right: 5px;top: 0;z-index: 9999;">
+			<div class="title-menu" id="mainTab">
+				<a href="trafficMap_vlc.html"><li class="btn btn-light">地图模式</li></a>
+				<li class="btn btn-light active">监控模式</li>
+			</div>
+		</div>
+		<div style="height: 100%;display: block;">
+		   <!-- 一屏-->
+		    <div class="col-zsr-9 row-1 padrgt" id="screen0" style="display: none;">
+		       <div class='row-1'>
+		       <div class='module a' id = "module1">
+		          
+		       </div>
+		       </div>
+		    </div>
+		    <!-- 四屏-->
+			<div class="col-zsr-9 row-1 padrgt" id="screen1" >
+				<div class='col-zsr-6 row-2 padrgt padbot'>
+					<div class='module a' id = "module2">
+					   <!--  <div class="close">x</div>
+					    <object id='vlc1' style="z-Index:-1;" class='object' type='application/x-vlc-plugin'  events='True' width='100%' height='95%'>
+					      <param name='fullscreen' value='false' />
+					      <param name='mrl' value='' />  
+                          <param name='autoplay' value='true' />
+					    </object> -->
+					</div>
+				</div>
+				<div class='col-zsr-6 row-2 padbot'>
+				  
+					<div class='module a' id = "module3">
+					   <!--  <div class="close">x</div>
+					   <object id='vlc2' style="z-Index:-1;" class='object' type='application/x-vlc-plugin'  events='True' width='100%' height='95%'><param name='fullscreen' value='false' /></object>	   -->
+					</div>
+				</div>
+				<div class='col-zsr-6 row-2 padrgt'>
+					<div class='module a' id = "module4">
+					   <!-- <div class="close">x</div>
+					   <object id='vlc3' class='object' type='application/x-vlc-plugin'  events='True' width='100%' height='100%'><param name='fullscreen' value='false' /></object> -->
+					</div>
+				</div>
+				<div class='col-zsr-6 row-2'>
+					<div class='module a' id = "module5">
+					   <!-- <div class="close">x</div>
+					   <object id='vlc4' class='object' type='application/x-vlc-plugin'  events='True' width='100%' height='100%'><param name='fullscreen' value='false' /></object> -->
+					</div>
+				</div>
+				</div>
+			<!-- 六屏-->
+			<div class="col-zsr-9 row-1 padrgt" id="screen2" style="display: none;" >
+				<div class='col-zsr-8 row-4 padrgt padbot'>
+					<div class='module a' id = "module6"></div>
+				</div>           
+				<div class='col-zsr-4 row-4'>
+					<div class='row-2 padbot'>
+						<div class='module a' id = "module7"></div>
+					</div>
+					<div class='row-2 padbot'>
+						<div class='module a' id = "module8"></div>
+					</div>
+				</div>
+				<div class='col-zsr-4 row-3 padrgt'>
+					<div class='module a' id = "module9"></div>
+				</div>
+				<div class='col-zsr-4 row-3 padrgt'>
+					<div class='module a' id = "module10"></div>
+				</div>
+				<div class='col-zsr-4 row-3'>
+					<div class='module a' id = "module11"></div>
+				</div>
+				</div>
+				<!-- 九屏-->
+			<div class="col-zsr-9 row-1 padrgt" id="screen3" style="display: none;">
+				<div class='col-zsr-4 row-3 padbot padrgt'>
+					<div class='module a' id = "module12"></div>
+				</div>
+				<div class='col-zsr-4 row-3 padbot padrgt'>
+					<div class='module a' id = "module13"></div>
+				</div>
+				<div class='col-zsr-4 row-3 padbot'>
+					<div class='module a' id = "module14"></div>
+				</div>
+				<div class='col-zsr-4 row-3 padbot padrgt'>
+					<div class='module a' id = "module15"></div>
+				</div>
+				<div class='col-zsr-4 row-3 padbot padrgt'>
+					<div class='module a' id = "module16"></div>
+				</div>
+				<div class='col-zsr-4 row-3 padbot'>
+					<div class='module a ' id = "module17"></div>
+				</div>
+				<div class='col-zsr-4 row-3 padrgt'>
+					<div class='module a' id = "module18"></div>
+				</div>
+				<div class='col-zsr-4 row-3 padrgt'>
+					<div class='module a' id = "module19"></div>
+				</div>
+				<div class='col-zsr-4 row-3'>
+					<div class='module a' id = "module20"></div>
+				</div> 
+			</div>
+			<div class="col-zsr-3" style="padding-top: 40px;">
+				<div class="title-list"  style="display: block">
+					<div class="module list" id="scroll">
+						<div class="panel-group" id="accordion"></div>
+					</div>
+					<div class="control ulTwo" id="controller">
+						<div class="btn btn-light active" data-ctl="stop">停止</div>
+						<div class="btn btn-light" data-ctl="allstop">全停</div>
+						<div class="btn btn-light" data-ctl="fullscreen">全屏</div>
+					</div>
+					<div class="layout" id="wnmod">
+						<div class="col-zsr-6 row-2" data-type="0">
+							<div class="screen one">
+								<i></i>
+							</div>
+							<div class="title">一屏模式</div>
+						</div>
+						<div class="col-zsr-6 row-2 active" data-type="1">
+							<div class="screen four">
+								<i></i><i></i><i></i><i></i>
+							</div>
+							<div class="title">四屏模式</div>
+						</div>
+						<div class="col-zsr-6 row-2" data-type="2">
+							<div class="screen six">
+								<i></i><i></i><i></i> <i></i><i></i><i></i>
+							</div>
+							<div class="title">六屏模式</div>
+						</div>
+						<div class="col-zsr-6 row-2" data-type="3">
+							<div class="screen nine">
+								<i></i><i></i><i></i><i></i><i></i> <i></i><i></i><i></i><i></i>
+							</div>
+							<div class="title">九屏模式</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<script src="../../resource/script/lib/jquery-1.11.1.min.js"></script>
+<!-- 	<script src="../../resource/script/lib/jquery.nicescroll.min.js"></script> -->
+	<script src="../../resource/script/lib/bootstrap.min.js"></script>
+	<!-- platform -->
+	<script src="${res}/resource/script/jquery.ux.public.js"></script>
+	<script>
+/* 	var IframeOnClick = {  
+    resolution: 200,  
+    iframes: [],  
+    interval: null,  
+    Iframe: function() {  
+        this.element = arguments[0];  
+        this.cb = arguments[1];   
+        this.hasTracked = false;  
+    },  
+    track: function(element, cb) {  
+        this.iframes.push(new this.Iframe(element, cb));  
+        if (!this.interval) {  
+            var _this = this;  
+            this.interval = setInterval(function() { _this.checkClick(); }, this.resolution);  
+        }  
+    },  
+    checkClick: function() {  
+        if (document.activeElement) {  
+            var activeElement = document.activeElement;  
+            for (var i in this.iframes) {  
+                if (activeElement === this.iframes[i].element) { // user is in this Iframe  
+                    if (this.iframes[i].hasTracked == false) {   
+                        this.iframes[i].cb.apply(window, []);   
+                        this.iframes[i].hasTracked = true;  
+                    }  
+                } else {  
+                    this.iframes[i].hasTracked = false;  
+                }  
+            }  
+        }  
+    }  
+}; 
+IframeOnClick.track(document.getElementById('video_frame'), function() { alert('a click'); });  */ 
+
+		var operPage = {
+			ajaxTools: null,
+			id   : null,
+			init: function () {
+				// 初始化页面
+				this.initPage();
+				// 初始化业务
+				this.initServices();
+				
+			},
+			initPage: function () {
+			  
+				 $('#wnmod > div').on('click', function () {
+					var index=$(this).index();
+					$(this).addClass('active').siblings().removeClass('active');
+					//plugins.setWindowMod($(this).attr('data-type'));
+					if(index==0){
+					    $("#screen1").hide();
+						$("#screen2").hide();
+						$("#screen3").hide();
+						$("#screen0").show();
+					}
+					if(index==1){
+						$("#screen0").hide();
+						$("#screen2").hide();
+						$("#screen3").hide();
+						$("#screen1").show();
+					}
+					if(index==2){
+						$("#screen1").hide();
+						$("#screen0").hide();
+						$("#screen3").hide();
+						$("#screen2").show();
+					}
+					if(index==3){
+						$("#screen1").hide();
+						$("#screen2").hide();
+						$("#screen0").hide();
+						$("#screen3").show();
+					}
+				 });
+				
+				 $('#controller > div').on('click', function () {
+					$(this).addClass('active').siblings().removeClass('active');
+					var crl = $(this).attr('data-ctl');
+					switch (crl) {
+						case 'stop':
+							// $('#' + operPage.id + '').empty();
+							break;
+						case 'allstop':
+							$('.a').empty();
+							break;
+						case 'fullscreen':
+							plugins.fullScreen();
+							break;
+	
+					}					
+				 });
+	
+		
+				$('.a').on('click', function() {
+					if(!($(this).children().length)){
+					  
+					   operPage.id = $(this).attr("id"); 
+					}
+				});
+				
+				 $('.close').on('click', function() {
+                     // operPage.id = $(this).parent().attr("id");
+				      $(this).parent().empty();
+				    
+				});
+				
+					
+				
+               
+                 
+			},
+			initServices : function() {
+				// 加载分组列表
+				this.loadGroupList();
+			},
+			loadGroupList : function() {
+				var data=[{"data":
+				[{"monitorName":"监控一","rtspUrlPc":"http://www.nju.gov.cn/web_info/scenic/video/Video.aspx?target=7.html"},
+				{"monitorName":"监控二","rtspUrlPc":"http://www.nju.gov.cn/web_info/scenic/video/Video.aspx?target=7.html"}],"group":"太原汾河景区"},{"data":
+				[],"group":"太原动物园"}];
+									if (data && data.length > 0) {
+										
+										var resultHtml = '';
+										var show = ' in';
+										for ( var i = 0, l1 = data.length; i < l1; i += 1) {
+											var val = data[i];
+
+											resultHtml += '<div class="panel panel-default">'
+													+ '<div class="panel-heading" id="heading' + i + '" role="tab">'
+													+ '<a href="#collapse' + i + '" aria-expanded="true" aria-controls="collapse' + i + '" data-toggle="collapse" data-parent="#accordion">'
+													+ '<i class="icon iconfont">&#xe618;</i>'
+													+ (val['group'] || '-')
+													+ '</a>'
+													+ '</div>'
+													+ '<div class="panel-collapse collapse'
+													+ (i == 0 ? show : '')
+													+ '" id="collapse'
+													+ i
+													+ '" role="tabpanel" aria-labelledby="heading'
+													+ i
+													+ '">'
+													+ '<div class="panel-body">'
+													+ '<ul class="list-group">';
+
+											for ( var j = 0, l2 = val['data'].length || 0; j < l2; j += 1) {
+												var val2 = val['data'][j];
+												resultHtml += '<li data-url="'
+														+ (val2['rtspUrlPc'] || '')
+														+ '" class="list-group-item js-mon-item">'
+														+ (val2['monitorName'] || '-')
+														+ '</li>';
+											}
+
+											resultHtml += '</ul>' + '</div>'
+													+ '</div>' + '</div>';
+											}
+							
+										$('#accordion').empty().append(
+												resultHtml);
+// 										$('#scroll').niceScroll({
+// 											cursorborder : "1px solid #000",
+// 											cursorcolor : "#ccc",
+// 											boxzoom : true
+// 										});
+                                        var objectHtml = '';
+                           
+										var that = this, $monModeCon = $('#monModeCon');
+										$('#accordion .js-mon-item').on('click',function() {
+													var url = $(this).attr('data-url');
+													
+													objectHtml += '<div class="close">x</div>'+
+																	  '<iframe scrolling="no" src="'+ url +'" width="100%" height="95%"style="background-color: black;padding-top:20px;padding-left:50px;">'+
+																	  '</iframe>';
+								                 	
+                                                    $('#' + operPage.id + '').empty().append(objectHtml);
+                                                     //$("iframe").contents().find("body").attr("style","text-align:center");
+													 
+                                                    	$('.close').on('click', function() {
+										                    operPage.id = $(this).parent().attr("id");
+														    $(this).parent().empty();	    
+			         									});						 
+													objectHtml = '';
+												});
+
+										// 默认加载
+										/* setTimeout(function () {
+											var wnmod = $('#wnmod > div.active').attr('data-type'),
+												num = 0;
+											switch (wnmod) {
+												case '0':
+													num = 1;
+													break;
+												case '1':
+													num = 4;
+													break;
+												case '2':
+													num = 6;
+													break;
+												case '3':
+													num = 9;
+													break;
+												// 没有 default
+											}
+										 */
+										/* 	for (var i = 0; i < 4; i += 1) {
+												(function (j) {
+													setTimeout(function () {
+														plugins.setPlayWnd(j);
+														$('#accordion .js-mon-item:eq(' + j + ')').trigger('click');	
+													}, 100)
+												})(i);
+											}
+										}, 500);
+										setTimeout(function () {
+											plugins.setPlayWnd(0);
+										}, 1000);  */
+									}
+					
+			}
+		};
+
+		$(document).ready(function() {
+			operPage.init();
+		});
+	</script>
+
+</body>
+</html>

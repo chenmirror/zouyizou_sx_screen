@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name=renderer content=webkit>
+		<title>游客行为分析-团散分析</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css " rel="stylesheet ">
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css " rel="stylesheet ">
+		<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="js/echarts.js"></script>
+		<!--<script src="js/xilinguolemeng.js"></script>-->
+		<link rel="stylesheet" href="css/teamorsingle.css">
+		<link rel="stylesheet" href="css/navstyle.css">
+	</head>
+
+	<body>
+		<div class="row" style="background-color: #3f3d3e;padding: 6px 10px;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="nav_title">游客团散分析</span>
+			</div>
+		</div>
+		<div class="container">
+			<ul class="nav nav-tabs" role="tablist" id="feature-tab"  style="float: right;margin-top: -52px;">
+				<li class="active">
+					<a href="#tab-day" role="tab" data-toggle="tab">天</a>
+				</li>
+				<li>
+					<a href="#tab-month" role="tab" data-toggle="tab">月</a>
+				</li>
+				<li>
+					<a href="#tab-year" role="tab" data-toggle="tab">年</a>
+				</li>
+				<li>
+					<a href="tourbehavior.html" target="_self">返回</a>
+				</li>
+			</ul>
+
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab-day">
+					<div class="col-md-7 charts-style">
+						<div id="daychartsqixian" class="widthheight"> </div>
+					</div>
+					<div class="col-md-5 div-padding">
+						<div id="dayscalecharts" class="special_height"> </div>
+						<div id="daychartsjingqu" class="special_height margin-top10"> </div>
+					</div>
+				</div>
+
+				<div class="tab-pane" id="tab-month">
+					<div class="row">
+						<div class="col-md-7 div-padding-year-left">
+							<div id="monthchartsqixian" class="widthheight">
+							</div>
+						</div>
+						<div class="col-md-5 div-padding-year-right">
+							<div id="monthchartsjingqu" class="widthheight">
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-3 div-padding-year-left">
+							<div id="monthchartsximeng" class="widthheight">
+							</div>
+						</div>
+						<div class="col-md-9 div-padding-year-right">
+							<div id="monthchartsmonth" class="widthheight">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane" id="tab-year">
+					<div class="col-md-5 div-padding-year-left">
+						<div id="yearchartsqixian" class="widthheight div-padding-year">
+						</div>
+					</div>
+					<div class="col-md-4 div-padding-year-mid">
+						<div id="yearchartsjingqu" class="widthheight ">
+						</div>
+					</div>
+					<div class="col-md-3 div-padding-year-right">
+						<div id="yearchartsximeng" class="widthheight div-padding-year">
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<script type="text/javascript">
+			var dayteamsingleChart1 = echarts.init(document.getElementById('daychartsqixian'), 'dark');
+			var dayqixianoption = {
+				title: {
+					text: '▌锡盟各旗县团散图',
+					top: '2%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				//				backgroundColor: "#1b74ac",
+				color: ["#24c5fb", "#ffcc67"],
+				textStyle: {
+					color: "#ffffff",
+
+				},
+				legend: {
+					right: 30,
+					width: 500,
+					itemWidth: 40,
+//					textStyle: {
+//						color: "#d7d7d7"
+//					},
+					top: '2%',
+					data: ['团', '散']
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						saveAsImage: {
+							show: true
+						}
+					}
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					top: '17%',
+					containLabel: true
+				},
+				xAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: '#858585'
+						},
+						interval: 0,
+						rotate: 30,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'category',
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗']
+				}],
+				yAxis: [{
+					type: 'value',
+					name: "单位：人",
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					}
+				}],
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						mark: {
+							show: true
+						},
+						saveAsImage: {
+							show: true
+						}
+					},
+					top:'1%'
+				},
+				series: [{
+					name: '团',
+					type: 'bar',
+					barWidth: 15,
+					itemStyle: {
+						normal: {
+							barBorderRadius: 6
+						}
+					},
+					data: [120, 50, 60, 50, 15, 50, 30, 50, 20, 50, 30, 50, 20]
+				}, {
+					name: '散',
+					type: 'bar',
+					barWidth: 10,
+					itemStyle: {
+						normal: {
+							barBorderRadius: 5
+						}
+					},
+					data: [66, 35, 58, 65, 70, 50, 40, 47, 40, 66, 35, 58, 65]
+				}]
+			};
+			dayteamsingleChart1.setOption(dayqixianoption);
+
+			var dayteamsingleChart2 = echarts.init(document.getElementById('dayscalecharts'), 'dark');
+			var data = [{
+				value: 1938,
+				name: '团'
+			}, {
+				value: 1623,
+				name: '散'
+			}];
+			var dayscaleoption = {
+				backgroundColor: '#fff',
+				title: {
+					//					text: '团散比例',
+					//					x: 'center',
+					//					y: 'center',
+					text: '▌团散比例',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					show: true,
+					trigger: 'item',
+					formatter: "{b}: {c} ({d}%)"
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						mark: {
+							show: true
+						},
+						restore: {
+							show: true
+						},
+						saveAsImage: {
+							show: true
+						}
+					},
+					top:'1%'
+				},
+//				legend: {
+//					orient: 'horizontal',
+//					bottom: '0%',
+//					//					data: ['<10w', '10w-50w', '50w-100w', '100w-500w', '>500w']
+//				},
+				series: [{
+					type: 'pie',
+					selectedMode: 'single',
+					radius: ['25%', '50%'],
+					color: ['#FF999A', '#FFCC67'],
+
+					label: {
+						normal: {
+							position: 'outside',
+							formatter: '{d}%',
+
+							textStyle: {
+								color: '#fff',
+								fontWeight: 'bold',
+								fontSize: 10
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							show: false
+						}
+					},
+					data: data
+				}, {
+					type: 'pie',
+					radius: ['50%', '73%'],
+					itemStyle: {
+						normal: {
+							color: '#F2F2F2'
+						},
+						emphasis: {
+							color: '#ADADAD'
+						}
+					},
+					label: {
+						normal: {
+							position: 'inner',
+							formatter: '{c}人',
+							textStyle: {
+								color: '#777777',
+								fontWeight: 'bold',
+								fontSize: 14
+							}
+						}
+					},
+					data: data
+				}]
+			};
+
+			dayteamsingleChart2.setOption(dayscaleoption);
+			var dayteamsingleChart3 = echarts.init(document.getElementById('daychartsjingqu'), 'dark');
+			var dayjingquoption = {
+				backgroundColor: '#fff',
+				title: {
+					text: '▌锡盟各景区团散图',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						saveAsImage: {
+							show: true
+						}
+					}
+				},
+				legend: {
+					icon: 'rect',
+					itemWidth: 14,
+					itemHeight: 5,
+					itemGap: 13,
+					data: ['团', '散'],
+					right: '1%',
+//					textStyle: {
+//						fontSize: 8,
+//						color: '#C7C7C7'
+//					},
+					//					top: '10%',
+					top: '9%',
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					//					bottom: '3%',
+					top: '27%',
+					containLabel: true
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						mark: {
+							show: true
+						},
+						magicType: {
+							show: true,
+							//							type: ['line', 'bar', 'stack', 'tiled']
+							type: ['bar', 'stack', 'tiled']
+						},
+						restore: {
+							show: true
+						},
+						saveAsImage: {
+							show: true
+						}
+					}
+				},
+				calculable: true,
+				xAxis: [{
+					type: 'category',
+					//						axisTick:{show:false},
+					boundaryGap: false,
+					data: ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						},
+						interval: 0,
+						rotate: 30,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					}
+				}],
+				yAxis: [{
+					type: 'value',
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						show: false
+					},
+					name: '人数(人)',
+				}],
+				series: [{
+						name: '团',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [167, 143, 160, 155, 162, 160, 170, 147, 163, 160, 185, 162, 160]
+					},
+					{
+						name: '散',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [151, 143, 130, 150, 153, 163, 143, 167, 153, 160, 165, 172, 150]
+					}
+				]
+			};
+			dayteamsingleChart3.setOption(dayjingquoption);
+
+			var monthteamsingleChart1 = echarts.init(document.getElementById('monthchartsqixian'), 'dark');
+			var monthqixianoption = {
+				backgroundColor: '#fff',
+				title: {
+					text: '▌锡盟各旗县团散图',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				//				color: ["#24c5fb", "#ffcc67"],
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						saveAsImage: {
+							show: true
+						}
+					},
+					top:'1%'
+				},
+				legend: {
+					data: ['团', '散'],
+					right: '5%',
+					top: '2%'
+				},
+				xAxis: {
+					//					triggerEvent: true,
+					//					data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+					type: 'category',
+					//						axisTick:{show:false},
+					boundaryGap: true,
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						},
+						interval: 0,
+						rotate: 30,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗'],
+				},
+				yAxis: {
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					}
+				},
+				series: [{
+					name: '团',
+					type: 'bar',
+					itemStyle: {
+						normal: {
+							color: ["#24c5fb"],
+						}
+					},
+					data: [220, 182, 191, 234, 290, 330, 310, 200, 200, 101, 300, 330]
+				}, {
+					name: '散',
+					type: 'bar',
+					itemStyle: {
+						normal: {
+							color: ["#ffcc67"],
+						}
+					},
+					data: [200, 200, 101, 300, 330, 190, 100, 220, 182, 191, 234, 290]
+				}]
+			};
+			monthteamsingleChart1.setOption(monthqixianoption);
+			var monthteamsingleChart2 = echarts.init(document.getElementById('monthchartsjingqu'), 'dark');
+			var monthjingquoption = {
+				backgroundColor: '#fff',
+				title: {
+					text: '▌锡盟各景区团散图',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						saveAsImage: {
+							show: true
+						}
+					},
+					top:'1%'
+				},
+				legend: {
+					icon: 'rect',
+					itemWidth: 14,
+					itemHeight: 5,
+					itemGap: 13,
+					data: ['团', '散'],
+//					textStyle: {
+//						fontSize: 8,
+//						color: '#C7C7C7'
+//					},
+					right: '1%',
+					top: '5%'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					//					bottom: '3%',
+					top: '17%',
+					containLabel: true
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						mark: {
+							show: true
+						},
+						magicType: {
+							show: true,
+							//							type: ['line', 'bar', 'stack', 'tiled']
+							type: ['bar', 'stack', 'tiled']
+						},
+						restore: {
+							show: true
+						},
+						saveAsImage: {
+							show: true
+						}
+					}
+				},
+				calculable: true,
+				xAxis: [{
+					type: 'category',
+					//						axisTick:{show:false},
+					boundaryGap: false,
+					data: ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						},
+						interval: 0,
+						rotate: 30,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					}
+				}],
+				yAxis: [{
+					type: 'value',
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						show: false
+					},
+					name: '人数(人)',
+				}],
+				series: [{
+						name: '团',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [167, 143, 160, 155, 162, 160, 170, 147, 163, 160, 185, 162, 160]
+					},
+					{
+						name: '散',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [151, 143, 130, 150, 153, 163, 143, 167, 153, 160, 165, 172, 150]
+					}
+				]
+			};
+			monthteamsingleChart2.setOption(monthjingquoption);
+			var monthteamsingleChart3 = echarts.init(document.getElementById('monthchartsximeng'), 'dark');
+			var data = [{
+				value: 10938,
+				name: '团'
+			}, {
+				value: 16623,
+				name: '散'
+			}];
+			var monthscaleoption = {
+				backgroundColor: '#fff',
+				title: {
+					//					text: '团散比例',
+					//					x: 'center',
+					//					y: 'center',
+					text: '▌团散比例',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					show: true,
+					trigger: 'item',
+					formatter: "{b}: {c} ({d}%)"
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						mark: {
+							show: true
+						},
+						restore: {
+							show: true
+						},
+						saveAsImage: {
+							show: true
+						}
+					},
+					top:'1%'
+				},
+//				legend: {
+//					orient: 'horizontal',
+//					bottom: '0%',
+//					//					data: ['<10w', '10w-50w', '50w-100w', '100w-500w', '>500w']
+//				},
+				series: [{
+					type: 'pie',
+					selectedMode: 'single',
+					radius: ['25%', '50%'],
+					color: ['#FF999A', '#FFCC67'],
+
+					label: {
+						normal: {
+							position: 'inner',
+							formatter: '{d}%',
+
+							textStyle: {
+								color: '#fff',
+								fontWeight: 'bold',
+								fontSize: 10
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							show: false
+						}
+					},
+					data: data
+				}, {
+					type: 'pie',
+					radius: ['50%', '73%'],
+					itemStyle: {
+						normal: {
+							color: '#F2F2F2'
+						},
+						emphasis: {
+							color: '#ADADAD'
+						}
+					},
+					label: {
+						normal: {
+							position: 'inner',
+							formatter: '{c}人',
+							textStyle: {
+								color: '#777777',
+								fontWeight: 'bold',
+								fontSize: 14
+							}
+						}
+					},
+					data: data
+				}]
+			};
+			monthteamsingleChart3.setOption(monthscaleoption);
+			var monthteamsingleChart4 = echarts.init(document.getElementById('monthchartsmonth'), 'dark');
+			var monthoption = {
+				backgroundColor: 'white',
+				title: {
+					text: '▌团散人数趋势',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						lineStyle: {
+							color: '#57617B'
+						}
+					}
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						saveAsImage: {
+							show: true
+						}
+					},
+					top:'1%'
+				},
+				legend: {
+					icon: 'rect',
+					itemWidth: 14,
+					itemHeight: 5,
+					itemGap: 13,
+					data: ['团', '散'],
+//					textStyle: {
+//						fontSize: 8,
+//						color: '#C7C7C7'
+//					},
+					right: '5%',
+					top: '2%'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					//										bottom: '20%',
+					top: '17%',
+					containLabel: true
+				},
+				xAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						},
+						interval: 0,
+						rotate: 34,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'category',
+					boundaryGap: false,
+					data: ['2016年8月', '2016年9月', '2016年10月', '2016年11月', '2016年12月', '2017年1月', '2017年2月', '2017年3月', '2017年4月', '2017年5月', '2017年6月', '2017年7月']
+				}],
+				yAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					type: 'value',
+					name: '人数(人)',
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					}
+				}],
+				series: [{
+					name: '团',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(137, 189, 27, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(137, 189, 27, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(137,189,27)'
+						}
+					},
+					data: [966, 796, 977, 695, 588, 594, 619, 694, 680, 752, 875, 994]
+				}, {
+					name: '散',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(0, 136, 212, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(0, 136, 212, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(0,136,212)'
+						}
+					},
+					data: [897, 759, 959, 860, 799, 690, 720, 791, 829, 867, 990, 984]
+				}]
+			};
+			monthteamsingleChart4.setOption(monthoption);
+
+			var yearteamsingleChart1 = echarts.init(document.getElementById('yearchartsqixian'), 'dark');
+			var yearqixianoption = {
+				backgroundColor: '#fff',
+				title: {
+					text: '▌锡盟各旗县团散图',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				//				color: ["#24c5fb", "#ffcc67"],
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						saveAsImage: {
+							show: true
+						}
+					},
+					top:'1%'
+				},
+				legend: {
+					data: ['团', '散'],
+					right: '5%',
+					top: '2%'
+				},
+				xAxis: {
+					//					triggerEvent: true,
+					//					data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+					type: 'category',
+					//						axisTick:{show:false},
+					boundaryGap: true,
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						},
+						interval: 0,
+						rotate: 30,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+
+					data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗']
+				},
+				yAxis: {
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					}
+				},
+				series: [{
+					name: '团',
+					type: 'bar',
+					itemStyle: {
+						normal: {
+							color: ["#24c5fb"],
+						}
+					},
+					data: [220, 182, 191, 234, 290, 330, 310, 200, 200, 101, 300, 330]
+				}, {
+					name: '散',
+					type: 'bar',
+					itemStyle: {
+						normal: {
+							color: ["#ffcc67"],
+						}
+					},
+					data: [200, 200, 101, 300, 330, 190, 100, 220, 182, 191, 234, 290]
+				}]
+			};
+			//			daytravelwayChart1.on('click', function(param) {
+			//				alert(param.value);
+			//			}); 
+			yearteamsingleChart1.setOption(yearqixianoption);
+
+			var yearteamsingleChart2 = echarts.init(document.getElementById('yearchartsjingqu'), 'dark');
+			var yearjingquoption = {
+				backgroundColor: '#fff',
+				title: {
+					text: '▌锡盟各景区团散图',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					icon: 'rect',
+					itemWidth: 14,
+					itemHeight: 5,
+					itemGap: 13,
+					data: ['团', '散'],
+//					textStyle: {
+//						fontSize: 8,
+//						color: '#C7C7C7'
+//					},
+					right: '6%',
+					top: '2%'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					//					bottom: '3%',
+					top: '17%',
+					containLabel: true
+				},
+				toolbox: {
+					show: true,
+					feature: {
+//						mark: {
+//							show: true
+//						},
+//						magicType: {
+//							show: true,
+//							type: ['bar', 'stack', 'tiled']
+//						},
+//						restore: {
+//							show: true
+//						},
+						saveAsImage: {
+							show: true
+						}
+					},
+					top:'1%'
+				},
+				calculable: true,
+				xAxis: [{
+					type: 'category',
+					//						axisTick:{show:false},
+					boundaryGap: false,
+					data: ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						},
+						interval: 0,
+						rotate: 30,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					}
+				}],
+				yAxis: [{
+					type: 'value',
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						show: false
+					},
+					name: '人数(人)',
+				}],
+				series: [{
+						name: '团',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [167, 143, 160, 155, 162, 160, 170, 147, 163, 160, 185, 162, 160]
+					},
+					{
+						name: '散',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [151, 143, 130, 150, 153, 163, 143, 167, 153, 160, 165, 172, 150]
+					}
+				]
+			};
+			yearteamsingleChart2.setOption(yearjingquoption);
+
+			var yearteamsingleChart3 = echarts.init(document.getElementById('yearchartsximeng'), 'dark');
+			var data = [{
+				value: 9938,
+				name: '团'
+			}, {
+				value: 17623,
+				name: '散'
+			}];
+			var yearximengoption = {
+				backgroundColor: '#fff',
+				title: {
+					//					text: '团散比例',
+					//					x: 'center',
+					//					y: 'center',
+					text: '▌团散比例',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					show: true,
+					trigger: 'item',
+					formatter: "{b}: {c} ({d}%)"
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						mark: {
+							show: true
+						},
+						restore: {
+							show: true
+						},
+						saveAsImage: {
+							show: true
+						}
+					},
+					top:'1%'
+				},
+				legend: {
+					orient: 'horizontal',
+					bottom: '0%',
+					//					data: ['<10w', '10w-50w', '50w-100w', '100w-500w', '>500w']
+				},
+				series: [{
+					type: 'pie',
+					selectedMode: 'single',
+					radius: ['25%', '50%'],
+					color: ['#FF999A', '#FFCC67'],
+
+					label: {
+						normal: {
+							position: 'inner',
+							formatter: '{d}%',
+
+							textStyle: {
+								color: '#fff',
+								fontWeight: 'bold',
+								fontSize: 10
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							show: false
+						}
+					},
+					data: data
+				}, {
+					type: 'pie',
+					radius: ['50%', '73%'],
+					itemStyle: {
+						normal: {
+							color: '#F2F2F2'
+						},
+						emphasis: {
+							color: '#ADADAD'
+						}
+					},
+					label: {
+						normal: {
+							position: 'inner',
+							formatter: '{c}人',
+							textStyle: {
+								color: '#777777',
+								fontWeight: 'bold',
+								fontSize: 14
+							}
+						}
+					},
+					data: data
+				}]
+			};
+			yearteamsingleChart3.setOption(yearximengoption);
+		</script>
+	</body>
+
+</html>

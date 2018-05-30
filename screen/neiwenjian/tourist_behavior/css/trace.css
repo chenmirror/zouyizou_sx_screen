@@ -1,0 +1,72 @@
+
+.container {
+	/*padding: 10px 10px 0 15px;*/
+	/*margin: 0;*/
+	width: 100%;
+	background-color: #eff1ff;
+}
+.charts-style{
+	/*border: 1px solid #EBEBEB;*/
+	border-radius: 4px;
+	background-color: white!important;
+}
+.padding-15 {
+	padding: 10px;
+	/*background-color: #eff1ff;*/
+}
+.padding-right3{
+	padding-right: 3px;
+}
+#mapChart {
+	/*width: 50%;*/
+	height: 699px;
+	/*border: 4px solid #1F3247;*/
+}
+/*.table-height{
+	height: 160px;
+}*/
+
+.relation{
+	/*width: 110%;*/
+	/*width: 678px;*/
+	border-radius: 4px;
+	height: 350px;
+	/*border-top: 5px solid #EFF1FF;*/
+	/*margin-left: 10px;*/
+	margin-right: 10px;
+}
+
+.title {
+	color: #FFC300;
+	font-size: 16px;
+	margin-bottom: 10px;
+	margin-top: 10px;
+}
+
+
+.table_title{
+	color: #EEB300;
+	font-size:15px;
+	margin-bottom: 10px;
+	margin-top: 13px;
+	font-weight: bold;
+}
+
+.fixed-table-container{
+	margin-bottom: 10px;
+}
+
+/*表格按钮*/
+.pagination ul>.active>a, .pagination ul>.active>span {
+    background-color: #337ab7!important;
+}
+.pagination ul>.active>a, .pagination ul>.active>span {
+    color: white;
+    cursor: default;
+}
+th{
+	background: #d7dcff;
+}
+.margin-top10{
+	margin-top: 10px;
+}

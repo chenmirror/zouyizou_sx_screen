@@ -1,0 +1,160 @@
+/*头部导航栏*/
+.nav-tabs {
+	padding-left: 60px;
+	padding-bottom: 2px;
+	border-bottom: 0px;
+}
+.title_ul{
+	margin-top: 29px;
+}
+.nav {
+    margin-bottom: 0px;
+}
+li a {
+	color: white;
+	background-color: #3E4955;
+	font-size: 14px;
+}
+.times {
+	color: white;
+}
+
+.times_div {
+	float: right;
+	padding: 10px;
+	margin-right: 30px;
+	/*border: 1px solid #759AA0;*/
+	display: inline;
+	padding-top: 0px;
+    margin-top: 30px;
+    padding-bottom: 0px;
+}
+
+.title {
+    margin-top: 29px;
+    float:right;
+   /* margin-left: 10px;*/
+    color: white;
+    font-size: 24px;
+    margin-right: 15px;
+}
+.navbar-collapse{
+	padding-right: 5px!important;
+}
+img{
+	margin-left: 20px;
+    margin-top: 5px;
+}
+/*-------------------------------------------------*/
+
+body{
+    padding: 0;
+    margin: 0;
+    background: #EFF1FF;
+}
+.container1{
+    width:98%;
+    background:#fff;
+    height: 400px;
+    margin: 0 auto;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.left{
+    width: 60%;
+    float: left;
+    height: 400px;
+}
+.pie{
+    width: 40%;
+    float: right;
+    height: 400px;
+}
+
+.top{
+    padding-top: 45px;
+    width: 100%;
+    height: 245px;
+    margin: 0 auto;
+}
+.bottom{
+    width: 100%;
+    height: 200px;
+    margin: 0 auto;
+    margin-top: -20px;
+}
+.three{
+    width: 98%;
+    margin: 0 auto;
+    height:400px;
+    background: #fff;
+    margin-top: 15px;
+    border-radius: 5px;
+}
+.rate{
+    width:100%;
+    height:400px;
+    float: left;
+}
+.week,.month,.year{
+    width:100%;
+    height:400px;
+    float: left;
+}
+
+.btn_rate{
+    margin-top: 5px;
+    float: right;
+    margin-right: 60px;
+}
+
+ .hotel_one{
+    width:50%;
+    height:400px;
+    float: left;
+}
+
+ .house_one{
+    width:50%;
+    height:400px;
+    float: right;
+}
+ #btn_week{
+ 	 position: relative;
+    left: 400px;
+    bottom: 390px;
+    width: 60px;
+    margin-bottom: 3px;
+    font-size: 12px;
+    color: white;
+    background-color: #027AE0;
+    border: 1px solid #027AE0;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+ }
+ #btn_month{
+ 	position: relative;
+    left: 394px;
+    bottom: 390px;
+    width: 60px;
+    margin-bottom: 3px;
+    font-size: 12px;
+    color: #027AE0;
+    background-color: white;
+    border: 1px solid #027AE0;
+ }
+#btn_year{
+	position: relative;
+    left: 390px;
+    bottom:390px;
+    width: 60px;
+    margin-bottom: 3px;
+    font-size: 12px;
+    color: #027AE0;
+    background-color: white;
+    border: 1px solid #027AE0;
+    border-left:none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}

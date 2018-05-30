@@ -1,0 +1,345 @@
+/**
+ *姚林刚
+ *常用操作工具方法
+ */
+var util = new Object();
+(function(t_util){
+	/**
+	 * 为请求字符串添加随机码，处理ie中请求只访问一次的问题
+	 * @author 姚林刚
+	 * @param url 需要处理的URL
+	 */
+	function warpRandom(url){
+		if(url){
+			if(/\?+/.test(url)){
+				url = url+"&math="+Math.random();
+			}else{
+				url = url+"?math="+Math.random();
+			}
+			return url;
+		}
+		return null;
+	}
+	t_util.warpRandom = warpRandom;
+	/**
+	 * 日期解析为字符串
+	 * @author 姚林刚
+	 * @param date 要解析的日期
+	 */
+	function dateFormatter(date){
+		if(typeof(date) !="undefined" && date != null){
+			if(date instanceof Date){
+				var y = date.getFullYear();
+				var m = date.getMonth()+1;
+				var d = date.getDate();
+				return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d);
+			}else if(typeof(date) == "number" || typeof(date) == "string"){
+				var value = date+"";
+				var date1 = new Date(parseInt(value.replace("/Date(", "").replace(")/", ""), 10));
+                //月份为0-11，所以+1，月份小于10时补个0       
+                var month = date1.getMonth() + 1 < 10 ? "0" + (date1.getMonth() + 1) : date1.getMonth() + 1;
+                var currentDate = date1.getDate() < 10 ? "0" + date1.getDate() : date1.getDate();
+                return date1.getFullYear() + "-" + month + "-" + currentDate;
+			}else{
+				return "";
+			}			
+		}		
+	}
+	t_util.dateFormatter = dateFormatter;
+	/**
+	 * 字符串解析为日期
+	 * @author 姚林刚
+	 * @param s 要解析的日期字符串
+	 */
+	function dateParser(s){
+		if (!s) return new Date();
+		var ss = s.split('-');
+		var y = parseInt(ss[0],10);
+		var m = parseInt(ss[1],10);
+		var d = parseInt(ss[2],10);
+		if (!isNaN(y) && !isNaN(m) && !isNaN(d)){
+			return new Date(y,m-1,d);
+		} else {
+			return new Date();
+		}
+	}
+	t_util.dateParser = dateParser;
+	/**
+	 * 时间解析为字符串
+	 * @author 姚林刚
+	 * @param 要解析的时间
+	 */
+	function datetimeFormatter(date){
+		var y = date.getFullYear();
+		var m = date.getMonth()+1;
+		var d = date.getDate();
+		var h = date.getHours();
+		var mm = date.getMinutes();
+		var s = date.getSeconds();
+		return y+'-'+(m<10?('0'+m):m)+'-'+(d<10?('0'+d):d)+' '+(h<10?('0'+h):h)+':'+(mm<10?('0'+mm):mm)+':'+(s<10?('0'+s):s);
+	}
+	t_util.datetimeFormatter = datetimeFormatter;
+	/**
+	 * 字符串解析为时间
+	 * @author 姚林刚
+	 * @param s 要解析的时间字符串
+	 */
+	function datetimeParser(s){
+		if (!s) return new Date();
+		var d = s.split(' ');
+		var ss = d[0].split("-");
+		var dd = d[1].split(":");
+		var y = parseInt(ss[0],10);
+		var m = parseInt(ss[1],10);
+		var d = parseInt(ss[2],10);
+		var h = parseInt(dd[0],10);
+		var mm = parseInt(dd[1],10);
+		var si = parseInt(dd[2],10);
+		if (!isNaN(y) && !isNaN(m) && !isNaN(d)&&!isNaN(h) && !isNaN(mm) && !isNaN(si)){
+			return new Date(y,m-1,d,h,mm,si);
+		} else {
+			return new Date();
+		}
+	}
+	t_util.datetimeParser = datetimeParser;
+	
+	
+	/**
+	 * esayUI数据表格组件
+	 * @author 姚林刚
+	 * @param selected 用jquery选择器选择的用于渲染的datagrid组件
+	 * @param tbselected 表格组件逐渐
+	 * @param column 列数据
+	 * @param url 数据连接地址
+	 * @param title 表格标题
+	 * @param msg 提示信息
+	 * @param noPage 是否分页 true表示无分页
+	 * @param data 其他参数，为对象
+	 */
+	function dataGrid(selected,tbselected,column,url,title,msg,noPage,data,pageParam){
+		if(noPage){
+			var param = {
+					url:url,
+				    autoRowHeight:true,//自动行高
+				    striped:true,//隔行换色
+				    columns:column,
+					fitColumns:true,//自适应列宽
+			 		fit:true,//自适应宽高
+			 		border:true,  //是否有外边框
+					scrollbarSize:0,
+			    	rownumbers:true, //是否显示行号
+			    	singleSelect:true,//设置选择单行
+			    	title:title,
+					msg:msg,
+					top:50,
+					toolbar:tbselected,
+					showType:'show'
+				};
+			$.extend(param,data);
+			var dg = $(selected).datagrid(param);
+			return dg;
+		}else{
+			var param = {
+					url:url,
+				    autoRowHeight:true,//自动行高
+				    striped:true,//隔行换色
+				    columns:column,
+					fitColumns:true,//自适应列宽
+			 		fit:true,//自适应宽高
+			 		pagination:true,
+			 		border:true,  //是否有外边框
+					scrollbarSize:0,
+			    	rownumbers:true, //是否显示行号
+			    	singleSelect:true,//设置选择单行
+			    	title:title,
+					msg:msg,
+					top:50,
+					pagination:true,
+					pageNumber:1,
+					pageSize: 15,
+					pageList:[10,15,20,50,100],
+					toolbar:tbselected,
+					showType:'show'
+				};
+			$.extend(param,data);
+			var dg = $(selected).datagrid(param);
+			var p = dg.datagrid('getPager'); //分页框设置
+			if(typeof(pageParam) != "undefined") {
+				if(pageParam == null){
+					pageParam = pageParam || {};					
+					pageParam.pageSize = 15;
+					pageParam.pageList = [10,15,20,50,100];
+					pageParam.beforePageText= '';//页数文本框前显示的汉字 
+					pageParam.afterPageText= '';
+					pageParam.displayMsg= '';
+					$(p).pagination(pageParam); 
+				}else{
+					if(!pageParam.pageSize){
+						pageParam.pageSize = 15;
+					}
+					if(!pageParam.pageList){
+						pageParam.pageList = [10,15,20,50,100];
+					}
+					pageParam.beforePageText= '';//页数文本框前显示的汉字 
+					pageParam.afterPageText= '';
+					pageParam.displayMsg= '';
+					$(p).pagination(pageParam); 
+				}
+			}else{
+				 $(p).pagination({ 
+			        pageSize: 15,//每页显示的记录条数，默认为10 
+			        pageList: [10,15,20,50,100],//可以设置每页记录条数的列表 
+			        beforePageText: '第',//页数文本框前显示的汉字 
+			        afterPageText: '页    共 {pages} 页', 
+			        displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录'
+			    }); 
+			}
+			return dg;
+		}
+	}
+	t_util.dataGrid = dataGrid;
+	
+	
+	
+	/**
+	 * 封装dialog，在URL中加上随机码，防止ie浏览器中不重新请求
+	 * @author 姚林刚
+	 * @param id 组件id值
+	 * @param data 参数 
+	 */
+	function dialog(id,data){
+		if(data.href){
+			if(/\?+/.test(data.href)){
+				data.href = data.href+"&math="+Math.random();
+			}else{
+				data.href = data.href+"?math="+Math.random();
+			}
+		}
+		data.inline = true;
+		return $(id).dialog(data); 
+	}
+	t_util.dialog = dialog;
+	
+	
+	/**
+	 * 替换所有匹配字符串方法
+	 * @author 姚林刚
+	 * @param source 原字符串
+	 * @param rex 要匹配的正则表达式
+	 * @param newChar 替换成的字符串
+	 */
+	function replaceAll(source,rex,newChar){
+		while(source.search(rex)!=-1){
+			source = source.replace(rex,newChar);
+		}
+		return source;
+	}
+	t_util.replaceAll = replaceAll;
+	
+	/**
+	 * 字符串过长时的截断方法,并加上提示完整信息的标题
+	 * @author 姚林刚
+	 * @param str 原字符串
+	 * @param len 字符串长度
+	 * @param extStr 切去多余长度，替换的字符串
+	 */
+	function subTextWithTitle(str,len,extStr){
+		if(!str){
+			return "";
+		}
+		var resStr="";
+		if(str.length+2<len){
+			resStr = str;
+		}else{
+			if(extStr){
+				resStr = str.substr(0,len)+extStr;
+			}else{
+				resStr = str.substr(0,len)+"...";
+			}
+		}
+		return "<span title='"+str+"'>"+resStr+"</span>";
+	}
+	t_util.subTextWithTitle = subTextWithTitle;
+	
+	/**
+	 * 阻止其他组件事件方法，主要避免组件的冒泡触发
+	 * @author 姚林刚
+	 * @param e 触发的事件
+	 */
+	function stopFn(e){
+		if (e && e.stopPropagation) {
+			e.stopPropagation();
+		} else {
+			window.event.cancelBubble = true;
+		}
+	}
+	t_util.stopFn = stopFn;
+	
+	//设置ajax请求超时方法
+	$(document).ajaxError(function(event,request, settings){
+		if(request.responseText.indexOf("登陆失效")!=-1){
+			top.tipAndReLoad();
+		}
+	});
+
+	
+	 // 分页
+//	function createPage(total, currentpage, pagesize, target, url , callBack , data) {
+//		$("#"+target).empty();
+//		var maxpage = Math.ceil(total / pagesize);
+//		// alert(maxpage);
+//		var $obj = $("#"+target);
+//		var i = currentpage - 2 > 0 ? currentpage - 2 : 1;
+//		var end = i + 3 < maxpage ? i + 3 : maxpage;
+//		i = end - 3 > 0 ? end - 3 : 1;
+//		if (currentpage - 1 > 0) {
+//			$obj.append('<span><button class=""  onclick="' + func + "("
+//					+ (currentpage - 1) + ');" >上一页</button></span> ');
+//		} else {
+//			$obj.append('<span><button class="" disabled="true" onclick="'
+//					+ func + "(" + 1 + ');" >上一页</button></span> ');
+//		}
+//		for (; i <= end; i++) {
+//			if (i == currentpage) {
+//				$obj.append('<span><button class="" disabled="true" onclick="'
+//						+ func + "(" + i + ');" >' + i + '</button></span> ');
+//			} else {
+//				$obj.append('<span><button class=""  onclick="' + func + "(" + i
+//						+ ');" >' + i + '</button></span> ');
+//			}
+//		}
+//		if (currentpage + 1 <= maxpage) {
+//			$obj.append('<span><button class=""  onclick="' + func + "(" + (currentpage + 1) + ');" >下一页</button></span> ');
+//		} else {
+//			$obj.append('<span><button class="" disabled="true" onclick="' + func + "(" + maxpage + ');" >下一页</button></span> ');
+//		}
+//		$obj.append('<span>共' + total + '条记录，共' + maxpage + '页，每页' + pagesize + '条</span> ');
+//	}
+	
+	/**
+	 * 当前html页面加载方法
+	 * @author 姚林刚
+	 * @param url 网页链接
+	 * @param divId 放入网页的divId
+	 * @param callBack 回调方法
+	 */
+	function loadHtml(url, divId, callBack) {
+		$.ajax({
+			url : url,
+			async: false,
+			dataType : "html",
+			success : function(data) {
+				$("#" + divId).empty();
+				$("#" + divId).append(data);
+				$("#" + divId).find(".main").width($("#" + divId).width());
+				$("#" + divId).find(".main").height($("#" + divId).height());
+				$("#" + divId).find(".progressBar").hide();
+				$("#" + divId).css("background-color", "#222222");
+				if(callBack){
+					callBack.apply();
+				}
+			}
+		});
+	}
+	t_util.loadHtml = loadHtml;
+})(util);

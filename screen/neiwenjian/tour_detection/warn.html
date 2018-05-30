@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name=renderer content=webkit>
+		<title></title>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/echarts.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/world.js"></script>
+		<script type="text/javascript" src="js/china.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+		<script src="js/bmap.js"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0UqXGL98FSmi22w2Rl6HK56I"></script>
+		<script src="semantic/semantic.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/total.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+		<!--<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css" />
+		<link rel="stylesheet" type="text/css" href="semantic/docs.css" />-->
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+	  
+	   <script type="text/javascript">
+	   	var myChart;
+$(document).ready(function() {
+	myChart = echarts.init(document.getElementById("main1"));
+
+	var option = {
+		backgroundColor: 'white',
+		title: {
+			top:10,
+			left: 15,
+			text: '▌酒店阈值监测',
+
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			}
+		},
+		color: ['#3398DB'],
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: { // 坐标轴指示器，坐标轴触发有效
+				// type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			}
+		},
+		legend: {
+			left: 130,
+			top: 315,
+			data: ['当日酒店人数', '人数预警值', '人数上限值']
+		},
+		grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		},
+		xAxis: [{
+			type: 'category',
+			show: true,
+			data: ['1星', '2星', '3星', '4星', '5星', '其它'],
+			axisTick: {
+				alignWithLabel: true
+			}
+		}],
+		yAxis: [{
+			show: true,
+			max: '200',
+			type: 'value',
+			axisLabel: {
+				textStyle: {
+					color: "#646464"
+				}
+			},
+			splitLine: {
+				show: true,
+				lineStyle: {
+					// 使用深浅的间隔色
+					color: ['#d9d9d9'],
+					type: 'dashed',
+				}
+			},
+			axisLine: {
+				lineStyle: {
+					color: '#999999'
+				}
+			}
+		}],
+
+		series: [{
+			name: '当日酒店人数',
+			type: 'bar',
+
+			barWidth: '40%',
+			data: [100, 80, 60, 50, 40, 120]
+		}, {
+			name: '人数预警值',
+			type: 'line',
+		
+			data: [120, 100, 110, 85, 90, 150],
+			lineStyle: {
+				normal: {
+					width: 2, //连线粗细
+					color: "red" //连线颜色
+				}
+			}
+		}, {
+			name: '人数上限值',
+			type: 'line',
+			color: "yellow",
+			data: [140, 120, 140, 100, 110, 180],
+			lineStyle: {
+				normal: {
+					width: 2, //连线粗细
+					color: "yellow" //连线颜色
+				}
+			}
+		}]
+	};
+	myChart.setOption(option);
+//	$("#btn11").css("background-color", "#027AE0");
+//	$("#btn11").css("color", "white");
+//	$("#btn11").siblings().css("background-color", "white");
+//	$("#btn11").siblings().css("color", "#027AE0");
+$("#btn11").css("background-color","#027AE0");
+				$("#btn11").css("color","white");
+				$("#btn12").css("background-color","white");
+				$("#btn12").css("color","#027AE0");
+				$("#btn13").css("background-color","white");
+				$("#btn13").css("color","#027AE0");
+
+})
+
+function jiudian() {
+	var option = {
+		backgroundColor: 'white',
+		title: {
+			top:10,
+			left: 15,
+			text: '▌酒店阈值监测',
+
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			}
+		},
+		color: ['#3398DB'],
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: { // 坐标轴指示器，坐标轴触发有效
+				// type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			}
+		},
+		legend: {
+			left: 130,
+			top: 315,
+			data: ['当日酒店人数', '人数预警值', '人数上限值']
+		},
+		grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		},
+		xAxis: [{
+			type: 'category',
+			show: true,
+			
+			data: ['1星', '2星', '3星', '4星', '5星', '其它'],
+			axisTick: {
+				alignWithLabel: true
+			}
+		}],
+		yAxis: [{
+			show: true,
+			max: '200',
+			type: 'value',
+			axisLabel: {
+				textStyle: {
+					color: "#646464"
+				}
+			},
+			splitLine: {
+				show: true,
+				lineStyle: {
+					// 使用深浅的间隔色
+					color: ['#d9d9d9'],
+					type: 'dashed',
+				}
+			},
+			axisLine: {
+				lineStyle: {
+					color: '#999999'
+				}
+			}
+		}],
+
+		series: [{
+			name: '当日酒店人数',
+			type: 'bar',
+
+			barWidth: '40%',
+			data: [100, 80, 60, 50, 40, 120]
+		}, {
+			name: '人数预警值',
+			type: 'line',
+			color: 'red',
+			data: [120, 100, 110, 85, 90, 150],
+			lineStyle: {
+				normal: {
+					width: 2, //连线粗细
+					color: "red" //连线颜色
+				}
+			}
+		}, {
+			name: '人数上限值',
+			type: 'line',
+			color: 'red',
+			data: [140, 120, 140, 100, 110, 180],
+			lineStyle: {
+				normal: {
+					width: 2, //连线粗细
+					color: "yellow" //连线颜色
+				}
+			}
+		}]
+	};
+	myChart.setOption(option);
+//	$("#btn11").css("background-color", "#027AE0");
+//	$("#btn11").css("color", "white");
+//	$("#btn11").siblings().css("background-color", "white");
+//	$("#btn11").siblings().css("color", "#027AE0");
+$("#btn11").css("background-color","#027AE0");
+				$("#btn11").css("color","white");
+				$("#btn12").css("background-color","white");
+				$("#btn12").css("color","#027AE0");
+				$("#btn13").css("background-color","white");
+				$("#btn13").css("color","#027AE0");
+
+}
+
+function jingqu() {
+	var option = {
+		backgroundColor: 'white',
+		title: {
+			top:10,
+			left: 15,
+			text: '▌景区阈值监测',
+
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			}
+		},
+		color: ['#3398DB'],
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: { // 坐标轴指示器，坐标轴触发有效
+				// type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			}
+		},
+		legend: {
+			left: 130,
+			top: 315,
+			data: ['当日景区人数', '人数预警值', '人数上限值']
+		},
+		grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		},
+		xAxis: [{
+			type: 'category',
+			show: true,
+			data: ['元上都', '贝子庙', '蒙古汗城', '多伦湖', '灰腾草原', '其它'],
+			axisTick: {
+				alignWithLabel: true
+			}
+		}],
+		yAxis: [{
+			show: true,
+			max: '15000',
+			type: 'value',
+			axisLabel: {
+				textStyle: {
+					color: "#646464"
+				}
+			},
+			splitLine: {
+				show: true,
+				lineStyle: {
+					// 使用深浅的间隔色
+					color: ['#d9d9d9'],
+					type: 'dashed',
+				}
+			},
+			axisLine: {
+				lineStyle: {
+					color: '#999999'
+				}
+			}
+		}],
+
+		series: [{
+			name: '当日景区人数',
+			type: 'bar',
+
+			barWidth: '40%',
+			data: [8000, 5000, 4000, 3000, 7000, 5000]
+		}, {
+			name: '人数预警值',
+			type: 'line',
+			color: 'red',
+			data: [12000, 8000, 7000, 6000, 10000, 9000],
+			lineStyle: {
+				normal: {
+					width: 2, //连线粗细
+					color: "red" //连线颜色
+				}
+			}
+		}, {
+			name: '人数上限值',
+			type: 'line',
+			color: 'red',
+			data: [14000, 13000, 14000, 10000, 13000, 14000],
+			lineStyle: {
+				normal: {
+					width: 2, //连线粗细
+					color: "yellow" //连线颜色
+				}
+			}
+		}]
+	};
+	myChart.setOption(option);
+//	$("#btn12").css("background-color", "#027AE0");
+//	$("#btn12").css("color", "white");
+//	$("#btn12").siblings().css("background-color", "white");
+//	$("#btn12").siblings().css("color", "#027AE0");
+$("#btn12").css("background-color","#027AE0");
+				$("#btn12").css("color","white");
+				$("#btn11").css("background-color","white");
+				$("#btn11").css("color","#027AE0");
+				$("#btn13").css("background-color","white");
+				$("#btn13").css("color","#027AE0");
+
+}
+
+function canyin() {
+	var option = {
+		backgroundColor: 'white',
+		title: {
+			top:10,
+			left: 15,
+			text: '▌餐饮阈值监测',
+
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			}
+		},
+		color: ['#3398DB'],
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: { // 坐标轴指示器，坐标轴触发有效
+				// type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+			}
+		},
+		legend: {
+			left: 130,
+			top: 315,
+			data: ['当日就餐人数', '人数预警值', '人数上限值']
+		},
+		grid: {
+			left: '6%',
+			right: '4%',
+			bottom: '14%',
+			containLabel: true
+		},
+		xAxis: [{
+			type: 'category',
+			show: true,
+			
+						
+			axisLabel: {
+							interval: 0,
+							                       rotate:10,
+							margin: 10,
+
+						},
+			data: ['二连浩特国际酒店', '多伦奥翔假日酒店', '内蒙古玖苑国际饭店', '锡林浩特麦豪斯酒店', '锡林浩特额尔敦酒店', '其它'],
+			axisTick: {
+				alignWithLabel: true
+			}
+		}],
+		yAxis: [{
+			show: true,
+			max: '300',
+			type: 'value',
+			axisLabel: {
+				textStyle: {
+					color: "#646464"
+				}
+			},
+			splitLine: {
+				show: true,
+				lineStyle: {
+					// 使用深浅的间隔色
+					color: ['#d9d9d9'],
+					type: 'dashed',
+				}
+			},
+			axisLine: {
+				lineStyle: {
+					color: '#999999'
+				}
+			}
+		}],
+
+		series: [
+		
+		{
+			name: '当日就餐人数',
+			type: 'bar',
+
+			barWidth: '40%',
+			data: [100, 110, 75, 89, 76, 140]
+		}, {
+			name: '人数预警值',
+			type: 'line',
+			color: 'red',
+			data: [120, 130, 100, 110, 120, 190],
+			lineStyle: {
+				normal: {
+					width: 2, //连线粗细
+					color: "red" //连线颜色
+				}
+			}
+		}, {
+			name: '人数上限值',
+			type: 'line',
+			color: 'red',
+			data: [140, 150, 130, 154, 160, 210],
+			lineStyle: {
+				normal: {
+					width: 2, //连线粗细
+					color: "yellow" //连线颜色
+				}
+			}
+		}]
+	};
+	myChart.setOption(option);
+//	$("#btn13").css("background-color", "#027AE0");
+//	$("#btn13").css("color", "white");
+//	$("#btn13").siblings().css("background-color", "white");
+//	$("#btn13").siblings().css("color", "#027AE0");
+$("#btn13").css("background-color","#027AE0");
+				$("#btn13").css("color","white");
+				$("#btn11").css("background-color","white");
+				$("#btn11").css("color","#027AE0");
+				$("#btn12").css("background-color","white");
+				$("#btn12").css("color","#027AE0");
+
+}</script>
+	   
+	   <script type="text/javascript">
+	   	var myChart1 ;
+	   	$(document).ready(function() {
+	myChart1 = echarts.init(document.getElementById("main2"));
+
+	var option = {
+		backgroundColor: 'white',
+		title: {
+			top:10,
+			left: 15,
+			text: '▌酒店每日游客数',
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			}
+		},
+
+		legend: {
+			left: 130,
+			top: 320,
+			data: ['1星', '2星', '3星', '4星', '5星', '其它']
+		},
+		grid: {
+
+			left: '5%',
+			right: '4%',
+			bottom: '16%',
+			containLabel: true
+		},
+		tooltip: {
+			trigger: 'axis'
+		},
+
+		xAxis: {
+			type: 'category',
+			boundaryGap: false,
+			axisLabel: {
+				interval: 0,
+				rotate: 30,
+				margin: 10,
+
+			},
+			data: ['2017/8/10', '2017/8/11', '2017/8/12', '2017/8/13', '2017/8/14', '2017/8/15', '2017/8/16']
+		},
+		yAxis: {
+			type: 'value',
+			axisLabel: {
+				textStyle: {
+					color: "#646464"
+				}
+			},
+			splitLine: {
+				show: true,
+				lineStyle: {
+					// 使用深浅的间隔色
+					color: ['#d9d9d9'],
+					type: 'dashed',
+				}
+			},
+			axisLine: {
+				lineStyle: {
+					color: '#999999'
+				}
+			}
+		},
+		series: [{
+				name: '1星',
+				type: 'line',
+
+				data: [120, 100, 80, 90, 100, 100, 98]
+			},
+			{
+				name: '2星',
+				type: 'line',
+
+				data: [110, 90, 79, 85, 95, 90, 95]
+			},
+			{
+				name: '3星',
+				type: 'line',
+
+				data: [122, 110, 90, 95, 120, 112, 116]
+			},
+			{
+				name: '4星',
+				type: 'line',
+
+				data: [75, 65, 70, 72, 80, 79, 69]
+			},
+			{
+				name: '5星',
+				type: 'line',
+
+				data: [89, 78, 75, 76, 89, 88, 90]
+			},
+			{
+				name: '其它',
+				type: 'line',
+
+				data: [126, 122, 123, 120, 140, 138, 145]
+			}
+		]
+	};
+	myChart1.setOption(option);
+//	$("#btn21").css("background-color", "#027AE0");
+//	$("#btn21").css("color", "white");
+//	$("#btn21").siblings().css("background-color", "white");
+//	$("#btn21").siblings().css("color", "#027AE0");
+$("#btn21").css("background-color","#027AE0");
+				$("#btn21").css("color","white");
+				$("#btn22").css("background-color","white");
+				$("#btn22").css("color","#027AE0");
+				$("#btn23").css("background-color","white");
+				$("#btn23").css("color","#027AE0");
+})
+	   	
+	function jdmryks(){
+		var option = {
+		backgroundColor: 'white',
+		title: {
+			top:10,
+			left: 15,
+			text: '▌酒店每日游客数',
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			}
+		},
+
+		legend: {
+			left: 130,
+			top: 320,
+			data: ['1星', '2星', '3星', '4星', '5星', '其它']
+		},
+		grid: {
+
+			left: '8%',
+			right: '4%',
+			bottom: '16%',
+			containLabel: true
+		},
+		tooltip: {
+			trigger: 'axis'
+		},
+
+		xAxis: {
+			type: 'category',
+			boundaryGap: false,
+			axisLabel: {
+				interval: 0,
+				rotate: 20,
+				margin: 10,
+
+			},
+			data: ['2017/8/10', '2017/8/11', '2017/8/12', '2017/8/13', '2017/8/14', '2017/8/15', '2017/8/16']
+		},
+		yAxis: {
+			type: 'value',
+			axisLabel: {
+				textStyle: {
+					color: "#646464"
+				}
+			},
+			splitLine: {
+				show: true,
+				lineStyle: {
+					// 使用深浅的间隔色
+					color: ['#d9d9d9'],
+					type: 'dashed',
+				}
+			},
+			axisLine: {
+				lineStyle: {
+					color: '#999999'
+				}
+			}
+		},
+		series: [{
+				name: '1星',
+				type: 'line',
+
+				data: [120, 100, 80, 90, 100, 100, 98]
+			},
+			{
+				name: '2星',
+				type: 'line',
+
+				data: [110, 90, 79, 85, 95, 90, 95]
+			},
+			{
+				name: '3星',
+				type: 'line',
+
+				data: [122, 110, 90, 95, 120, 112, 116]
+			},
+			{
+				name: '4星',
+				type: 'line',
+
+				data: [75, 65, 70, 72, 80, 79, 69]
+			},
+			{
+				name: '5星',
+				type: 'line',
+
+				data: [89, 78, 75, 76, 89, 88, 90]
+			},
+			{
+				name: '其它',
+				type: 'line',
+
+				data: [126, 122, 123, 120, 140, 138, 145]
+			}
+		]
+	};
+	myChart1.setOption(option);
+//	$("#btn21").css("background-color", "#027AE0");
+//	$("#btn21").css("color", "white");
+//	$("#btn21").siblings().css("background-color", "white");
+//	$("#btn21").siblings().css("color", "#027AE0");
+$("#btn21").css("background-color","#027AE0");
+				$("#btn21").css("color","white");
+				$("#btn22").css("background-color","white");
+				$("#btn22").css("color","#027AE0");
+				$("#btn23").css("background-color","white");
+				$("#btn23").css("color","#027AE0");
+
+	}
+	
+	
+	function jqmryks(){
+		var option = {
+		backgroundColor: 'white',
+		title: {
+			top:10,
+			left: 15,
+			text: '▌景区每日游客数',
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			}
+		},
+
+		legend: {
+			left: 60,
+			top: 320,
+			data: ['元上都', '贝子庙', '蒙古汗城', '多伦湖', '灰腾草原', '其它']
+		},
+		grid: {
+
+			left: '8%',
+			right: '4%',
+			bottom: '16%',
+			containLabel: true
+		},
+		tooltip: {
+			trigger: 'axis'
+		},
+
+		xAxis: {
+			type: 'category',
+			boundaryGap: false,
+			axisLabel: {
+				interval: 0,
+				rotate: 20,
+				margin: 10,
+
+			},
+			data: ['2017/8/10', '2017/8/11', '2017/8/12', '2017/8/13', '2017/8/14', '2017/8/15', '2017/8/16']
+		},
+		yAxis: {
+			type: 'value',
+			axisLabel: {
+				textStyle: {
+					color: "#646464"
+				}
+			},
+			splitLine: {
+				show: true,
+				lineStyle: {
+					// 使用深浅的间隔色
+					color: ['#d9d9d9'],
+					type: 'dashed',
+				}
+			},
+			axisLine: {
+				lineStyle: {
+					color: '#999999'
+				}
+			}
+		},
+		series: [{
+				name: '元上都',
+				type: 'line',
+
+				data: [11120, 10100, 9880, 9940, 11020, 12100, 10098]
+			},
+			{
+				name: '贝子庙',
+				type: 'line',
+
+				data: [7910, 8190, 8979, 7985, 8295, 8090, 7995]
+			},
+			{
+				name: '蒙古汗城',
+				type: 'line',
+
+				data: [6922, 7110, 7090,6995, 7120,7112, 7116]
+			},
+			{
+				name: '多伦湖',
+				type: 'line',
+
+				data: [6075, 6265, 6460, 6772, 6480, 6879, 7069]
+			},
+			{
+				name:  '灰腾草原',
+				type: 'line',
+
+				data: [9089, 8978, 9235, 9076, 9489, 8988, 9090]
+			},
+			{
+				name: '其它',
+				type: 'line',
+
+				data: [8126, 8122, 7923, 7820, 8140, 8238, 7845]
+			}
+		]
+	};
+	myChart1.setOption(option);
+//	$("#btn22").css("background-color", "#027AE0");
+//	$("#btn22").css("color", "white");
+//	$("#btn22").siblings().css("background-color", "white");
+//	$("#btn22").siblings().css("color", "#027AE0");
+$("#btn22").css("background-color","#027AE0");
+				$("#btn22").css("color","white");
+				$("#btn21").css("background-color","white");
+				$("#btn21").css("color","#027AE0");
+				$("#btn23").css("background-color","white");
+				$("#btn23").css("color","#027AE0");
+	}
+	
+	function cymryks(){
+		var option = {
+		backgroundColor: 'white',
+		title: {
+			top:10,
+			left: 15,
+			text: '▌餐饮每日游客数',
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			}
+		},
+
+		legend: {
+			left: 50,
+			top: 305,
+			data: ['二连浩特国际酒店', '多伦奥翔假日酒店', '内蒙古玖苑国际饭店', '锡林浩特麦豪斯酒店', '锡林浩特额尔敦酒店', '其它']
+		},
+		grid: {
+
+			left: '8%',
+			right: '4%',
+			bottom: '16%',
+			containLabel: true
+		},
+		tooltip: {
+			trigger: 'axis'
+		},
+
+		xAxis: {
+			type: 'category',
+			boundaryGap: false,
+			axisLabel: {
+				interval: 0,
+				rotate: 20,
+				margin: 10,
+
+			},
+			data: ['2017/8/10', '2017/8/11', '2017/8/12', '2017/8/13', '2017/8/14', '2017/8/15', '2017/8/16']
+		},
+		yAxis: {
+			type: 'value',
+			axisLabel: {
+				textStyle: {
+					color: "#646464"
+				}
+			},
+			splitLine: {
+				show: true,
+				lineStyle: {
+					// 使用深浅的间隔色
+					color: ['#d9d9d9'],
+					type: 'dashed',
+				}
+			},
+			axisLine: {
+				lineStyle: {
+					color: '#999999'
+				}
+			}
+		},
+		series: [{
+				name: '二连浩特国际酒店',
+				type: 'line',
+
+				data: [110, 105, 98, 94, 102, 104, 100]
+			},
+			{
+				name: '多伦奥翔假日酒店',
+				type: 'line',
+
+				data: [114, 93, 84, 89, 105, 97, 99]
+			},
+			{
+				name: '内蒙古玖苑国际饭店',
+				type: 'line',
+
+				data: [129, 113, 100, 99, 127, 122, 126]
+			},
+			{
+				name: '锡林浩特麦豪斯酒店',
+				type: 'line',
+
+				data: [83, 76, 81, 82, 90, 89, 76]
+			},
+			{
+				name: '锡林浩特额尔敦酒店',
+				type: 'line',
+
+				data: [90, 84, 86, 86, 95, 98, 100]
+			},
+			{
+				name: '其它',
+				type: 'line',
+
+				data: [140, 142, 143, 133, 147, 143, 155]
+			}
+		]
+	};
+	myChart1.setOption(option);
+//	$("#btn23").css("background-color", "#027AE0");
+//	$("#btn23").css("color", "white");
+//	$("#btn23").siblings().css("background-color", "white");
+//	$("#btn23").siblings().css("color", "#027AE0");
+$("#btn23").css("background-color","#027AE0");
+				$("#btn23").css("color","white");
+				$("#btn22").css("background-color","white");
+				$("#btn22").css("color","#027AE0");
+				$("#btn21").css("background-color","white");
+				$("#btn21").css("color","#027AE0");
+	}
+</script>
+	   
+	  <script>$(document).ready(function() {
+	var echarts_main = echarts.init(document.getElementById("foot111"));
+	var option = {
+		backgroundColor: 'white',
+		title: {
+			left:15,
+			top:10,
+			text: '▌元上都阈值',
+			
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			},
+		},
+		tooltip: {
+			formatter: "{a} <br/>{b} : {c}"
+		},
+         grid: {
+            
+			left: '8%',
+			right: '2%',
+			bottom: '5%',
+			containLabel: true
+		},
+		series: [{
+			name: '游客流量',
+			type: 'gauge',
+			max: 14000,
+			detail: {
+				formatter: '{value}人'
+			},
+			radius: '80%',
+			center:['50%','58%'],
+			splitNumber: 7,
+			axisTick: { // 坐标轴小标记
+				length: 8, // 属性length控制线长
+				lineStyle: { // 属性lineStyle控制线条样式
+					color: 'auto'
+				}
+			},
+			title: {
+				textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+					fontWeight: 'bolder',
+					fontSize: 14,
+					fontStyle: 'italic'
+				}
+			},
+			detail: {
+				offsetCenter: [0, '60%'],
+				textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+					fontWeight: 'bolder',
+					fontSize: 14,
+				}
+			},
+			data: [{
+				value: 10550,
+				name: ''
+			}]
+		}]
+	};
+
+	setInterval(function() {
+		option.series[0].data[0].value = (Math.random() * 10000).toFixed(0) - 0;
+		echarts_main.setOption(option, true);
+	}, 2000);
+	echarts_main.setOption(option);
+
+})</script>
+		<script>$(document).ready(function() {
+	var echarts_main = echarts.init(document.getElementById("foot112"));
+	var option = {
+		backgroundColor: 'white',
+		title: {
+			left:15,
+			top:10,
+			text: '▌贝子庙阈值',
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			},
+		},
+		tooltip: {
+			formatter: "{a} <br/>{b} : {c}"
+		},
+
+		series: [{
+			name: '游客流量',
+			type: 'gauge',
+			max: 14000,
+			center:['50%','58%'],
+			detail: {
+				formatter: '{value}人'
+			},
+			radius: '80%',
+			splitNumber: 7,
+			axisTick: { // 坐标轴小标记
+				length: 8, // 属性length控制线长
+				lineStyle: { // 属性lineStyle控制线条样式
+					color: 'auto'
+				}
+			},
+			title: {
+				textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+					fontWeight: 'bolder',
+					fontSize: 14,
+					fontStyle: 'italic'
+				}
+			},
+			detail: {
+				offsetCenter: [0, '60%'],
+				textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+					fontWeight: 'bolder',
+					fontSize: 14,
+				}
+			},
+			data: [{
+				value: 5750,
+				name: ''
+			}]
+		}]
+	};
+	setInterval(function() {
+		option.series[0].data[0].value = (Math.random() * 10000).toFixed(0) - 0;
+		echarts_main.setOption(option, true);
+	}, 2000);
+	echarts_main.setOption(option);
+});</script>
+		<script>$(document).ready(function() {
+	var echarts_main = echarts.init(document.getElementById("foot121"));
+	var option = {
+		backgroundColor: 'white',
+		title: {
+			left:15,
+			top:10,
+			text: '▌多伦湖阈值',
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			},
+		},
+		tooltip: {
+			formatter: "{a} <br/>{b} : {c}"
+		},
+
+		series: [{
+			name: '游客流量',
+			type: 'gauge',
+			max: 14000,
+			center:['50%','58%'],
+			detail: {
+				formatter: '{value}人'
+			},
+			radius: '80%',
+			splitNumber: 7,
+			axisTick: { // 坐标轴小标记
+				length: 8, // 属性length控制线长
+				lineStyle: { // 属性lineStyle控制线条样式
+					color: 'auto'
+				}
+			},
+			title: {
+				textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+					fontWeight: 'bolder',
+					fontSize: 14,
+					fontStyle: 'italic'
+				}
+			},
+			detail: {
+				offsetCenter: [0, '60%'],
+				textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+					fontWeight: 'bolder',
+					fontSize: 14,
+				}
+			},
+
+			data: [{
+				value: 7550,
+				name: ''
+			}]
+		}]
+	};
+
+	setInterval(function() {
+		option.series[0].data[0].value = (Math.random() * 10000).toFixed(0) - 0;
+		echarts_main.setOption(option, true);
+	}, 2000);
+	echarts_main.setOption(option);
+
+})</script>
+		<script>$(document).ready(function() {
+	var echarts_main = echarts.init(document.getElementById("foot122"));
+	var option = {
+		backgroundColor: 'white',
+		title: {
+			left:15,
+			top:10,
+			text: '▌蒙古汗城阈值',
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			},
+		},
+		tooltip: {
+			formatter: "{a} <br/>{b} : {c}"
+		},
+
+		series: [{
+center:['50%','58%'],
+			name: '游客流量',
+			type: 'gauge',
+			max: 14000,
+			detail: {
+				formatter: '{value}人'
+			},
+			radius: '80%',
+			splitNumber: 7,
+			axisTick: { // 坐标轴小标记
+				length: 8, // 属性length控制线长
+				lineStyle: { // 属性lineStyle控制线条样式
+					color: 'auto'
+				}
+			},
+			title: {
+				textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+					fontWeight: 'bolder',
+					fontSize: 14,
+					fontStyle: 'italic'
+				}
+			},
+			detail: {
+				offsetCenter: [0, '60%'],
+				textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+					fontWeight: 'bolder',
+					fontSize: 14,
+				}
+			},
+			data: [{
+				value: 9850,
+				name: ''
+			}]
+		}]
+	};
+
+	setInterval(function() {
+		option.series[0].data[0].value = (Math.random() * 10000).toFixed(0) - 0;
+		echarts_main.setOption(option, true);
+	}, 2000);
+	echarts_main.setOption(option);
+
+})</script>
+		<script>$(document).ready(function() {
+	var foot123_char = echarts.init(document.getElementById("foot123"));
+	var option = {
+		backgroundColor: 'white',
+		title: {
+			left:15,
+			top:10,
+			text: '▌灰腾草原阈值',
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			},
+		},
+		tooltip: {
+			formatter: "{a} <br/>{b} : {c}"
+		},
+
+		series: [{
+center:['50%','58%'],
+			name: '游客流量',
+			type: 'gauge',
+			max: 14000,
+			detail: {
+				formatter: '{value}人'
+			},
+			radius: '80%',
+			splitNumber: 7,
+			axisTick: { // 坐标轴小标记
+				length: 8, // 属性length控制线长
+				lineStyle: { // 属性lineStyle控制线条样式
+					color: 'auto'
+				}
+			},
+			title: {
+				textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+					fontWeight: 'bolder',
+					fontSize: 14,
+					fontStyle: 'italic'
+				}
+			},
+			detail: {
+				offsetCenter: [0, '60%'],
+				textStyle: { // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+					fontWeight: 'bolder',
+					fontSize: 14,
+				}
+			},
+			data: [{
+				value: 9850,
+				name: ''
+			}]
+		}]
+	};
+
+	setInterval(function() {
+		option.series[0].data[0].value = (Math.random() * 10000).toFixed(0) - 0;
+		foot123_char.setOption(option, true);
+	}, 2000);
+	foot123_char.setOption(option);
+
+})</script>
+
+	   
+	   <style type="text/css">#main1 {
+	width: 48%;
+	height: 350px;
+	float: left;
+	left: 1%;
+	top: 10px;
+	 border-radius: 5px;
+
+}
+
+#main2 {
+	width: 49.8%;
+    height: 350px;
+    float: left;
+    left: 1.4%;
+   top: -13px;
+    border-radius: 5px;
+
+}
+
+#foot111 {
+	float: left;
+	width: 19.4%;
+	height: 240px;
+	left: 1%;
+    top: -1.3%;
+	 border-radius: 5px;
+
+}
+
+#foot112 {
+	float: left;
+	width: 19.4%;
+	height: 240px;
+	left: 1.3%;
+    top: -1.3%;
+	 border-radius: 5px;
+
+}
+
+#foot122 {
+	float: left;
+	width: 19.4%;
+	height: 240px;
+	left: 1.9%;
+    top: -1.3%;
+	 border-radius: 5px;
+
+}
+
+#foot121 {
+	float: left;
+	width: 19.4%;
+	height: 240px;
+	left: 1.6%;
+    top: -1.3%;
+	 border-radius: 5px;
+
+}
+
+#foot123 {
+	float: left;
+	width: 19.4%;
+	height: 240px;
+	left: 2.2%;
+    top: -1.3%;
+	 border-radius: 5px;
+
+}
+
+.container1 {
+	float: left;
+	background-color: #eff1ff;
+	height: 600px;
+	width: 100%;
+}
+#btn11 {
+				    position: relative;
+				    left: -14.1%;
+    bottom: -4%;
+				    width: 47px;
+				    
+				    font-size: 12px;
+				    color: white;
+				    background-color: #027AE0;
+				    border: 1px solid #027AE0;
+				    border-top-left-radius: 5px;
+				    border-bottom-left-radius: 5px;
+			}
+			
+			#btn12 {
+				position: relative;
+			    left: -14.5%;
+    bottom: -4%;
+			    width: 47px;
+			   
+			    font-size: 12px;
+			    color: #027AE0;
+			    background-color: white;
+			    border: 1px solid #027AE0;
+			    border-top-right-radius: 0px;
+			    border-bottom-right-radius: 0px;
+			}
+				
+				#btn13 {
+				    position: relative;
+				    left: -14.9%;
+				     bottom: -4%;
+				    width: 47px;
+				    
+				    color: #027AE0;
+				    background-color: white;
+				    border: 1px solid #027AE0;
+				    border-top-right-radius: 5px;
+				    border-bottom-right-radius: 5px;
+			}   
+			
+			#btn21 {
+				    position: relative;
+				    left: 25.9%;
+				    bottom: -4%;
+				    width: 47px;
+				   
+				    font-size: 12px;
+				    color: white;
+				    background-color: #027AE0;
+				    border: 1px solid #027AE0;
+				    border-top-left-radius: 5px;
+				    border-bottom-left-radius: 5px;
+			}
+			
+			#btn22 {
+				position: relative;
+			    left: 25.5%;
+			     bottom: -4%;
+			    width: 47px;
+			   
+			    font-size: 12px;
+			    color: #027AE0;
+			    background-color: white;
+			    border: 1px solid #027AE0;
+			    border-top-right-radius: 0px;
+			    border-bottom-right-radius: 0px;
+			}
+				
+				#btn23 {
+				    position: relative;
+				    left: 25.1%;
+				    bottom: -4%;
+				    width: 47px;
+				   
+				    font-size: 12px;
+				    color: #027AE0;
+				    background-color: white;
+				    border: 1px solid #027AE0;
+				    border-top-right-radius: 5px;
+				    border-bottom-right-radius: 5px;
+			} 
+			/*头部导航栏*/
+.nav-tabs {
+	padding-left: 60px;
+	padding-bottom: 2px;
+	border-bottom: 0px;
+}
+.title_ul{
+	margin-top: 29px;
+}
+.nav {
+    margin-bottom: 0px;
+}
+li a {
+	color: white;
+	background-color: #3E4955;
+	/*border: 5px solid ghostwhite;*/
+	font-size: 14px;
+}
+.times {
+	color: white;
+}
+
+.times_div {
+	float: right;
+	padding: 10px;
+	margin-right: 30px;
+	/*border: 1px solid #759AA0;*/
+	display: inline;
+	padding-top: 0px;
+    margin-top: 30px;
+    padding-bottom: 0px;
+}
+
+.title {
+    margin-top: 29px;
+    float:right;
+    margin-left: 10px;
+    color: white;
+    font-size: 24px;
+}
+.navbar-collapse{
+	padding-right: 5px!important;
+}
+img{
+	margin-left: 19px;
+    margin-top: 5px;
+}
+/*-------------------------------------------------*/  
+	   </style>
+	</head>
+	<body>
+		<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">旅游监测分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					
+					<li>
+						<a href="huizong.html" target="_self" style="margin-right: 20px">返回</a>
+					</li>
+				</ul>
+			</div>
+			<!--<div class="times_div">
+					<div class="times">
+						<p class="ks">开始时间：</p>
+						<span class="input-append date form_datetime start_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<div class="times">&nbsp;&nbsp;
+						<p class="js">结束时间:</p>
+						<span class="input-append date form_datetime end_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<span><a id="search" name="search" href="javascript:void(0)" onclick="doSearch()">&nbsp;&nbsp;查询</a></span>
+				</div>-->
+			</div>
+		<div class="container1">
+			
+			
+		<div id="main1"></div>
+		<button type="button" id="btn11" onclick="jiudian()">酒店</button>
+	    <button type="button" id="btn12" onclick="jingqu()">景区</button>
+	    <button type="button" id="btn13" onclick="canyin()">餐饮</button>
+		
+		
+		<div id="main2"></div>
+		<button type="button" id="btn21" onclick="jdmryks()">酒店</button>
+	    <button type="button" id="btn22" onclick="jqmryks()">景区</button>
+	    <button type="button" id="btn23" onclick="cymryks()">餐饮</button>
+		
+		
+		
+		<div id="foot111"></div>
+		<div id="foot112"></div>
+		<div id="foot121"></div>
+		
+		<div id="foot122"></div>
+		<div id="foot123"></div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,37 @@
+/*select框*/
+.ui-select
+{ 
+    display:inline-block;   
+    font: 14px/1.231 "微软雅黑",Verdana,"宋体",sans-serif;
+    border:#FFFDEF solid 1px;
+    border-radius: 2px;
+    cursor: pointer;    
+    vertical-align: top;
+    zoom:1;
+    color: #3E81DC;
+}
+ 
+.ui-select:hover{ box-shadow:#bbb 0px 0px 2px; }
+.ui-select .default{padding:4px 10px; overflow:hidden; display:block; zoom:1;}
+.ui-select .default span{ float:left; line-height: 23px;}
+.ui-select .default label{ font-size:10px; padding-left:3px;margin-left:0px; font-weight:700; float:right;}
+.ui-select .default label i{position: relative;top: 4px;}
+.ui-select ul
+{
+    margin:0;
+    padding:0; 
+    list-style:none; 
+    position:absolute; 
+    z-index: 99999;
+    display:block;
+    border:#bbb solid 1px; 
+    margin-left:-1px; 
+    line-height:22px;
+    border-bottom-right-radius: 3px 3px;
+    border-bottom-left-radius: 3px 3px;
+    text-align:left;
+    background:#001937;
+    display:none;
+}
+.ui-select li{ text-indent: 5px;}
+.ui-select li:hover , .ui-select li.active{ background:#0bF; color:#fff;}

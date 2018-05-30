@@ -1,0 +1,41 @@
+body{
+    padding: 0;
+    margin: 0
+}
+.count{
+    position: relative;
+    top:50px;
+    width:600px;
+    height:400px;
+}
+.hotel{
+   /* position: relative;
+    top:50px;
+    left: 30px;*/
+    width:600px;
+    height:400px;
+    float: left;
+}
+.house{
+  /*  position: relative;
+    top:-350px;
+    left: 700px;*/
+    float: left;
+    width:600px;
+    height:400px;
+}
+.day{
+    width:600px;
+    height:400px;
+}
+.count div{
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.count_month{
+    display: none;
+}
+.count_year{
+    display: none;
+}

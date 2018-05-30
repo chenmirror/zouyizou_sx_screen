@@ -1,0 +1,46 @@
+.weizhi_tuandui{
+	
+	width: 105%;
+	height: 300px;
+	border-top: 20px;
+	background-color: white  !important;
+}
+
+.jiage_tuandui{
+	width: 105%;
+	height: 300px;
+	border-top: 20px;
+	background-color: white  !important;
+}
+
+.dangci_tuandui{
+	width: 100%;
+	height: 300px;
+	border-top: 20px;
+	background-color: white  !important;
+}
+
+.weizhi_sanke{
+	width: 105%;
+	height: 300px;
+	margin-top: 10px;
+	background-color: white  !important;
+}
+
+.jiage_sanke{
+	width: 105%;
+	height: 300px;
+	margin-top: 10px;
+	background-color: white  !important;
+}
+
+.dangci_sanke{
+	width: 100%;
+	height: 300px;
+	margin-top: 10px;
+	background-color: white  !important;
+}
+
+body{
+	background-color: #EFF1FF !important;
+}

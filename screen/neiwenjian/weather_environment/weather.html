@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name=renderer content=webkit>
+		<title></title>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/echarts.js"></script>
+		<script src="js/xilin.js"></script>
+		<script type="text/javascript" src="./js/jquery-1.10.1.min.js.下载"></script>
+		<script type="text/javascript" src="./js/jquery.json.min.js.下载"></script> 
+		<script type="text/javascript" src="./js/util.js.下载"></script>
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/world.js"></script>
+		<script type="text/javascript" src="js/china.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+		<script src="js/bmap.js"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0UqXGL98FSmi22w2Rl6HK56I"></script>
+		<script src="semantic/semantic.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/total.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+		<!--<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css" />
+		<link rel="stylesheet" type="text/css" href="semantic/docs.css" />-->
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+    
+
+
+		<link rel="stylesheet" type="text/css" href="./css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="./css/bootstrap-responsive.css">
+		<script src="./js/bootstrap.js.下载"></script>
+
+
+
+	    <link href="./css/beyond.min.css" rel="stylesheet">
+	    <link href="./css/body.css" rel="stylesheet">
+	    <link href="./css/weather.css" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="./css/font-awesome.min.css">
+		
+		
+		<script type="text/javascript">$(document).ready(function() {
+	var myChart = echarts.init(document.getElementById("main1"));
+
+	myChart.showLoading();
+	$.get('./data/xilin.json', function(geoJson) {
+
+		myChart.hideLoading();
+
+		echarts.registerMap('锡林郭勒盟', geoJson);
+
+		myChart.setOption(option = {
+			backgroundColor: 'white',
+			title: {
+				top: 10,
+				left: 15,
+				text: '▌锡林郭勒盟 （2017/08/10）',
+				subtext: '锡林郭勒盟气象预警',
+				textStyle: {
+					color: '#EEB300',
+					fontSize: 15
+				}
+			},
+			tooltip: {
+				trigger: 'item',
+				formatter: '{b}<br/>{c} (预警值)'
+			},
+			visualMap: {
+				min: 0,
+				max: 400,
+				text: ['High', 'Low'],
+				realtime: false,
+				calculable: true,
+				inRange: {
+					color: ['lightskyblue', 'yellow', 'orangered']
+				}
+			},
+
+			series: [{
+				name: '锡林郭勒盟气象预警',
+				type: 'map',
+				mapType: '锡林郭勒盟', // 自定义扩展图表类型
+
+				itemStyle: {
+					normal: {
+						label: {
+							show: true
+						}
+					},
+					emphasis: {
+						label: {
+							show: true
+						},
+						areaStyle: {
+							color: 'red'
+						}
+					}
+
+				},
+				data: [{
+						name: '锡林浩特市',
+						value: 22
+					},
+					{
+						name: '二连浩特市',
+						value: 333
+					},
+					{
+						name: '西乌珠穆沁旗',
+						value: 222
+					},
+					{
+						name: '多伦县',
+						value: 378
+					},
+					{
+						name: '正蓝旗',
+						value: 22
+					},
+					{
+						name: '太仆寺旗',
+						value: 122
+					},
+					{
+						name: '正镶白旗',
+						value: 222
+					},
+					{
+						name: '镶黄旗',
+						value: 240
+					},
+					{
+						name: '苏尼特左旗',
+						value: 337
+					},
+					{
+						name: '苏尼特右旗',
+						value: 242
+					},
+					{
+						name: '阿巴嘎旗',
+						value: 122
+					},
+					{
+						name: '东乌珠穆沁旗',
+						value: 340
+					}
+				]
+			}]
+		});
+
+	});
+});</script>
+  
+  <script type="text/javascript">$(document).ready(function() {
+	var echarts_main = echarts.init(document.getElementById("main2"));
+	var option = {
+		backgroundColor: 'white',
+		title: {
+			top: 10,
+			left: 15,
+			text: '▌整点天气状况',
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			},
+		},
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'cross',
+				label: {
+					backgroundColor: '#283b56'
+				}
+			}
+		},
+
+		grid: {
+			top: 70,
+			left: '5%',
+			containLabel: true
+		},
+
+		dataZoom: {
+			show: false,
+			start: 0,
+			end: 100
+		},
+		xAxis: [{
+			type: 'category',
+			boundaryGap: false,
+			name: '时间',
+			axisLabel: {
+				interval: 0,
+				rotate: 60,
+				margin: 10,
+
+			},
+			data: (function() {
+				var now = new Date();
+				var res = [];
+				var len = 12;
+				while(len--) {
+					res.unshift(now.toLocaleTimeString().replace(/^\D*/, ''));
+					now = new Date(now - 1000 * 60 * 60);
+				}
+				return res;
+			})()
+		}],
+		yAxis: [{
+			type: 'value',
+			//          scale: true,
+			name: '温度（℃）',
+			min: 0,
+			boundaryGap: [0.1, 0.1],
+			axisLabel: {
+				textStyle: {
+					color: "#646464"
+				}
+			},
+			splitLine: {
+				show: true,
+				lineStyle: {
+					// 使用深浅的间隔色
+					color: ['#d9d9d9'],
+					type: 'dashed',
+				}
+			},
+			axisLine: {
+				lineStyle: {
+					color: '#999999'
+				}
+			}
+
+		}],
+		series: [{
+			name: '温度变化',
+			type: 'line',
+
+			data: (function() {
+				var res = [];
+				var len = 0;
+				while(len < 12) {
+					res.push((Math.random() + 2).toFixed(0) - 0);
+					len++;
+				}
+				return res;
+			})()
+		}]
+	};
+
+	setInterval(function() {
+		axisData = (new Date()).toLocaleTimeString().replace(/^\D*/, '');
+
+		var data0 = option.series[0].data;
+		data0.shift();
+		data0.push(Math.round(Math.random() + 1));
+
+		option.xAxis[0].data.shift();
+		option.xAxis[0].data.push(axisData);
+
+		echarts_main.setOption(option);
+	}, 2000);
+	echarts_main.setOption(option);
+
+});</script>
+ 
+  
+  <script type="text/javascript">$(document).ready(function() {
+	var myChart = echarts.init(document.getElementById("main3"));
+
+	var option = {
+		backgroundColor: 'white',
+		title: {
+
+			top: 10,
+			left: 20,
+			text: '▌锡林郭勒盟空气质量（过去一个月）',
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+			},
+		},
+		tooltip: {
+			trigger: 'axis',
+			axisPointer: {
+				type: 'cross',
+				label: {
+					backgroundColor: '#6a7985'
+				}
+			}
+		},
+		legend: {
+			left: 300,
+			top: 375,
+			data: ['锡林郭勒盟', '锡林浩特市', '二连浩特市', '多伦县', '东乌珠穆沁旗']
+		},
+		toolbox: {
+			feature: {
+				saveAsImage: {}
+			}
+		},
+		grid: {
+			left: '3%',
+			right: '4%',
+			bottom: '15%',
+			containLabel: true
+		},
+		xAxis: [{
+			type: 'category',
+			boundaryGap: false,
+			axisLabel: {
+				interval: 0,
+				rotate: 35,
+				margin: 10,
+
+			},
+			data: ['2017/07/21', '2017/07/22', '2017/07/23', '2017/07/24', '2017/07/25', '2017/07/26', '2017/07/27', '2017/07/28', '2017/07/29', '2017/07/30', '2017/07/31', '2017/08/1', '2017/08/2', '2017/08/3', '2017/08/4', '2017/08/5', '2017/08/6', '2017/08/7', '2017/08/8', '2017/08/9', '2017/08/10', '2017/08/11', '2017/08/12', '2017/08/13', '2017/08/14', '2017/08/15', '2017/08/16', '2017/08/17', '2017/08/18', '2017/08/19', '2017/08/20', '2017/08/21']
+		}],
+		yAxis: [{
+			type: 'value',
+
+			axisLabel: {
+				textStyle: {
+					color: "#646464"
+				}
+			},
+			splitLine: {
+				show: true,
+				lineStyle: {
+					// 使用深浅的间隔色
+					color: ['#d9d9d9'],
+					type: 'dashed',
+				}
+			},
+			axisLine: {
+				lineStyle: {
+					color: '#999999'
+				}
+			}
+
+		}],
+		series: [{
+				name: '锡林郭勒盟',
+				type: 'line',
+
+				areaStyle: {
+					normal: {
+						color: '#000',
+					}
+				},
+				data: [10, 12, 15, 16, 18, 15, 14, 20, 24, 20, 25, 23, 21, 18, 10, 12, 15, 16, 18, 15, 18, 10, 12, 15, 16, 18, 15, 17, 20, 25, 23, 20]
+			},
+			{
+				name: '锡林浩特市',
+				type: 'line',
+
+				areaStyle: {
+					normal: {}
+				},
+				data: [12, 14, 16, 17, 19, 16, 15, 21, 25, 21, 26, 24, 22, 19, 11, 13, 16, 17, 19, 16, 19, 11, 13, 16, 17, 19, 16, 18, 21, 26, 24, 26]
+			},
+			{
+				name: '二连浩特市',
+				type: 'line',
+
+				areaStyle: {
+					normal: {}
+				},
+				data: [14, 16, 18, 19, 21, 18, 17, 26, 28, 24, 29, 27, 25, 21, 14, 16, 18, 19, 22, 18, 22, 18, 19, 21, 21, 23, 21, 22, 25, 29, 28, 28]
+			},
+			{
+				name: '多伦县',
+				type: 'line',
+
+				areaStyle: {
+					normal: {}
+				},
+				data: [16, 19, 21, 22, 25, 21, 22, 28, 30, 27, 32, 30, 29, 25, 18, 20, 23, 25, 26, 24, 26, 24, 23, 27, 28, 29, 27, 28, 29, 32, 33, 32]
+			},
+			{
+				name: '东乌珠穆沁旗',
+				type: 'line',
+
+				label: {
+					normal: {
+						show: true,
+						position: 'top'
+					}
+				},
+				areaStyle: {
+					normal: {}
+				},
+				data: [18, 21, 25, 26, 28, 26, 24, 32, 35, 30, 36, 34, 33, 34, 29, 25, 26, 28, 30, 28, 29, 29, 28, 29, 32, 35, 36, 34, 36, 36, 38, 40]
+			}
+		]
+	};
+
+	myChart.setOption(option);
+});</script>
+		<style type="text/css">#main1 {
+	    width: 45%;
+    height: 390px;
+    position: relative;
+    left: 1.7%;
+    top: 10px;
+
+}
+
+#main2 {
+	width: 45%;
+	height: 300px;
+	position: absolute;
+	left: 1.7%;
+	top: 478px;
+}
+
+#main3 {
+	width: 96.5%;
+	height: 400px;
+	position: absolute;
+	top: 800px;
+	left: 1.7%;
+	/*border: 1px solid red;*/
+}
+
+
+/*#main4{
+			width: 500px;
+			height: 400px;
+			position: absolute;
+			top: 10px;
+			left: 600px;
+			/*border: 1px solid red;*/
+
+
+}
+*/ .left .around ul li a {
+	color: rgba(255, 255, 255, 1)
+}
+li a {
+	color: white;
+	background-color: #3E4955;
+	/*border: 5px solid ghostwhite;*/
+	
+	font-size: 16px;
+}
+.navbar-collapse {
+	float: right;
+}
+.nav-tabs {
+	/*padding-right: 0px;*/
+	
+	padding-bottom: 2px;
+}
+.logo {
+	width: 80px;
+	float: left;
+	margin-left: 20px;
+}
+.title {
+	margin-top: 29px;
+	float: left;
+	margin-left: 10px;
+	color: white;
+	font-size: 24px;
+}
+body>div.col-lg-6.col-md-6.bordershiying.kongqizhishu>div>div:nth-child(1)>div.databox-cell.cell-4.bordered.bordered-1.bordered-blueberry.no-padding {
+	margin-top: 0px;
+}
+.bordershiying {
+	/*border: 0px solid #1F3247;*/
+	
+	border-radius: 5px;
+}
+.overflow-3 {
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 3;
+	overflow: hidden;
+}
+.top30px {
+	margin-top: 50px;
+}
+.top20px {
+	margin-top: 30px;
+}
+.youyi {
+	float: right;
+	margin-right: -300px;
+}
+.top10px {
+	margin-top: 10px;
+}
+.bot10px {
+	margin-bottom: 10px;
+}
+.fontsize12 {
+	font-size: 12px;
+}
+body {
+	background-color: #eff1ff;
+}
+body > div.row > div.navbar-collapse.collapse.title > ul{
+	background-color: transparent;
+	    margin-top: 14px;
+	}
+.xilintitle {
+	position: absolute;
+    top:78px;
+    left: 47.3%;
+    width: 51%;
+    height: 35px;
+    padding-top: 10px;
+}
+.tianqi {
+	position: absolute;
+	top: 114px;
+	left: 47.3%;
+	height: 355px;
+	width: 51%;
+}
+.kongqizhishu {
+	width: 51%;
+	position: absolute;
+	top: 478px;
+	left: 47.3%;
+}
+.tupian {
+	margin-top: 40px;
+}
+body>div.col-lg-6.col-md-6.bordershiying.kongqizhishu>div>div:nth-child(1)>div.databox-cell.cell-4.bordered.bordered-1.bordered-blueberry.no-padding {
+	border: none;
+}
+body>div.col-lg-6.col-md-6.bordershiying.kongqizhishu>div>div:nth-child(2)>div:nth-child(1) {
+	border: none;
+}
+body>div.col-lg-6.col-md-6.bordershiying.kongqizhishu>div>div:nth-child(2)>div:nth-child(3) {
+	border: none;
+}
+body>div.col-lg-6.col-md-6.bordershiying.kongqizhishu>div>div:nth-child(1)>div:nth-child(1)>div.databox-cell.cell-4.no-padding>div.databox-row.row-4 {
+	margin-left: 3px;
+}
+body>div.col-lg-6.col-md-6.bordershiying.kongqizhishu>div>div:nth-child(1)>div.databox-cell.cell-4.bordered.bordered-1.bordered-blueberry.no-padding>div.databox-cell.cell-4.no-padding>div.databox-row.row-4 {
+	margin-left: 3px;
+}
+body>div.col-lg-6.col-md-6.bordershiying.kongqizhishu>div>div:nth-child(1)>div:nth-child(3)>div.databox-cell.cell-4.no-padding>div.databox-row.row-4 {
+	margin-left: 3px;
+}
+body>div.col-lg-6.col-md-6.bordershiying.kongqizhishu>div>div:nth-child(2)>div:nth-child(1)>div.databox-cell.cell-4.no-padding>div.databox-row.row-4 {
+	margin-left: 3px;
+}
+body>div.col-lg-6.col-md-6.bordershiying.kongqizhishu>div>div:nth-child(2)>div:nth-child(2)>div.databox-cell.cell-4.no-padding>div.databox-row.row-4 {
+	margin-left: 3px;
+}
+body>div.col-lg-6.col-md-6.bordershiying.kongqizhishu>div>div:nth-child(2)>div:nth-child(3)>div.databox-cell.cell-4.no-padding>div.databox-row.row-4 {
+	margin-left: 3px;
+}
+body>div.col-lg-6.col-md-6.bordershiying.kongqizhishu>div>div:nth-child(1)>div:nth-child(1)>div.databox-cell.cell-4.no-padding>div.databox-row.row-8 {
+	margin-top: 3px;
+}
+		
+			/*头部导航栏*/
+.nav-tabs {
+	
+	
+	border-bottom: 0px;
+}
+.title_ul{
+	margin-top: 29px;
+}
+.nav {
+    margin-bottom: 0px;
+}
+li a {
+	color: white;
+	background-color: #3E4955;
+	/*border: 5px solid ghostwhite;*/
+	font-size: 14px;
+}
+.times {
+	color: white;
+}
+
+.times_div {
+	float: right;
+	padding: 10px;
+	margin-right: 30px;
+	/*border: 1px solid #759AA0;*/
+	display: inline;
+	padding-top: 0px;
+    margin-top: 30px;
+    padding-bottom: 0px;
+}
+
+.title {
+    margin-top: 29px;
+    float:right;
+    margin-left: 10px;
+    color: white;
+    font-size: 24px;
+}
+.navbar-collapse{
+	padding-right: 5px!important;
+}
+img{
+	margin-left: 29px;
+    margin-top: 5px;
+}
+/*-------------------------------------------------*/
+body > div.row > div.navbar-collapse.collapse.title > ul{
+	    background-color: transparent;
+    margin-top: -2px;
+	}
+		</style>
+		
+	</head>
+	<body>
+	<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img  src="img/logo1.jpg" alt="logo" />
+				<span class="title">气象环境分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					
+					<li>
+						<a href="/XiMeng_Manager/index_files/index.html" target="_self" style="margin-bottom: 2px;margin-right: 20px;">返回</a>
+					</li>
+				</ul>
+			</div>
+			<!--<div class="times_div">
+					<div class="times">
+						<p class="ks">开始时间：</p>
+						<span class="input-append date form_datetime start_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<div class="times">&nbsp;&nbsp;
+						<p class="js">结束时间:</p>
+						<span class="input-append date form_datetime end_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<span><a id="search" name="search" href="javascript:void(0)" onclick="doSearch()">&nbsp;&nbsp;查询</a></span>
+				</div>-->
+			</div>
+	<div id="main1"></div>	
+	
+
+    
+	 <div class="col-lg-6 col-md-6 xilintitle" style="background-color: #fff;">
+            <span class="diqu" style="font-size: 15px;color: #EEB300;">▌锡林郭勒盟</span>
+            <span id="date"  style="font-size: 15px;color: #EEB300;">08月10日</span>&nbsp;&nbsp;<span style="font-size: 15px;color: #EEB300;">实时温度(</span>
+            <span id="wendu" style="font-size: 15px;color: #EEB300;">23</span>
+            <span style="font-size: 15px;color: #EEB300;"><span style="font-size: 15px;color: #EEB300;">℃</span>)</span>
+            <span id="aqi" class="badge badge-success" style="font-size: 16px">实时空气质量：41</span>
+            <span id="shidu" class="badge badge-warning "></span>
+            <span id="updateTime" class="badge badge-darkorange">更新时间：19:40</span>
+             
+        </div>
+       
+    
+        <!--<div class="col-lg-3 col-md-3">
+            <label  class="youyi">
+                <span class="jingshi" style="height: 16px "></span> 温馨提示：
+                <span id="tishi">各类人群可自由活动</span>
+            </label>
+        </div>-->
+        
+        
+
+        <div class=" col-lg-6 col-md-6 bordershiying tianqi" style="background-color: #fff;">
+            <div class="databox  text-align-center  tupian" >
+            <div class="databox-cell  cell-2 col-md-2 bordered bordered-1 bordered-blueberry " style="margin: 20px 1.3% 0 3%;background-color: #94E2F5;">
+                <div class="databox-row row-2 no-padding">
+                    <label id="today"  class="top10px">08月10日</label>
+                </div>
+                <div class="databox-row row-2 no-padding" >
+                    <img id="img1" style="width: 80px;height: 80px;margin-left: -1px;" src="./img/qing2.png" has_check_key_word="true">
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label>
+                        <span id="low1">19℃</span>
+                        <span class="dao">～</span>
+                        <span id="high1">24℃</span>
+                    </label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="type1">小到中雨</label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="fengli1">微风级</label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="fengxiang1"  class="bot10px">北风</label>
+                </div>
+
+            </div>
+            <div class="databox-cell cell-2 bordered bordered-1 bordered-blueberry " style="margin: 20px 1.3%">
+                <div class="databox-row row-2 no-padding"><label class="top10px" id="one">08月11日</label></div>
+                <div class="databox-row row-2 no-padding">
+                    <img id="img2" style="width: 80px;height: 80px;margin-left: -7px;" src="./img/yinzhuanduoyun.png" has_check_key_word="true">
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label>
+                        <span id="low2">21℃</span>
+                        <span class="dao">～</span>
+                        <span id="high2">28℃</span>
+                    </label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="type2">阴</label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="fengli2">微风级</label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="fengxiang2" class="bot10px">南风</label>
+                </div>
+            </div>
+            <div class="databox-cell cell-2 bordered bordered-1 bordered-blueberry " style="margin: 0 1.3%">
+                <div class="databox-row row-2 no-padding">
+                    <label id="two" class="top10px">08月12日</label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <img id="img3" style="width: 80px;height: 80px;margin-left: 4px;" src="./img/duoyun.png" alt="" has_check_key_word="true">
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label>
+                        <span id="low3">22℃</span>
+                        <span class="dao">～</span>
+                        <span id="high3">29℃</span>
+                    </label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="type3">多云</label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="fengli3">微风级</label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="fengxiang3" class="bot10px">南风</label>
+                </div>
+            </div>
+            <div class="databox-cell cell-2 bordered bordered-1 bordered-blueberry " style="margin: 0 1.3%">
+                <div class="databox-row row-2 no-padding">
+                    <label id="three" class="top10px">08月13日</label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <img id="img4" style="width: 80px;height: 80px;margin-left: 4px;" src="./img/duoyun.png" alt="" has_check_key_word="true">
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label>
+                        <span id="low4">20℃</span>
+                        <span class="dao">～</span>
+                        <span id="high4">29℃</span>
+                    </label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="type4">多云</label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="fengli4">微风级</label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="fengxiang4" class="bot10px">南风</label>
+                </div>
+            </div>
+            <div class="databox-cell cell-2 bordered bordered-1 bordered-blueberry" style="margin: 0 3% 0 1.3%">
+                <div class="databox-row row-2 no-padding">
+                    <label id="four" class="top10px">08月14日</label></div>
+                <div class="databox-row row-2 no-padding">
+                    <img id="img5" style="width: 80px;height: 80px;margin-left: 4px;" src="./img/qing2.png" alt="" has_check_key_word="true">
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label><span id="low5">22℃</span>
+                        <span class="dao">～</span>
+                        <span id="high5">30℃</span>
+                    </label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="type5">晴</label></div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="fengli5">微风级</label>
+                </div>
+                <div class="databox-row row-2 no-padding">
+                    <label id="fengxiang5" class="bot10px">南风</label>
+                </div>
+            </div>
+            </div>
+        </div>
+ </div>
+     
+        
+        
+        
+        
+        <div class="col-lg-6 col-md-6 bordershiying kongqizhishu" style="height:300px;background-color: #fff;">
+            <div class="databox radius-bordered top30px databox-shadowed bordered bordered-1 bordered-blueberry">
+                <div class="databox-row row-6">
+                    <div class="databox-cell cell-4  no-padding" style="margin-top: -6px;">
+                        <div class="databox-cell cell-4 no-padding">
+                            <div class="databox-row row-8">
+                                <i class="ziwaixian"></i>
+                            </div>
+                            <div class="databox-row row-4">
+                                <label id="name1" class="label label-purple" style="width: 66px">紫外线</label>
+                            </div>
+                        </div>
+                        <div class="databox-cell cell-8">
+                            <div class="databox-row row-4 text-align-center">
+                                <label id="value1" class="databox-number sky ">中等</label>
+                            </div>
+                            <div class="databox-row row-8">
+                                <label id="detail1" class="overflow-3 fontsize12">涂擦SPF大于15、PA+防晒护肤品。</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="databox-cell cell-4 bordered bordered-1 bordered-blueberry no-padding">
+                        <div class="databox-cell cell-4 no-padding">
+                            <div class="databox-row row-8"><i class="ganmao"></i></div>
+                            <div class="databox-row row-4">
+                                <label id="name2" class="label label-danger" style="width: 66px">感冒指数</label>
+                            </div>
+                        </div>
+                        <div class="databox-cell cell-8">
+                            <div class="databox-row row-4 text-align-center">
+                                <label id="value2" class="databox-number sky ">少发</label>
+                            </div>
+                            <div class="databox-row row-8">
+                                <label id="detail2" class="overflow-3 fontsize12" title="各项气象条件适宜，无明显降温过程，发生感冒机率较低。">各项气象条件适宜，无明显降温过程，发生感冒机率较低。</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="databox-cell cell-4  no-padding">
+                        <div class="databox-cell cell-4 no-padding">
+                            <div class="databox-row row-8"><i class="chuanyi"></i></div>
+                            <div class="databox-row row-4">
+                                <label id="name3" class="label label-pink" style="width: 66px">穿衣指数</label>
+                            </div>
+                        </div>
+                        <div class="databox-cell cell-8">
+                            <div class="databox-row row-4 text-align-center">
+                                <label id="value3" class="databox-number sky ">热</label>
+                            </div>
+                            <div class="databox-row row-8">
+                                <label id="detail3" class="overflow-3 fontsize12" title="天气热，建议着短裙、短裤、短薄外套、T恤等夏季服装。">涂擦SPF大于15、PA+防晒护肤品。</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="databox-row row-6">
+                    <div class="databox-cell cell-4 bordered bordered-1 bordered-blueberry no-padding">
+                        <div class="databox-cell cell-4 no-padding">
+                            <div class="databox-row row-8"><i class="xiche"></i></div>
+                            <div class="databox-row row-4">
+                                <label id="name4" class="label label-blueberry" style="width: 66px">洗车指数</label>
+                            </div>
+                        </div>
+                        
+                        <div class="databox-cell cell-8">
+                            <div class="databox-row row-4 text-align-center">
+                                <label id="value4" class="databox-number sky ">较适宜</label>
+                            </div>
+                            <div class="databox-row row-8">
+                                <label id="detail4" class="overflow-3 fontsize12" title="较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。">较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="databox-cell cell-4 no-padding">
+                        <div class="databox-cell cell-4 no-padding">
+                            <div class="databox-row row-8"><i class="yundong"></i></div>
+                            <div class="databox-row row-4">
+                                <label id="name5" class="label label-sky " style="width: 66px">运动指数</label>
+                            </div>
+                        </div>
+                        <div class="databox-cell cell-8">
+                            <div class="databox-row row-4 text-align-center">
+                                <label id="value5" class="databox-number sky">较不宜</label>
+                            </div>
+                            <div class="databox-row row-8">
+                                <label id="detail5" class="overflow-3 fontsize12" title="阴天，且天气较热，请减少运动时间并降低运动强度。">阴天，且天气较热，请减少运动时间并降低运动强度。</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="databox-cell cell-4 bordered bordered-1 bordered-blueberry no-padding">
+                        <div class="databox-cell cell-4 no-padding">
+                            <div class="databox-row row-8"><i class="AQI"></i></div>
+                            <div class="databox-row row-4">
+                                <label id="name6" class="label label-success" style="width: 66px">综合指数</label>
+                            </div>
+                        </div>
+                        <div class="databox-cell cell-8">
+                            <div class="databox-row row-4 text-align-center">
+                                <label class="databox-number sky" id="value6">中等</label>
+                            </div>
+                            <div class="databox-row row-8 ">
+                                <label id="detail6" class="overflow-3 fontsize12">涂擦SPF大于15、PA+防晒护肤品。</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div id="main2"></div>	
+    <div id="main3"></div>
+    
+	</body>
+</html>

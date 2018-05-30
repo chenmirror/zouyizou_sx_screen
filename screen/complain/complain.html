@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>旅游投诉监测</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="author" content="">
+<meta name="description" content="">
+<meta name="keywords" content="">
+<link rel="stylesheet" href="../../resource/css/lib/bootstrap.min.css"/>
+<link rel="stylesheet" href="../../resource/css/lib/ui-form.css"/>
+<link rel="stylesheet" href="../../resource/css/lib/swiper.min.css"/>
+<link rel="stylesheet" href="../../resource/css/common.css"/>
+<style>
+	.swiper-pagination-bullet{
+		width: 12px;
+		height: 12px;
+		border-radius: 12px;
+		background-color: transparent;
+		opacity: 1;
+		border: 1px solid #2FDDA8;
+	}
+	.swiper-pagination-bullet-active{
+		background-color: #2FDDA8;
+	}
+	.video-js{
+		margin: 0 auto;
+		width: 80%;
+		height: 100%;
+	}
+	.plot1 footer .ulTwo {
+		margin-top: 0;
+	}
+</style>
+</head>
+<body>
+<header class="monitor-header clearfix">
+	<div class="col-zsr-3 clearfix">
+		<img src="../../resource/images/logo.png" class="logo pull-left"/>
+		<div class="title pull-left">山西省旅游投诉监测</div>
+	</div>
+	<div class="col-zsr-1 addBtn">
+		<div class="select-gruop">
+			<div class="select">
+				<p>选择年份<i class="icon iconfont">&#xe618;</i></p>
+				<div class="select-pull">	
+				    <ul id="yearListId">
+				    	
+				    </ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div id="mainTab" class="col-zsr-4 addBtn">
+			<div class="btn btn-line active" data-id="ALLYEAR">全年</div>
+			<div class="btn btn-line" data-id="HOLIDAY">节假日</div>
+			<div class="btn btn-line" data-id="WEEKEND">周末</div>
+	</div>
+	
+	<div class="col-zsr-4">
+		<div class="btn btn-icon">
+			<a href="../index.html" title="首页"><i class="icon iconfont">&#xe613;</i></a>
+		</div>
+	</div>
+</header>
+<section class="monitor-main">
+	<!--投诉原因分析-->
+	<div class="col-zsr-3 row-1 plot1 padrgt">
+		<div class="module padnei plot-footer2 tab">
+			<section class="plot-header">
+				<header>
+					<div class="btn-title">
+						<div class="btn">
+							<i class="icon iconfont">&#xe615;</i><span class="tab-title" id="complainId">投诉原因分析</span>
+						</div>
+					</div>
+				</header>
+				<section class="tab-show" style="display: block;" id="complainReasonId"></section>
+			</section>
+			<footer>
+				<div class="ulTwo tab-menu" id="complainBtnId">
+					<div class="btn btn-light active">投诉原因分析</div>
+					<div class="btn btn-light">投诉对象分析</div>
+				</div>
+			</footer>
+		</div>
+	</div>
+	
+	<div class="col-zsr-6 row-1 padtwo">
+		<!--全年投诉数量-->
+		<div class="row-2 padbot plot2 tab">
+			<div class="module module-light padnei">
+				<div class="plot-footer2">
+					<section class="plot-header">
+						<header>
+							<div class="btn-title">
+								<div class="btn">
+									<i class="icon iconfont">&#xe603;</i><span class="tab-title" id="complainAllYearId">全年投诉数量</span>
+								</div>
+							</div>
+						</header>
+						<section class="tab-show" style="display: block;" id="yearComplainId"></section>
+					</section>
+					<footer>
+						<div class="ulTwo tab-menu" id="complainAllyearSelectedId">
+							<div class="btn btn-light active">全年投诉数量</div>
+							<div class="btn btn-light">地市投诉排行</div>
+						</div>
+					</footer>
+				</div>
+			</div>
+		</div>
+		<!--重点景区投诉排行-->
+		<div class="row-2 padtop">
+			<div class="module module-light padnei">
+				<div class="plot-footer2">
+					<section class="plot-header">
+						<header>
+							<div class="btn-title">
+								<div class="btn">
+									<i class="icon iconfont">&#xe610;</i><span class="tab-title" id="complainSpotId">景区投诉排行</span>
+								</div>
+							</div>
+						</header>
+						<section id="scenicComplainTopId"></section>
+					</section>
+					<footer>
+						<div class="ulTwo tab-menu" id="complainSpotSelectedId">
+							<div class="btn btn-light active">景区投诉排行</div>
+							<div class="btn btn-light">出入境投诉排行</div>
+						</div>
+					</footer>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-zsr-3 row-1 plot2 padleft">
+		<!--地市投诉比例-->
+		<div class="row-2 padbot plot2 tab">
+			<div class="module module-light padnei">
+				<div class="plot-header">
+					<header>
+						<div class="btn-title">
+							<div class="btn">
+								<i class="icon iconfont">&#xe609;</i>地市投诉比例
+							</div>
+						</div>
+					</header>
+					<section id="CityComplainId"></section>
+				</div>
+			</div>
+		</div>
+		<!--最新投诉-->
+		<div class="row-2 tab padtop">
+			<div class="module module-bot padnei">
+				<section class="plot-foot">
+					<header>
+						<div class="btn-title">
+							<div class="btn">
+								<i class="icon iconfont">&#xe608;</i><span class="tab-title" id="complaintTitleId">旅游咨询</span>
+							</div>
+						</div>
+					</header>
+					<section class="tab-show" style="display: block;">
+					<div class="vertical">
+						<div class="middle" style="vertical-align: top">
+							<table class="table table-border" id="complaintListId">
+							</table>
+							<div class="page">
+								<ul class="pagination" id="pagination">
+								</ul>								
+							</div>
+						</div>
+					</div>
+				</section>
+				</section>
+			<footer>
+				<div class="ulTwo tab-menu" id="areaId">
+					<div class="btn btn-light active">旅游咨询</div>
+					<div class="btn btn-light">最新投诉</div>
+				</div>
+			</footer>
+			</div>
+		</div>
+		
+	</div>
+</section>
+<script src="../../resource/script/lib/jquery-1.11.1.min.js"></script>
+<!--echarts  -->
+<script src="../../resource/script/lib/echarts-2.2.7/echarts.js"></script>
+<script src="../../resource/script/jquery.ux.public.js"></script>
+<script src="../../resource/script/platform.utils.js"></script>
+<script src="../../resource/script/lib/jquery.form.js"></script>
+<script src="../../resource/script/lib/swiper.min.js"></script>
+<script src="../../resource/script/lib/bootstrap-paginator.js"></script>
+<script>
+// 页面
+	var complainPage = {
+		ajaxTools: null,
+		year : null,
+		month: null,
+		tabComIndex1 : 0,
+		tabComIndex2 : 0,//全年投诉数量跟地市投诉排行专用
+		tabComIndex3 : 0,//景区投诉排行与出入境投诉排行专用
+		pageSize : 2,
+		tabListIndex : 0,
+		zoneId: 'ALLYEAR',  //全年，节假日，周末
+		
+		
+		init: function () {
+			// 初始化页面
+			this.initPage();
+			// 加载报表 - 同时需要加载第一时间展示的报表
+			initEcharts.apply(this, ['loadInitChartServ']);
+		},
+		//初始化页面
+		initPage: function () {
+			var that=this;
+			// 初始化日期
+			var CDATE = PLATFORM_CONSTANS.DATE;
+			
+			var	yearHtml = '';
+			var	nowYear=CDATE.getCurrentYear();
+			//年列表动态添加
+			yearHtml += '<li data-value="' + nowYear + '">' + nowYear + '年</li>';
+			yearHtml += '<li data-value="' + (nowYear-1) + '">' + (nowYear-1) + '年</li>';
+			$('#yearListId').append(yearHtml);
+			//月列表动态添加
+			var months=CDATE.getMonths(nowYear);
+			var nowMonth=CDATE.getCurrentMonth();
+			var monthHtml="";
+			for(var i = 0; i < months.length; i += 1) {
+				monthHtml += '<li data-value="' + months[i] + '">' + months[i] + '月</li>';
+			}
+			$('#monthListId').append(monthHtml);
+			
+			$('#yearListId').parent().parent().find('p').html(nowYear + '年<i class="icon iconfont">&#xe618;</i>');
+			$('#monthListId').parent().parent().find('p').html(nowMonth+'月<i class="icon iconfont">&#xe618;</i>');
+			this.year=nowYear;
+			this.month=nowMonth;
+			// 年 
+			$('#yearListId li').on('click', function() {
+				var $this = $(this);
+				var index=$(this).index();
+				var txt=$(this).text();
+				var str=txt+"<i class='icon iconfont'>&#xe618;</i>";
+				$(this).parent().parent().parent().find('p').html(str);
+				$(this).siblings().removeClass('active');
+				$(this).addClass('active');
+				$(this).parent().parent().fadeOut();
+				// 年份
+				var val = $this.attr('data-value');
+				complainPage.year = val;
+				var clickMonths=CDATE.getMonths(val);
+				var clickHtml="";
+				for(var i = 0; i < clickMonths.length; i ++) {
+					clickHtml += '<li data-value="' + clickMonths[i] + '">' + clickMonths[i] + '月</li>';
+				}
+				$('#monthListId').empty().append(clickHtml);
+				//月
+				$('#monthListId li').on('click', function() {
+					var $this = $(this);
+					var index=$(this).index();
+					var txt=$(this).text();
+					var str=txt+"<i class='icon iconfont'>&#xe618;</i>";
+					$(this).parent().parent().parent().find('p').html(str);
+					$(this).siblings().removeClass('active');
+					$(this).addClass('active');
+					$(this).parent().parent().fadeOut();
+					// 月份
+					var val = $this.attr('data-value');
+					complainPage.month = val;
+					$('#hotelMonthId .btn:first').addClass('active').siblings().removeClass('active');
+					// 加载数据
+					complainPage.loadSelectCharts();
+				});
+				var str=clickMonths[0]+"<i class='icon iconfont'>&#xe618;</i>";
+				$('#monthListId').parent().parent().find('p').html(str);
+				complainPage.month = clickMonths[0];
+				// 加载数据
+				complainPage.loadSelectCharts();
+			});
+			//月
+			$('#monthListId li').on('click', function() {
+				var $this = $(this);
+				var index=$(this).index();
+				var txt=$(this).text();
+				var str=txt+"<i class='icon iconfont'>&#xe618;</i>";
+				$(this).parent().parent().parent().find('p').html(str);
+				$(this).siblings().removeClass('active');
+				$(this).addClass('active');
+				$(this).parent().parent().fadeOut();
+				// 月份
+				var val = $this.attr('data-value');
+				complainPage.month = val;
+				
+				
+				// 加载数据
+				complainPage.loadSelectCharts();
+			});
+			
+			
+		
+			// main tab
+			$('#mainTab > div').on('click', function () {
+				if ($(this).hasClass('active')) {
+					return;
+				}
+				$(this).addClass('active').siblings().removeClass('active');
+				var zoneId = $(this).attr('data-id');
+				that.zoneId = zoneId;
+				if(zoneId == 'ALLYEAR'){					
+					$("#complainAllYearId").html("全年投诉数量");
+					$('#complainAllyearSelectedId .btn').eq(0).html("全年投诉数量");				
+				}else if(zoneId == 'HOLIDAY'){
+					$("#complainAllYearId").html("节假日投诉数量");
+					$('#complainAllyearSelectedId .btn').eq(0).html("节假日投诉数量");
+				}else if(zoneId == 'WEEKEND'){
+					$("#complainAllYearId").html("周末投诉数量");
+					$('#complainAllyearSelectedId .btn').eq(0).html("周末投诉数量");			
+				}
+				//选择全年或者节假日或者周末第一时间展示的图表
+				if($('#complainBtnId .btn').eq(0).hasClass('active')){
+					complainPage.loadComplainReason('complainReasonId'); // 投诉原因分析
+				}else{
+					complainPage.loadComplainObject('complainReasonId'); //投诉对象分析
+				}
+				if($('#complainAllyearSelectedId .btn').eq(0).hasClass('active')){
+					complainPage.loadComplainNum('yearComplainId');	//全年投诉数量			
+				}else{
+					complainPage.loadComplainCityTop('yearComplainId');//地市投诉排行
+				}				
+				if($('#complainSpotSelectedId .btn').eq(0).hasClass('active')){
+					complainPage.loadScenicTop('scenicComplainTopId');//景区投诉排行
+				}else{
+					complainPage.loadComplainInOut('scenicComplainTopId');//出入境投诉排行
+				}	
+				complainPage.loadComplainCity('CityComplainId');//地市投诉比例				
+				complainPage.loadComplaintList(1);//旅游咨询
+			});
+			
+			//投诉原因，对象
+			var complainServs = ['loadComplainReason', 'loadComplainObject'];
+			var complainChart = 'complainReasonId';
+			$('#complainBtnId .btn').on('click',function(){
+				$(this).addClass('active').siblings().removeClass('active');
+				var index = $(this).index();
+				that.tabComIndex1=index;
+				$('#complainId').html($(this).text());
+				that[complainServs[index]](complainChart);
+			});
+			
+			//全年投诉数量，地市投诉排行列表切换  
+			var complainYearNumServs = ['loadComplainNum', 'loadComplainCityTop'];
+			var complainYearChart = 'yearComplainId';
+			$('#complainAllyearSelectedId .btn').on('click',function(){
+				$(this).addClass('active').siblings().removeClass('active');
+				var index = $(this).index();
+				that.tabComIndex2=index;
+				$('#complainAllYearId').html($(this).text());
+				that[complainYearNumServs[index]](complainYearChart);
+				
+			});
+			
+			//景区投诉排行，出入境投诉排行列表切换
+			var complainSpotTopServs = ['loadScenicTop', 'loadComplainInOut'];
+			var complainSpotChart = 'scenicComplainTopId';
+			$('#complainSpotSelectedId .btn').on('click',function(){
+				$(this).addClass('active').siblings().removeClass('active');
+				var index = $(this).index();
+				that.tabComIndex3=index;
+				$('#complainId').html($(this).text());
+				that[complainSpotTopServs[index]](complainSpotChart);
+			});
+			
+			//旅游咨询，最新投诉列表切换
+			$('#areaId .btn').on('click',function(){
+				$('#complaintTitleId').html($(this).text());
+				$(this).addClass('active').siblings().removeClass('active');
+				pagination.clear('#pagination');
+				var tabListIndex=$(this).index();
+				that.tabListIndex=tabListIndex;
+				if(that.tabListIndex==0){
+					that.pageSize=3;
+				}
+				if(that.tabListIndex==1){
+					that.pageSize=3;
+				}
+				that.loadComplaintList('1');
+			})
+			
+			
+		},
+		// 加载第一时间展示的报表
+		loadInitChartServ: function () {
+			this.loadComplainReason('complainReasonId'); // 投诉原因分析
+			this.loadComplainNum('yearComplainId'); //全年投诉数量
+			this.loadScenicTop('scenicComplainTopId');//景区投诉排行			
+			this.loadComplainCity('CityComplainId');//地市投诉比例
+			this.loadComplaintList(1);//旅游咨询
+		},
+				
+		//选择年月加载的报表
+		loadSelectCharts : function(){
+			if(this.tabComIndex1==0){
+				this.loadComplainReason('complainReasonId'); //投诉原因分析
+			}else if(this.tabComIndex1==1){
+				this.loadComplainObject('complainReasonId'); //投诉对象分析
+			}
+			if(this.tabComIndex2==0){
+				this.loadComplainNum('yearComplainId'); //全年投诉数量
+			}else if(this.tabComIndex2==1){
+				this.loadComplainCityTop('yearComplainId');//地市投诉排行
+			}
+			if(this.tabComIndex3==0){
+				this.loadScenicTop('scenicComplainTopId');//景区投诉排行
+			}else if(this.tabComIndex3==1){
+				this.loadComplainInOut('scenicComplainTopId');//出入境投诉排行
+			}
+			
+			this.loadComplainCity('CityComplainId');//地市投诉比例		
+			this.loadComplaintList('1');//旅游咨询				
+		},
+		
+		//投诉原因分析
+		loadComplainReason : function(charElem){
+			var	chart = getChartInstance.apply(this, [charElem]);		
+			//全年
+			allYearComplainReasonName = [{name:'超越经营范围',icon:'force'},{name:'强制购物消费',icon:'force'},{name:'欺骗行程安排',icon:'force'},{name:'导游态度恶劣',icon:'force'},{name:'旅游景点太少',icon:'force'},
+										{name:'游玩项目太少',icon:'force'},{name:'住宿条件太差',icon:'force'},{name:'性价比有点低',icon:'force'},{name:'和预期差很多',icon:'force',},{name:'形式太过单一',icon:'force',}];
+			allYearComplainReasonData = [{value:30, name:'超越经营范围'},{value:30, name:'强制购物消费'},{value:24, name:'欺骗行程安排'},{value:13, name:'导游态度恶劣'},{value:48, name:'旅游景点太少'},
+										{value:58, name:'游玩项目太少'},{value:18, name:'住宿条件太差'},{value:38, name:'游玩项目太少'},{value:18, name:'性价比有点低'},{value:23, name:'和预期差很多'},{value:24, name:'形式太过单一'}];
+			//节假日
+			holidayComplainReasonName = [{name:'强制购物消费',icon:'force'},{name:'欺骗行程安排',icon:'force'},{name:'导游态度恶劣',icon:'force'},{name:'旅游景点太少',icon:'force'},{name:'游玩项目太少',icon:'force'},
+										{name:'住宿条件太差',icon:'force'},{name:'性价比有点低',icon:'force'},{name:'和预期差很多',icon:'force'},{name:'形式太过单一',icon:'force'}];
+			holidayComplainReasonData = [{value:30, name:'强制购物消费'},{value:24, name:'欺骗行程安排'},{value:13, name:'导游态度恶劣'},{value:48, name:'旅游景点太少'},{value:58, name:'游玩项目太少'},
+										{value:18, name:'住宿条件太差'},{value:38, name:'游玩项目太少'},{value:18, name:'性价比有点低'},{value:23, name:'和预期差很多'},{value:24, name:'形式太过单一'}];
+			//周末
+			weekendComplainReasonName = [{name:'超越经营范围',icon:'force'},{name:'欺骗行程安排',icon:'force'},{name:'导游态度恶劣',icon:'force'},{name:'旅游景点太少',icon:'force'},{name:'游玩项目太少',icon:'force'},
+										{name:'性价比有点低',icon:'force'},{name:'和预期差很多',icon:'force'},{name:'形式太过单一',icon:'force'}];
+			weekendComplainReasonData = [{value:30, name:'超越经营范围'},{value:24, name:'欺骗行程安排'},{value:13, name:'导游态度恶劣'},{value:20, name:'旅游景点太少'},{value:58, name:'游玩项目太少'},
+										{value:38, name:'游玩项目太少'},{value:18, name:'性价比有点低'},{value:10, name:'和预期差很多'},{value:24, name:'形式太过单一'}];
+		
+			var inDataName = allYearComplainReasonName;
+			var inData = allYearComplainReasonData;
+			if(this.zoneId == 'ALLYEAR'){						
+				inDataName= allYearComplainReasonName; 
+				inData = allYearComplainReasonData;
+			}else if(this.zoneId == 'HOLIDAY'){				
+				inDataName= holidayComplainReasonName;
+				inData= holidayComplainReasonData;
+			}else if(this.zoneId == 'WEEKEND'){					
+				inDataName = weekendComplainReasonName;
+				inData = weekendComplainReasonData;
+			}
+			
+			chartPage.showComplainReason(chart,inDataName,inData);
+
+		},
+		//投诉对象分析
+		loadComplainObject : function(charElem){
+			var	chart = getChartInstance.apply(this, [charElem]);			
+			chartPage.showComplainObject(chart);
+		},
+		
+		//全年投诉数量
+		loadComplainNum : function(charElem){
+			var	chart = getChartInstance.apply(this, [charElem]);		
+			//全年投诉数量
+			allYearDataName = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']; //全年X轴数据
+			allYearData = [{value:0, name:'1月'},{value:0, name:'2月'},{value:3, name:'3月'},{value:2, name:'4月'},{value:4, name:'5月'},{value:3, name:'6月'},{value:1, name:'7月'},{value:2, name:'8月'},{value:3, name:'9月'},{value:0, name:'10月'},{value:4, name:'11月'},{value:2, name:'12月'},];
+			//节假日
+			holidayDataName = ['元旦','春节','清明','五一','端午','中秋','国庆']; //节假日X轴数据
+			holidayData = [{value:3, name:'元旦'},{value:1, name:'春节'},{value:2, name:'清明'},{value:2, name:'五一'},{value:0, name:'端午'},{value:2, name:'中秋'},{value:1, name:'国庆'},];
+			//周末数据
+			weekendDataName = ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']; //全年X轴数据
+			weekendData = [{value:4, name:'1月'},{value:5, name:'2月'},{value:3, name:'3月'},{value:1, name:'4月'},{value:4, name:'5月'},{value:5, name:'6月'},{value:2, name:'7月'},{value:3, name:'8月'},{value:2, name:'9月'},{value:2, name:'10月'},{value:1, name:'11月'},{value:0, name:'12月'},];					
+			var inDataName = allYearDataName;
+			var inData = allYearData;
+			if(this.zoneId == 'ALLYEAR'){						
+				inDataName= allYearDataName; 
+				inData = allYearData;
+			}else if(this.zoneId == 'HOLIDAY'){				
+				inDataName= holidayDataName;
+				inData= holidayData;
+			}else if(this.zoneId == 'WEEKEND'){					
+				inDataName = weekendDataName;
+				inData = weekendData;
+			}
+			chartPage.showComplainNum(chart,inDataName,inData);
+		},
+		//地市投诉排行
+		loadComplainCityTop : function(charElem){
+		     var chart = getChartInstance.apply(this, [charElem]);
+		     chartPage.showComplainCityTop(chart);
+		},
+		
+		//景区投诉排行  
+		loadScenicTop : function(charElem){
+			var	chart = getChartInstance.apply(this, [charElem]);
+			//X轴数据
+			dataName = ['五台山','云冈石窟','应县木塔','平遥古城','恒山','晋祠','洪洞大槐树','解州关帝庙','灵石','王家大院','绵山']; //全年X轴数据
+			//全年
+			allYearData = [{value:3, name:'五台山'},{value:3, name:'云冈石窟'},{value:1, name:'应县木塔'},{value:2, name:'平遥古城'},{value:4, name:'恒山'},{value:3, name:'晋祠'},
+						{value:3, name:'洪洞大槐树'},{value:3, name:'解州关帝庙'},{value:1, name:'灵石'},{value:2, name:'平遥古城'},{value:4, name:'王家大院'},{value:3, name:'绵山'}];
+			//节假日
+			holidayData = [{value:1, name:'五台山'},{value:4, name:'云冈石窟'},{value:2, name:'应县木塔'},{value:1, name:'平遥古城'},{value:4, name:'恒山'},{value:3, name:'晋祠'},
+						{value:1, name:'洪洞大槐树'},{value:1, name:'解州关帝庙'},{value:2, name:'灵石'},{value:1, name:'平遥古城'},{value:2, name:'王家大院'},{value:3, name:'绵山'}];
+			//周末数据
+			weekendData = [{value:2, name:'五台山'},{value:2, name:'云冈石窟'},{value:3, name:'应县木塔'},{value:2, name:'平遥古城'},{value:2, name:'恒山'},{value:3, name:'晋祠'},
+						{value:3, name:'洪洞大槐树'},{value:2, name:'解州关帝庙'},{value:3, name:'灵石'},{value:2, name:'平遥古城'},{value:3, name:'王家大院'},{value:1, name:'绵山'}];
+			var inDataName = dataName;
+			var inData = allYearData;
+			if(this.zoneId == 'ALLYEAR'){						
+				inData = allYearData;
+			}else if(this.zoneId == 'HOLIDAY'){				
+				inData= holidayData;
+			}else if(this.zoneId == 'WEEKEND'){					
+				inData = weekendData;
+			}
+			chartPage.showScenicTop(chart,inDataName,inData);
+		},
+		//出入境投诉排行  
+		loadComplainInOut : function(charElem){
+		     var chart = getChartInstance.apply(this, [charElem]);
+		     chartPage.showComplainInOut(chart);
+		},
+		
+		
+		//地市投诉比例
+		loadComplainCity : function(charElem){
+		    var chart = getChartInstance.apply(this, [charElem]);
+		    //图例名数据
+			dataName = [{name:'忻州',icon : 'triangle'},{name:'大同',icon : 'triangle'},{name:'灵石',icon : 'triangle'},
+            		{name:'应县',icon : 'triangle',},{name:'五行山',icon : 'triangle'},{name:'太原',icon : 'triangle'}];
+			//全年
+			allYearData = [{value:24, name:'忻州'},{value:22, name:'大同'},{value:18, name:'灵石'},
+                		{value:17, name:'应县'},{value:12, name:'五行山'},{value:8, name:'太原'}];
+			//节假日
+			holidayData = [{value:10, name:'忻州'},{value:30, name:'大同'},{value:11, name:'灵石'},
+                		{value:17, name:'应县'},{value:7, name:'五行山'},{value:15, name:'太原'}];
+            //周末数据
+			weekendData = [{value:1, name:'忻州'},{value:13, name:'大同'},{value:14, name:'灵石'},
+                		{value:28, name:'应县'},{value:23, name:'五行山'},{value:8, name:'太原'}];
+			var inDataName = dataName;
+			var inData = allYearData;
+			if(this.zoneId == 'ALLYEAR'){						
+				inData = allYearData;
+			}else if(this.zoneId == 'HOLIDAY'){				
+				inData= holidayData;
+			}else if(this.zoneId == 'WEEKEND'){					
+				inData = weekendData;
+			}
+		     chartPage.showComplainCity(chart,inDataName,inData);
+		},
+		//旅游咨询
+		loadComplaintList : function(pageNo){
+			var total=6;
+			var reslutHtml="";
+			if(this.tabListIndex==0){
+				reslutHtml+="<thead><tr>"+
+							"<th style=\"width:60%;\">投诉人/问题</th>"+
+							"<th style=\"width:20%;\">处理日期</th>"+
+							"<th style=\"width:20%;\">处理状态</th>"+
+							"</tr></thead>";
+			}else if(this.tabListIndex==1){
+				reslutHtml+="<thead><tr>"+
+							"<th>投诉人</th>"+
+							"<th>投诉日期</th>"+
+							"<th>投诉对象</th>"+
+							"<th>投诉原因</th>"+
+							"</tr></thead>";
+			}
+			if(total>0){
+				if(this.tabListIndex==0){
+					reslutHtml+="<tr><td>"+"牛胜波1：地铁卡与公共自行车办卡"+"</td><td>"+"2017-6-12"+"</td><td>"+"已回复"+"</td></tr>";
+					reslutHtml+="<tr><td>"+"牛胜波2：地铁卡与公共自行车办卡"+"</td><td>"+"2017-6-12"+"</td><td>"+"已回复"+"</td></tr>";
+					reslutHtml+="<tr><td>"+"牛胜波3：地铁卡与公共自行车办卡"+"</td><td>"+"2017-6-12"+"</td><td>"+"已回复"+"</td></tr>";
+					reslutHtml+="<tr><td>"+"牛胜波4：地铁卡与公共自行车办卡"+"</td><td>"+"2017-6-12"+"</td><td>"+"已回复"+"</td></tr>";
+				}else if(this.tabListIndex==1){
+					reslutHtml+="<tr><td>"+"赵帅1"+"</td><td>"+"2017-6-12"+"</td><td>"+"张三"+"</td><td>"+"态度不好"+"</td></tr>";
+					reslutHtml+="<tr><td>"+"赵帅2"+"</td><td>"+"2017-6-12"+"</td><td>"+"张三"+"</td><td>"+"态度不好"+"</td></tr>";
+					reslutHtml+="<tr><td>"+"赵帅3"+"</td><td>"+"2017-6-12"+"</td><td>"+"张三"+"</td><td>"+"态度不好"+"</td></tr>";
+					reslutHtml+="<tr><td>"+"赵帅4"+"</td><td>"+"2017-6-12"+"</td><td>"+"张三"+"</td><td>"+"态度不好"+"</td></tr>";	
+				}
+				$("#complaintListId").empty().append(reslutHtml);
+				// 分页
+				pagination('#pagination', total, this.pageSize, this, this.loadComplaintList, pageNo);
+			}else{
+					for(var i=0;i<this.pageSize;i++){
+						reslutHtml+="<tr><td>-</td><td>-</td><td>-</td><td>-</td></tr>";
+					}
+				$("#complaintListId").empty().append(reslutHtml);
+			}
+		}
+	};
+	// 报表
+	var chartPage = {
+		//投诉原因分析
+		showComplainReason : function (chart,inDataName,inData) {
+			option = {
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			    },
+			    legend: {
+			        orient : 'horizontal',
+			        x : '66px',
+			        y : '380px',
+			        itemGap: 30,
+			        itemWidth:50,
+			        itemHeight:20,
+			        data:inDataName,
+			        /*data:[
+			        	{
+                			name:'超越经营范围',
+                			icon:'force',
+            			},
+            			{
+                			name:'强制购物消费',
+                			icon:'force',
+            			},
+            			{
+                			name:'欺骗行程安排',
+                			icon:'force',
+            			},
+            			{
+                			name:'导游态度恶劣',
+			       			icon:'force',
+            			},
+            			{
+                			name:'旅游景点太少',
+                			icon:'force',
+            			},
+            			{
+                			name:'游玩项目太少',
+                			icon:'force',
+            			},
+            			{
+                			name:'住宿条件太差',
+                			icon:'force',
+            			},
+			        	{
+                			name:'性价比有点低',
+                			icon:'force',
+            			},
+            			{
+                			name:'和预期差很多',
+                			icon:'force',
+            			},
+            			{
+                			name:'形式太过单一',
+                			icon:'force',
+            			}
+			        	]*/
+			    },
+			    series : [
+			        {
+			            name:'投诉原因',
+			            type:'pie',
+			            center:['48%','30%'],
+			            radius : ['30%', '60%'],
+			            data:inData,
+			            /*data:[
+			            	{value:30, name:'超越经营范围'},
+               				{value:30, name:'强制购物消费'},
+                			{value:24, name:'欺骗行程安排'},
+               				{value:13, name:'导游态度恶劣'},
+                			{value:48, name:'旅游景点太少'},
+               				{value:58, name:'游玩项目太少'},
+                			{value:18, name:'住宿条件太差'},
+                			{value:38, name:'游玩项目太少'},
+                			{value:18, name:'性价比有点低'},
+               				{value:23, name:'和预期差很多'},
+                			{value:24, name:'形式太过单一'},
+			            ],*/
+			            itemStyle : {
+			                normal : {
+			                    label : {
+			                        show : true,
+			                        formatter:"{d}%"
+			                    },
+			                    labelLine : {
+			                        show : true
+			                    }
+			                },
+			                emphasis : {
+			                    label : {
+			                        show : true,
+			                        position : 'center',
+			                        textStyle : {
+			                            fontSize : '30',
+			                            fontWeight : 'bold'
+			                        }
+			                    }
+			                }
+			            },
+			        }
+			    ]
+			};
+
+			echartsUtil.setOption(chart, option);
+		},
+		//投诉对象分析
+		showComplainObject : function (chart) {
+			option = {
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			    },
+			    legend: {
+			        orient : 'horizontal',
+			        x : '66px',
+			        y : '380px',
+			        itemGap: 30,
+			        itemWidth:80,
+			        itemHeight:20,
+			        data:[
+			        	{
+                			name:'旅行社',
+                			icon:'force',
+            			},
+            			{
+                			name:'宾馆饭店',
+                			icon:'force',
+            			},
+            			{
+                			name:'景点景区',
+                			icon:'force',
+            			},
+            			{
+                			name:'导游人员',
+                			icon:'force',
+            			},
+            			{
+                			name:'其他',
+                			icon:'force',
+            			}
+			        	]
+			    },
+			    series : [
+			        {
+			            name:'投诉对象',
+			            type:'pie',
+			            center:['48%','30%'],
+			            radius : ['30%', '60%'],
+			            data:[
+			            	{value:30, name:'旅行社'},
+               				{value:30, name:'宾馆饭店'},
+                			{value:24, name:'景点景区'},
+               				{value:13, name:'导游人员'},
+                			{value:48, name:'其他'},
+			            ],
+			            itemStyle : {
+			                normal : {
+			                    label : {
+			                        show : true,
+			                        formatter:"{d}%"
+			                    },
+			                    labelLine : {
+			                        show : true
+			                    }
+			                },
+			                emphasis : {
+			                    label : {
+			                        show : true,
+			                        position : 'center',
+			                        textStyle : {
+			                            fontSize : '30',
+			                            fontWeight : 'bold'
+			                        }
+			                    }
+			                }
+			            },
+			        }
+			    ]
+			};
+			echartsUtil.setOption(chart, option);
+		},
+		
+		//全年投诉数量  
+		showComplainNum : function (chart,name,sdata) {
+			var monthDate=PLATFORM_CONSTANS.DATE.getMonths();
+			var option = {
+				title : {
+        			text: '全省累计投诉量为12221条',
+        			x:'center',
+        			textStyle:{
+        				color:'white',
+        			},
+    			},
+		        tooltip: {
+		            trigger: 'axis',
+		            formatter: '{b}月 : {c}(人)'
+		        },
+		        grid: {
+		        	x: 40,
+		        	y: 30,
+		        	x2: 40,
+		        	y2: 30
+		        },
+		        xAxis: [
+		            {
+		                type: 'category',
+		                data:name
+		                //data:monthDate
+		                //data: ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+		            }
+		        ],
+		        yAxis: [
+		            {
+		                type: 'value',
+		                name: '人数(人)'
+		            }
+		        ],
+		        series: [
+		            {
+		                'name': '投诉数量',
+		                'type': 'line',
+		                'data': sdata
+		                /*'data':[
+			            	{value:0, name:'1月'},
+                			{value:0, name:'2月'},
+               				{value:3, name:'3月'},
+                			{value:2, name:'4月'},
+               				{value:4, name:'5月'},
+                			{value:3, name:'6月'},
+                			{value:1, name:'7月'},
+                			{value:2, name:'8月'},
+                			{value:3, name:'9月'},
+                			{value:0, name:'10月'},
+                			{value:4, name:'11月'},
+                			{value:2, name:'12月'},
+			            ],*/
+		            }
+		        ]
+		   };
+			echartsUtil.setOption(chart, option);
+		},
+		//地市投诉排行
+		showComplainCityTop : function (chart) {
+			var monthDate=PLATFORM_CONSTANS.DATE.getMonths();
+			var option = {
+				title : {
+        			text: '全省累计投诉量为12221条',
+        			x:'center',
+        			textStyle:{
+        				color:'white',
+        			},
+    			},
+		        tooltip: {
+		            trigger: 'axis',
+		            formatter: '{b}月 : {c}(人)'
+		        },
+		        grid: {
+		        	x: 40,
+		        	y: 30,
+		        	x2: 40,
+		        	y2: 30
+		        },
+		        xAxis: [
+		            {
+		                type: 'category',
+		                name: '地市',
+		                data: ['忻州','大同','灵石','应县','五行山','太原']
+		            }
+		        ],
+		        yAxis: [
+		            {
+		                type: 'value',
+		                name: '人数(人)'
+		            }
+		        ],
+		        series: [
+		            {
+		                'name': '投诉数量',
+		                'type': 'line',
+		                'data':[
+			            	{value:3, name:'忻州'},
+                			{value:3, name:'大同'},
+               				{value:1, name:'灵石'},
+                			{value:2, name:'应县'},
+               				{value:4, name:'五行山'},
+                			{value:3, name:'太原'},
+			            ],
+		            }
+		        ]
+		   };
+			echartsUtil.setOption(chart, option);
+		},
+		//景区投诉排行
+		showScenicTop  : function (chart,inDataName,inData) {
+			var option = {
+		        tooltip: {
+		            trigger: 'axis',
+		            axisPointer : {
+		                type : 'shadow'
+		            },
+		        },
+		        grid: {
+		        	x: 40,
+		        	y: 40,
+		        },
+		        xAxis: [
+		            {
+		                type: 'category',
+		                name: '景点',
+		                data: inDataName,
+		                //data: ['五台山','云冈石窟','应县木塔','平遥古城','恒山','晋祠','洪洞大槐树','解州关帝庙','灵石','王家大院','绵山']
+		            }
+		        ],
+		        yAxis: [
+		            {
+		                type: 'value',
+		            }
+		        ],
+		        series: [
+		            {
+		                'name': '投诉人数',
+		                'type': 'bar',
+		                barGap: '0%',
+			            barWidth:34,
+			            barCategoryGap:'50%',
+			            'data': inData,
+		                /*'data': [
+		                	{value:3, name:'五台山'},
+                			{value:3, name:'云冈石窟'},
+               				{value:1, name:'应县木塔'},
+                			{value:2, name:'平遥古城'},
+               				{value:4, name:'恒山'},
+                			{value:3, name:'晋祠'},
+                			{value:3, name:'洪洞大槐树'},
+                			{value:3, name:'解州关帝庙'},
+               				{value:1, name:'灵石'},
+                			{value:2, name:'平遥古城'},
+               				{value:4, name:'王家大院'},
+                			{value:3, name:'绵山'},
+		                ]*/
+		            }
+		        ]
+		   };
+			echartsUtil.setOption(chart, option);
+		},
+		//出入境投诉排行
+		showComplainInOut  : function (chart) {
+			var option = {
+		        tooltip: {
+		            trigger: 'axis',
+		            axisPointer : {
+		                type : 'shadow'
+		            },
+		        },
+		        grid: {
+		        	x: 40,
+		        	y: 40,
+		        },
+		        xAxis: [
+		            {
+		                type: 'category',
+		                data: ['国内出境游','国内入境游','国际出境游','国际入境游']
+		            }
+		        ],
+		        yAxis: [
+		            {
+		                type: 'value',
+		            }
+		        ],
+		        series: [
+		            {
+		                'name': '投诉人数',
+		                'type': 'bar',
+		                barGap: '0%',
+			            barWidth:34,
+			            barCategoryGap:'50%',
+		                'data': [
+		                	{value:11, name:'国内出晋游'},
+                			{value:7, name:'国内入晋游'},
+               				{value:9, name:'国际出晋游'},
+                			{value:8, name:'国际入晋游'},
+		                ]
+		            }
+		        ]
+		    };
+
+			echartsUtil.setOption(chart, option);
+		},
+		
+		
+		
+		//地市投诉比例
+		showComplainCity : function (chart,inDataName,inData) {
+			option = {
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			    },
+			    legend: {
+			        orient : 'vertical',
+			        x : '350px',
+			        y : 'center',
+			        itemGap: 0,
+			        itemWidth:20,
+			        itemHeight:20,
+			        formatter: '{name}',
+			        selectedMode:false,
+			        data : inDataName,
+			       /* data:[
+			        	{
+                			name:'忻州',
+                			icon : 'triangle',          
+            			},
+            			{
+                			name:'大同',
+                			icon : 'triangle',          
+            			},
+            			{
+                			name:'灵石',
+                			icon : 'triangle',          
+            			},
+            			{
+                			name:'应县',
+                			icon : 'triangle',          
+            			},
+            			{
+                			name:'五行山',
+                			icon : 'triangle',          
+            			},
+            			{
+                			name:'太原',
+                			icon : 'triangle',          
+            			}
+					],*/
+			    },
+			    //calculable : true,
+			    series : [
+			        {
+			            name:'投诉原因',
+			            type:'pie',
+			            center:['40%','50%'],
+			            radius : ['30%', '60%'],
+			            data : inData,
+			            /*data:[
+			            	{value:24, name:'忻州'},
+                			{value:22, name:'大同'},
+               				{value:18, name:'灵石'},
+                			{value:17, name:'应县'},
+               				{value:12, name:'五行山'},
+                			{value:8, name:'太原'},
+			            ],*/
+			            itemStyle : {
+			                normal : {
+			                    label : {
+			                        show : true,
+			                        formatter:"{d}%"
+			                    },
+			                    labelLine : {
+			                        show : true
+			                    }
+			                },
+			                emphasis : {
+			                    label : {
+			                        show : true,
+			                        position : 'center',
+			                        textStyle : {
+			                            fontSize : '30',
+			                            fontWeight : 'bold'
+			                        }
+			                    }
+			                }
+			            },
+			        }
+			    ]
+			};
+
+			echartsUtil.setOption(chart, option);
+		},
+	};
+	$(document).ready(function () {
+		complainPage.init();
+	});
+</script>
+</body>
+</html>
+

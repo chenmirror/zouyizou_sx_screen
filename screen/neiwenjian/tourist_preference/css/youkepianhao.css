@@ -1,0 +1,109 @@
+body > div > div > div:nth-child(1) > div > div.bootstrap-table > div.fixed-table-container > div.fixed-table-pagination > div.pull-right.pagination > ul > li.page-number.active > a{
+	background-color: #337ab7 !important;
+}
+
+.container1{
+	border-left: 20px solid #EFF1FF;
+	border-right: 20px solid #EFF1FF;
+	border-top: 10px solid #eff1ff;
+}
+
+#travel_table > thead > tr > th:nth-child(1){
+	width: 20%;
+}
+
+.xianlu_table{
+	margin-top: 10px;
+}
+
+#xianlu{
+	border-top: 10px solid #EFF1FF;
+	margin-top: 30px;
+	/*margin-left: 5px !important;*/
+}
+
+.select{
+	border-bottom: 0px solid #fafafa !important;
+}
+
+#xianlu > div:nth-child(1) > div > div.bootstrap-table > div.fixed-table-container{
+	width: 500px;
+}
+
+.mar-left40{
+	margin-left: 40px;
+}
+
+.mar-left20{
+	margin-left: 20px;
+}
+
+#traveltop10Chart{
+	width: 500px;
+	height: 334px;
+	border-right: 10px solid #EFF1FF;
+}
+
+.title{
+	    color: #EEB300;
+    font-size: 15px;
+    margin-bottom: 10px;
+    margin-top: 16px;
+    /*font-weight: bold;*/
+}
+
+.jiange{
+	background-color: black;
+    height: 5px;
+    margin-top: 5px;
+}
+
+.time_jieri{
+	width: 110%;
+	height: 300px;
+	border-top: 10px solid #EFF1FF;
+}
+
+.table th, .table td { 
+text-align: center;
+vertical-align: middle!important;
+}
+
+#time_table > thead > tr:nth-child(3) > th:nth-child(1){
+	width: 38px;
+}
+
+.time_div_table{
+	margin-top: 60px;;
+}
+
+.tingliushijian{
+	width: 300px;
+	height: 300px;	
+	border-right: 10px solid #EFF1FF;
+	
+}
+
+.chartJijie{
+	width: 380px;
+	height: 300px;	
+}
+
+.xianluxiangqing{
+	
+}
+
+.relation{
+	width: 110%;
+	height: 500px;
+	border-top: 10px solid #EFF1FF;
+}
+
+.xianluxiangqing{
+	border-left: 10px solid #EFF1FF;
+	border-right: 10px solid #EFF1FF;
+	padding-left: 10px;
+	padding-right: 10px;
+	line-height: 30px;
+}
+

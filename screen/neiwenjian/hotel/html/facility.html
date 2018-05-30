@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name=renderer content=webkit>
+    <title>住宿设施</title>
+    <script src="../echarts/echarts.js"></script>
+	<!-- <link rel="stylesheet" href="../css/hotel_order.css">-->
+   <link rel="stylesheet" href="../css/facility.css" />
+   <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+    <script src="../js/jquery.min.js"></script>
+    <script src = "../bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            	</button>
+				<img class="logo" src="../img/logo1.jpg" alt="logo" />
+				<span class="title">住宿设施分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					
+					<li>
+						<a href="main.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	
+
+		<div id="hotel_facility" class="hotel_facility1" ></div>
+		<div id="house_facility" class="hotel_facility" ></div>
+	
+<script>
+    var myChart_hotel_facility = echarts.init(document.getElementById('hotel_facility'));
+    var myChart_house_facility = echarts.init(document.getElementById('house_facility'));
+   /* var myChart_hotel_one = echarts.init(document.getElementById('hotel_one'),'dark');
+    var myChart_house_one = echarts.init(document.getElementById('house_one'),'dark');*/
+    option_hotel_facility= {
+    	backgroundColor:'white',
+        title: {
+            text: '▌不同类型酒店提供设施情况统计',
+            top: '4%',
+			left: '2%',
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+					}	
+        },
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        legend: {
+            orient: 'horizontal',
+            top: 'bottom',
+            data: ['游泳池', '棋牌室','卡拉OK房','会议室','投影仪','音响设备']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '10%',
+            containLabel: true
+        },
+        xAxis:  {
+            type: 'value',
+            name:'数量',
+            max:2100,
+            axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+        },
+        yAxis: {
+            type: 'category',
+            data: ['商务型酒店','度假型酒店','长住型酒店','汽车酒店'],
+
+        },
+        series: [
+            {
+                name: '游泳池',
+                type: 'bar',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+                barWidth : 30,
+                data: [320, 302, 301, 334]
+            },
+            {
+                name: '棋牌室',
+                type: 'bar',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+                data: [220, 232, 241, 224]
+            },
+            {
+                name: '卡拉OK房',
+                type: 'bar',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+                data: [220, 182, 191, 234]
+            },
+            {
+                name: '会议室',
+                type: 'bar',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+                data: [150, 212, 201, 154]
+            },
+            {
+                name: '投影仪',
+                type: 'bar',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+                data: [690, 540, 301, 230]
+            } ,
+            {
+                name: '音响设备',
+                type: 'bar',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+                data: [200, 222, 201, 254]
+            }
+        ]
+    };
+    option_house_facility= {
+    	backgroundColor:'white',
+        title: {
+            text: '▌不同类型牧人之家提供设施情况统计',
+            top: '4%',
+			left: '2%',
+			textStyle: {
+				color: '#EEB300',
+				fontSize: 15
+					}	
+        },
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        legend: {
+            top: 'bottom',
+            data: ['游泳池', '棋牌室','卡拉OK房','会议室','投影仪','音响设备']
+        },
+        grid: {
+            left: '5.5%',
+            right: '4%',
+            bottom: '10%',
+            containLabel: true
+        },
+        xAxis:  {
+            type: 'value',
+            name:'数量',
+            max:2100,
+            axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						}
+        },
+        yAxis: {
+            type: 'category',
+            data: ['一星级','二星级','三星级','四星级','五星级']
+        },
+        series: [
+            {
+                name: '游泳池',
+                type: 'bar',
+                stack: '总量',
+                barWidth : 30,
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+                data: [320, 302, 301, 334,250]
+            },
+            {
+                name: '棋牌室',
+                type: 'bar',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+                data: [120, 132, 101, 134,350]
+            },
+            {
+                name: '卡拉OK房',
+                type: 'bar',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+                data: [220, 182, 191, 234,140]
+            },
+            {
+                name: '会议室',
+                type: 'bar',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+                data: [150, 212, 201, 154,400]
+            },
+            {
+                name: '投影仪',
+                type: 'bar',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+                data: [250, 367, 490, 534,600]
+            } ,
+            {
+                name: '音响设备',
+                type: 'bar',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'insideRight'
+                    }
+                },
+                data: [150, 212, 201, 154,200]
+            }
+        ]
+    };
+    myChart_hotel_facility .setOption( option_hotel_facility);
+    myChart_house_facility.setOption(option_house_facility );
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name=renderer content=webkit>
+		<title>游客行为分析-轨迹分析</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css " rel="stylesheet ">
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css " rel="stylesheet ">
+		<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<link href="css/bootstrap-table.min.css" rel="stylesheet ">
+		<script src="js/bootstrap-table.min.js"></script>
+		<script src="js/bootstrap-table-zh-CN.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script src="js/echarts.js"></script>
+		<script src="js/xilinguolemeng.js"></script>
+		<link rel="stylesheet" href="css/trace.css">
+		<script type="text/javascript" src="../tourist_preference/js/dataTool.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0BHOFVd4GhCNDquSmn5RIZi0OB4L0WGw"></script>
+		<link href="css/navstyle.css" rel="stylesheet " />
+	</head>
+
+	<body>
+		<div class="row" style="background-color: #3f3d3e;padding: 6px 10px;">
+			<div class="navbar-header" style="padding-left: 15px;">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="nav_title">游客轨迹分析</span>
+			</div>
+			<div class="navbar-collapse collapse nav_title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist" style="padding-bottom: 0px;">
+					<li style="margin-bottom: -5px;margin-right: 20px;">
+						<a href="tourbehavior.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="padding-15 container">
+			<div id="mapChart" class="col-xs-6 col-lg-6 col-md-6 ">
+
+			</div>
+			<div class="col-md-6 padding-right3">
+				<div class="relation col-md-12 col-xs-12 col-sm-12" id="relation"></div>
+				<div class="col-md-12 col-xs-12 col-sm-12 charts-style margin-top10" >
+					<p class="title">▌旅游线路排行TOP10详情</p>
+					<table id="travel_table" class="table table-hover table-height" data-toggle="table" data-url="#" data-page-size="5" data-pagination="true">
+						<thead>
+							<tr>
+								<th>线路名称</th>
+								<th>线路详情</th>
+								<th>热度</th>
+								<th>人数</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<a href="#" data-toggle="modal" data-target="#myModal">线路1</a>
+								</td>
+								<td><a href="#" data-toggle="modal" data-target="#myModal">锡林浩特市 > 东乌珠穆沁旗 > 西乌珠穆沁旗</a></td>
+								<td>19.8</td>
+								<td>8740</td>
+							</tr>
+							<tr>
+								<td>线路2</td>
+								<td>锡盟草原 > 元上都遗址 > 金莲川草原</td>
+								<td>19.5</td>
+								<td>7450</td>
+							</tr>
+							<tr>
+								<td>线路3</td>
+								<td>锡林郭勒 > 乌兰五台 > 半拉山湿地保护区 </td>
+								<td>18.0</td>
+								<td>5410</td>
+							</tr>
+							<tr>
+								<td>线路4</td>
+								<td>草原景区 > 阿斯哈图石林 > 白音敖包景区 </td>
+								<td>17.8</td>
+								<td>5210</td>
+							</tr>
+							<tr>
+								<td>线路5</td>
+								<td>达里诺尔湖 > 平顶山 > 锡林浩特</td>
+								<td>17.5</td>
+								<td>4440</td>
+							</tr>
+							<tr>
+								<td>线路6</td>
+								<td>锡林浩特 > 蒙古汗城 > 九曲湾</td>
+								<td>17.4</td>
+								<td>3330</td>
+							</tr>
+							<tr>
+								<td>线路7</td>
+								<td>锡林浩特 > 阿斯哈图石林 > 西乌旗</td>
+								<td>17.2</td>
+								<td>3000</td>
+							</tr>
+							<tr>
+								<td>线路8</td>
+								<td>锡林浩特 > 锡林郭勒大草原 > 阿巴嘎</td>
+								<td>17.0</td>
+								<td>2220</td>
+							</tr>
+							<tr>
+								<td>线路9</td>
+								<td>二连浩特 > 中蒙边防公路 > 成吉思宝格达山</td>
+								<td>16.9</td>
+								<td>1110</td>
+							</tr>
+							<tr>
+								<td>线路10</td>
+								<td>锡林浩特 > 恐龙博物馆 > 中蒙国门</td>
+								<td>16.8</td>
+								<td>1000</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+			</div>
+
+	<!--模态框-->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+							<h4 class="modal-title" id="modal-label">详情</h4>
+						</div>
+						<div class="modal-body">
+						<p>&nbsp;&nbsp;&nbsp;&nbsp;该线路突出展示了民族文化、草原风情、地质奇观，涵盖了锡林郭勒草原丰富多样的自然景观，保留完整的蒙古族民俗风情及富集的精品旅游景区，有国家唯一一个草地类自然保护区锡林郭勒草原、地质奇观——克什克腾世界地质公园；有北方游牧民族摇篮的乌珠穆沁部落文化；锡林浩特市有按照国家4A级标准建设的蒙元文化苑、贝子庙景区、锡林郭勒赛马场，白音锡勒国家级草原自然保护区；西乌珠穆沁旗有国家3A级旅游景区国家第一批工农业旅游示范点蒙古汗城，游牧部落；东乌珠穆沁旗有乌里雅斯太山景区、珠恩嘎达布其口岸；正蓝旗有蒙元帝国的夏都——元上都遗址，探险游的天堂——浑善达克沙地；多伦县有满清商业文化的代表山西会馆，汇宗寺等景区。</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				var relation = echarts.init(document.getElementById("relation"));
+
+				relation.showLoading();
+				$.get('./xml/les-miserables.gexf', function(xml) {
+					relation.hideLoading();
+
+					var graph = echarts.dataTool.gexf.parse(xml);
+					var categories = [];
+					categories[0] = {
+						name: "锡林浩特市"
+					};
+					categories[1] = {
+						name: "东乌珠穆沁旗"
+					};
+					categories[2] = {
+						name: "西乌珠穆沁旗"
+					};
+					categories[3] = {
+						name: "锡盟草原"
+					};
+					categories[4] = {
+						name: "元上都遗址"
+					};
+					categories[5] = {
+						name: "金莲川草原"
+					};
+					categories[6] = {
+						name: "锡林郭勒"
+					};
+					graph.nodes.forEach(function(node) {
+						node.itemStyle = null;
+						node.value = node.symbolSize;
+						node.symbolSize /= 1.5;
+						node.label = {
+							normal: {
+								show: node.symbolSize > 10
+							}
+						};
+						node.category = node.attributes.modularity_class;
+					});
+					option = {
+						backgroundColor: 'white',
+						title: {
+							text: '▌景点关联图',
+							top: '4%',
+							left: '2%',
+							textStyle: {
+								color: '#EEB300',
+								fontSize: 15
+							}
+						},
+						tooltip: {},
+//						legend: [{
+//							// selectedMode: 'single',
+//							data: categories.map(function(a) {
+//								console.log(a);
+//								return a.name;
+//							}),
+//							orient: 'horizontal',
+//							//						top: 'bottom',
+//							top: 'bottom',
+//						}],
+						animationDurationUpdate: 1500,
+						animationEasingUpdate: 'quinticInOut',
+						series: [{
+							name: '景区关系图',
+							type: 'graph',
+							layout: 'circular',
+							circular: {
+								rotateLabel: true
+							},
+							data: graph.nodes,
+							links: graph.links,
+							categories: categories,
+							roam: 'scale',
+							bottom:'1%',
+							label: {
+								normal: {
+									position: 'right',
+									formatter: '{b}'
+								}
+							},
+							lineStyle: {
+								normal: {
+									color: 'source',
+									curveness: 0.3
+								}
+							}
+						}]
+					};
+
+					relation.setOption(option);
+				}, 'xml');
+			})
+			// 百度地图API功能
+			var map = new BMap.Map("mapChart");
+			map.centerAndZoom("锡林郭勒盟", 14); // 初始化地图，设置中心点坐标和地图级别
+			map.enableScrollWheelZoom(); // 允许滚轮缩放
+			var bounds = null;
+			var linesPoints = null;
+
+			var spoi1 = new BMap.Point(116.102044, 43.953628); // 起点1
+			var spoi2 = new BMap.Point(117.6, 44.58); // 起点2
+			var spoi3 = new BMap.Point(111.93747, 43.65645); // 起点3
+			var epoi1 = new BMap.Point(113.63, 43.863); // 终点
+			var epoi2 = new BMap.Point(116.47, 42.18);
+			var epoi3 = new BMap.Point(116.966717, 45.520528);
+			//			var myIcon = new BMap.Icon("http://lbsyun.baidu.com/jsdemo/img/Mario.png", new BMap.Size(32, 70), {
+			var myIcon = new BMap.Icon("img/car(1).png", new BMap.Size(46, 32), {
+				imageOffset: new BMap.Size(0, 0)
+			});
+
+			function initLine() {
+				bounds = new Array();
+				linesPoints = new Array();
+				map.clearOverlays(); // 清空覆盖物
+				var driving3 = new BMap.DrivingRoute(map, {
+					onSearchComplete: drawLine
+				}); // 驾车实例,并设置回调
+				driving3.search(spoi1, epoi1); // 搜索一条线路
+				var driving4 = new BMap.DrivingRoute(map, {
+					onSearchComplete: drawLine
+				}); // 驾车实例,并设置回调
+				driving4.search(spoi2, epoi2);
+				var driving5 = new BMap.DrivingRoute(map, {
+					onSearchComplete: drawLine
+				}); // 驾车实例,并设置回调
+				driving5.search(spoi3, epoi3); // 搜索一条线路
+			}
+
+			function run() {
+				for(var m = 0; m < linesPoints.length; m++) {
+					var pts = linesPoints[m];
+					var len = pts.length;
+					var carMk = new BMap.Marker(pts[0], {
+						icon: myIcon
+					});
+					map.addOverlay(carMk);
+					resetMkPoint(1, len, pts, carMk)
+				}
+
+				function resetMkPoint(i, len, pts, carMk) {
+					carMk.setPosition(pts[i]);
+					if(i < len) {
+						setTimeout(function() {
+							i++;
+							resetMkPoint(i, len, pts, carMk);
+						}, 100);
+					}
+				}
+
+			}
+
+			function drawLine(results) {
+				var opacity = 0.45;
+				var planObj = results.getPlan(0);
+				var b = new Array();
+				var addMarkerFun = function(point, imgType, index, title) {
+					var url;
+					var width;
+					var height
+					var myIcon;
+					// imgType:1的场合，为起点和终点的图；2的场合为车的图形
+					if(imgType == 1) {
+						url = "http://lbsyun.baidu.com/jsdemo/img/dest_markers.png";
+
+						width = 42;
+						height = 34;
+						myIcon = new BMap.Icon(url, new BMap.Size(width, height), {
+							offset: new BMap.Size(14, 32),
+							imageOffset: new BMap.Size(0, 0 - index * height)
+						});
+					} else {
+						url = "http://lbsyun.baidu.com/jsdemo/img/trans_icons.png";
+						width = 22;
+						height = 25;
+						var d = 25;
+						var cha = 0;
+						var jia = 0
+						if(index == 2) {
+							d = 21;
+							cha = 5;
+							jia = 1;
+						}
+						myIcon = new BMap.Icon(url, new BMap.Size(width, d), {
+							offset: new BMap.Size(10, (11 + jia)),
+							imageOffset: new BMap.Size(0, 0 - index * height - cha)
+						});
+					}
+
+					var marker = new BMap.Marker(point, {
+						icon: myIcon
+					});
+					if(title != null && title != "") {
+						marker.setTitle(title);
+					}
+					// 起点和终点放在最上面
+					if(imgType == 1) {
+						marker.setTop(true);
+					}
+					map.addOverlay(marker);
+				}
+				var addPoints = function(points) {
+					for(var i = 0; i < points.length; i++) {
+						bounds.push(points[i]);
+						b.push(points[i]);
+					}
+				}
+				// 绘制驾车步行线路
+				for(var i = 0; i < planObj.getNumRoutes(); i++) {
+					var route = planObj.getRoute(i);
+					if(route.getDistance(false) <= 0) {
+						continue;
+					}
+					addPoints(route.getPath());
+					// 驾车线路
+					if(route.getRouteType() == BMAP_ROUTE_TYPE_DRIVING) {
+						map.addOverlay(new BMap.Polyline(route.getPath(), {
+							strokeColor: "#0030ff",
+							strokeOpacity: opacity,
+							strokeWeight: 6,
+							enableMassClear: true
+						}));
+					} else {
+						// 步行线路有可能为0
+						map.addOverlay(new BMap.Polyline(route.getPath(), {
+							strokeColor: "#30a208",
+							strokeOpacity: 0.75,
+							strokeWeight: 4,
+							enableMassClear: true
+						}));
+					}
+				}
+				map.setViewport(bounds);
+				// 终点
+				addMarkerFun(results.getEnd().point, 1, 1);
+				// 开始点
+				addMarkerFun(results.getStart().point, 1, 0);
+				linesPoints[linesPoints.length] = b;
+			}
+			initLine();
+			setTimeout(function() {
+				run();
+			}, 1500);
+		</script>
+	</body>
+
+</html>

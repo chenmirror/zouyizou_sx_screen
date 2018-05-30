@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name=renderer content=webkit>
+		<title>游客行为分析-到达方式分析</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css " rel="stylesheet ">
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css " rel="stylesheet ">
+		<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="js/echarts.js"></script>
+		<link rel="stylesheet" href="css/arriveway.css">
+		<link rel="stylesheet" href="css/navstyle.css">
+	</head>
+
+	<body>
+		<div class="row" style="background-color: #3f3d3e;padding: 6px 10px;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="nav_title">到达方式分析</span>
+			</div>
+		</div>
+		<div class="container">
+			<ul class="nav nav-tabs" role="tablist" id="feature-tab" style="float: right;margin-top: -52px;">
+				<li class="active">
+					<a href="#tab-day" role="tab" data-toggle="tab">天</a>
+				</li>
+				<!--<li>
+					<a href="#tab-week" role="tab" data-toggle="tab">周</a>
+				</li>-->
+				<li>
+					<a href="#tab-month" role="tab" data-toggle="tab">月</a>
+				</li>
+				<li>
+					<a href="#tab-year" role="tab" data-toggle="tab">年</a>
+				</li>
+				<li>
+					<a href="tourbehavior.html" target="_self">返回</a>
+				</li>
+
+			</ul>
+
+			<div class="tab-content padding-left-5">
+				<div class="tab-pane active" id="tab-day">
+					<div class="col-md-3 div-padding-left">
+						<div id="dayarrivechartsximeng" class="special_height"> </div>
+						<div id="dayarrivechartsway" class="special_height margin-top10"> </div>
+					</div>
+					<div class="col-md-9 div-padding-mid">
+						<div id="dayarrivechartsqixian" class="widthheight"> </div>
+					</div>
+				</div>
+				<div class="tab-pane" id="tab-month">
+					<div class="col-md-3 div-padding-left">
+						<div id="montharrivechartsximeng" class="special_height"> </div>
+						<div id="montharrivechartsway" class="special_height margin-top10"> </div>
+					</div>
+					<div class="col-md-9 div-padding-mid">
+						<div id="montharrivechartsqixian" class="widthheight"> </div>
+					</div>
+				</div>
+				<div class="tab-pane" id="tab-year">
+					<div class="col-md-3 div-padding-left">
+						<div id="yeararrivechartsximeng" class="special_height"> </div>
+						<div id="yeararrivecharts" class="special_height margin-top10"> </div>
+					</div>
+					<div class="col-md-9 div-padding-mid">
+						<div id="yeararrivechartsqixian" class="widthheight"> </div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<script type="text/javascript">
+			var arrivewayChart1 = echarts.init(document.getElementById('dayarrivechartsway'), 'dark');
+			var data = [{
+				value: 3661,
+				name: '飞机'
+			}, {
+				value: 5713,
+				name: '火车'
+			}, {
+				value: 9999,
+				name: '客车'
+			}, {
+				value: 17623,
+				name: '自驾'
+			}, {
+				value: 3299,
+				name: '租车'
+			}, {
+				value: 18888,
+				name: '其他'
+			}];
+			var arrivewayoption = {
+				backgroundColor: '#fff',
+				title: {
+					text: '锡盟到达方式占比',
+					top: '2%',
+					//					x: 'center',
+					//					y: 'center',
+					textStyle: {
+						color: '#FFC300',
+						fontStyle: 'normal',
+						fontWeight: 'normal',
+						fontSize: 16,
+					}
+				},
+				tooltip: {
+					//					show: false,
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				series: [{
+					name: '占比',
+					type: 'pie',
+					selectedMode: 'single',
+					radius: ['20%', '46%'],
+					color: ['#86D560', '#AF89D6', '#59ADF3', '#FF999A', '#FFCC67', '#61a0a8'],
+
+					label: {
+						normal: {
+							position: 'outside',
+							formatter: "{b} \n {d}%",
+							textStyle: {
+//								color: '#fff',
+								fontWeight: 'bold',
+								fontSize: 10
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							show: true
+						}
+					},
+					data: data
+				}]
+			};
+			arrivewayChart1.setOption(arrivewayoption);
+
+			var arrivewayChart2 = echarts.init(document.getElementById('dayarrivechartsqixian'), 'dark');
+			var qixianarrivewayoption = {
+				title: {
+					text: '锡盟各旗县游客到达方式',
+					top: '2%',
+					textStyle: {
+						color: '#FFC300',
+						fontStyle: 'normal',
+						fontWeight: 'normal',
+						fontSize: 16,
+					}
+				},
+				backgroundColor: '#fff',
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend: {
+					data: ['飞机', '火车', '客车', '自驾', '租车', '其他'],
+					align: 'right',
+					right: '4%',
+					top: '8%'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					top: '17%',
+					containLabel: true
+				},
+				xAxis: [{
+					axisLabel: {
+						interval: 0,
+						rotate: 30, //倾斜度 -90 至 90 默认为0  
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'category',
+					data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗']
+				}],
+				yAxis: [{
+					type: 'value',
+					name: '人数(人)',
+					axisLabel: {
+						formatter: '{value}',
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+				}],
+				series: [{
+						name: '飞机',
+						type: 'bar',
+						data: [320, 302, 301, 334, 390, 234, 401, 276, 234, 299, 289, 266, 199]
+					},
+					{
+						name: '火车',
+						type: 'bar',
+						data: [120, 132, 101, 134, 90, 320, 332, 321, 134, 345, 121, 234, 210]
+					},
+					{
+						name: '客车',
+						type: 'bar',
+						data: [202, 312, 321, 134, 196, 220, 182, 191, 234, 290, 320, 132, 301]
+					},
+					{
+						name: '自驾',
+						type: 'bar',
+						stack: '总量',
+						data: [220, 162, 201, 134, 173, 150, 212, 201, 154, 190, 122, 212, 121]
+					},
+					{
+						name: '租车',
+						type: 'bar',
+						data: [420, 332, 401, 334, 290, 220, 232, 301, 134, 167, 201, 134, 173]
+					},
+					{
+						name: '其他',
+						type: 'bar',
+						data: [620, 532, 501, 534, 390, 420, 432, 401, 334, 467, 301, 334, 373]
+					}
+				]
+			};
+
+			arrivewayChart2.setOption(qixianarrivewayoption);
+			var arrivewayChart3 = echarts.init(document.getElementById('dayarrivechartsximeng'), 'dark');
+			var ximengarrivewayoption = {
+				title: {
+					text: '锡盟游客到达方式',
+					top: '4%',
+					textStyle: {
+						color: '#FFC300',
+						fontStyle: 'normal',
+						fontWeight: 'normal',
+						fontSize: 16,
+					}
+				},
+				backgroundColor: '#fff',
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				grid: {
+					top: '28%', //调整体表格的整体
+					containLabel: true
+				},
+				color: ['#61a0a8'],
+				xAxis: [{
+					axisLabel: {
+						interval: 0,
+						rotate: 30, //倾斜度 -90 至 90 默认为0  
+						//						margin: 5,
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					data: ['飞机', '火车', '客车', '自驾', '租车', '其他'],
+				}],
+				yAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'value',
+					name: '人数(人)'
+				}],
+				series: [{
+					name: '人数',
+					type: 'bar',
+					barWidth: '50%',
+					boundaryGap: true,
+					data: [705, 903, 898, 910, 899, 1999]
+				}]
+			};
+			arrivewayChart3.setOption(ximengarrivewayoption);
+			
+			var montharrivewayChart1 = echarts.init(document.getElementById('montharrivechartsway'), 'dark');
+			var data = [{
+				value: 13661,
+				name: '飞机'
+			}, {
+				value: 15613,
+				name: '火车'
+			}, {
+				value: 19938,
+				name: '客车'
+			}, {
+				value: 97623,
+				name: '自驾'
+			}, {
+				value: 9299,
+				name: '租车'
+			}, {
+				value: 20888,
+				name: '其他'
+			}];
+			var montharrivewayoption = {
+				backgroundColor: '#fff',
+				title: {
+					text: '锡盟到达方式占比',
+					top: '2%',
+					//					x: 'center',
+					//					y: 'center',
+					textStyle: {
+						color: '#FFC300',
+						fontStyle: 'normal',
+						fontWeight: 'normal',
+						fontSize: 16,
+					}
+				},
+				tooltip: {
+					//					show: false,
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				series: [{
+					name: '占比',
+					type: 'pie',
+					selectedMode: 'single',
+					radius: ['20%', '45%'],
+					color: ['#86D560', '#AF89D6', '#59ADF3', '#FF999A', '#FFCC67', '#61a0a8'],
+
+					label: {
+						normal: {
+							position: 'outside',
+							formatter: "{b} \n {d}%",
+							textStyle: {
+//								color: '#fff',
+								fontWeight: 'bold',
+								fontSize: 10
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							show: true
+						}
+					},
+					data: data
+				}]
+			};
+			montharrivewayChart1.setOption(montharrivewayoption);
+
+			var montharrivewayChart2 = echarts.init(document.getElementById('montharrivechartsqixian'), 'dark');
+			var monthqixianarrivewayoption = {
+				title: {
+					text: '锡盟各旗县游客到达方式',
+					top: '2%',
+					textStyle: {
+						color: '#FFC300',
+						fontStyle: 'normal',
+						fontWeight: 'normal',
+						fontSize: 16,
+					}
+				},
+				backgroundColor: '#fff',
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend: {
+					data: ['飞机', '火车', '客车', '自驾', '租车', '其他'],
+					align: 'right',
+					right: '4%',
+					top: '8%'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					top: '17%',
+					containLabel: true
+				},
+				xAxis: [{
+					axisLabel: {
+						interval: 0,
+						rotate: 30, //倾斜度 -90 至 90 默认为0  
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'category',
+					data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗']
+				}],
+				yAxis: [{
+					type: 'value',
+					name: '人数(人)',
+					axisLabel: {
+						formatter: '{value}',
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+				}],
+				series: [{
+						name: '飞机',
+						type: 'bar',
+						data: [3320, 2302, 3501, 4034, 3390, 2234, 3401, 2176, 3534, 3299, 4289, 3766, 3199]
+					},
+					{
+						name: '火车',
+						type: 'bar',
+						data: [4120, 3632, 3101, 3534, 4090, 3320, 3832, 3421, 4634, 3745, 3121, 3334, 2910]
+					},
+					{
+						name: '客车',
+						type: 'bar',
+						data: [3402, 3312, 4021, 2734, 3596, 4220, 3182, 3691, 3234, 2290, 3520, 4132, 3901]
+					},
+					{
+						name: '自驾',
+						type: 'bar',
+						stack: '总量',
+						data: [3220, 4162, 2201,3134, 3173, 3150, 4212, 2601, 3154, 3190, 3522, 3012, 3121]
+					},
+					{
+						name: '租车',
+						type: 'bar',
+						data: [3020, 3332, 4801, 3934, 3290, 3720, 3232, 3301, 3134, 3167, 4201, 3634, 2173]
+					},
+					{
+						name: '其他',
+						type: 'bar',
+						data: [4620, 3602, 3201, 3534, 3390, 4420, 2432, 3901, 3334, 3667, 2301, 3334, 3373]
+					}
+				]
+			};
+
+			montharrivewayChart2.setOption(monthqixianarrivewayoption);
+			var montharrivewayChart3 = echarts.init(document.getElementById('montharrivechartsximeng'), 'dark');
+			var monthximengarrivewayoption = {
+				title: {
+					text: '锡盟游客到达方式',
+					top: '4%',
+					textStyle: {
+						color: '#FFC300',
+						fontStyle: 'normal',
+						fontWeight: 'normal',
+						fontSize: 16,
+					}
+				},
+				backgroundColor: '#fff',
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				grid: {
+					top: '28%', //调整体表格的整体
+					containLabel: true
+				},
+				color: ['#61a0a8'],
+				xAxis: [{
+					axisLabel: {
+						interval: 0,
+						rotate: 30, //倾斜度 -90 至 90 默认为0  
+						//						margin: 5,
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					data: ['飞机', '火车', '客车', '自驾', '租车', '其他'],
+				}],
+				yAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'value',
+					name: '人数(人)'
+				}],
+				series: [{
+					name: '人数',
+					type: 'bar',
+					barWidth: '50%',
+					boundaryGap: true,
+					data: [4605, 4003, 4798, 5910, 4599, 6999]
+				}]
+			};
+			montharrivewayChart3.setOption(monthximengarrivewayoption);
+			
+			var yeararrivewayChart1 = echarts.init(document.getElementById('yeararrivecharts'), 'dark');
+			var data = [{
+				value: 130661,
+				name: '飞机'
+			}, {
+				value: 160713,
+				name: '火车'
+			}, {
+				value: 99938,
+				name: '客车'
+			}, {
+				value: 317623,
+				name: '自驾'
+			}, {
+				value: 203299,
+				name: '租车'
+			}, {
+				value: 118888,
+				name: '其他'
+			}];
+			var yeararrivewayoption = {
+				backgroundColor: '#fff',
+				title: {
+					text: '锡盟到达方式占比',
+					top: '2%',
+					//					x: 'center',
+					//					y: 'center',
+					textStyle: {
+						color: '#FFC300',
+						fontStyle: 'normal',
+						fontWeight: 'normal',
+						fontSize: 16,
+					}
+				},
+				tooltip: {
+					//					show: false,
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				series: [{
+					name: '占比',
+					type: 'pie',
+					selectedMode: 'single',
+					radius: ['20%', '45%'],
+					color: ['#86D560', '#AF89D6', '#59ADF3', '#FF999A', '#FFCC67', '#61a0a8'],
+
+					label: {
+						normal: {
+							position: 'outside',
+							formatter: "{b} \n {d}%",
+							textStyle: {
+//								color: '#fff',
+								fontWeight: 'bold',
+								fontSize: 10
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							show: true
+						}
+					},
+					data: data
+				}]
+			};
+			yeararrivewayChart1.setOption(yeararrivewayoption);
+
+			var yeararrivewayChart2 = echarts.init(document.getElementById('yeararrivechartsqixian'), 'dark');
+			var yearqixianarrivewayoption = {
+				title: {
+					text: '锡盟各旗县游客到达方式',
+					top: '2%',
+					textStyle: {
+						color: '#FFC300',
+						fontStyle: 'normal',
+						fontWeight: 'normal',
+						fontSize: 16,
+					}
+				},
+				backgroundColor: '#fff',
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend: {
+					data: ['飞机', '火车', '客车', '自驾', '租车', '其他'],
+					align: 'right',
+					right: '4%',
+					top: '8%'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					top: '17%',
+					containLabel: true
+				},
+				xAxis: [{
+					axisLabel: {
+						interval: 0,
+						rotate: 30, //倾斜度 -90 至 90 默认为0  
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'category',
+					data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗']
+				}],
+				yAxis: [{
+					type: 'value',
+					name: '人数(人)',
+					axisLabel: {
+						formatter: '{value}',
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+				}],
+				series: [{
+						name: '飞机',
+						type: 'bar',
+						data: [30220, 24302, 33010, 45334, 51390, 62234, 43401, 54276, 34234, 53299, 23289, 31266, 42199]
+					},
+					{
+						name: '火车',
+						type: 'bar',
+						data: [43120, 34132, 40101, 45134, 53290, 23320, 29332, 39321, 19134, 23345, 24121, 12234, 20210]
+					},
+					{
+						name: '客车',
+						type: 'bar',
+						data: [45202, 54312, 34321, 42134,23196, 34220, 23182, 43191, 29234, 39290, 19320, 21132, 26301]
+					},
+					{
+						name: '自驾',
+						type: 'bar',
+						stack: '总量',
+						data: [32220, 19162, 22201, 31134, 21173, 32150, 34212, 45201, 50154, 20190, 34122, 23212, 19121]
+					},
+					{
+						name: '租车',
+						type: 'bar',
+						data: [19420, 23332, 35401, 56334, 34290, 32220, 36232, 41301, 40134, 29167, 22201, 19134, 30173]
+					},
+					{
+						name: '其他',
+						type: 'bar',
+						data: [23620, 21532, 33501, 30534, 42390, 46420, 50432, 38401, 42334, 52467, 30301, 24334, 19373]
+					}
+				]
+			};
+
+			yeararrivewayChart2.setOption(yearqixianarrivewayoption);
+			var yeararrivewayChart3 = echarts.init(document.getElementById('yeararrivechartsximeng'), 'dark');
+			var yearximengarrivewayoption = {
+				title: {
+					text: '锡盟游客到达方式',
+					top: '4%',
+					textStyle: {
+						color: '#FFC300',
+						fontStyle: 'normal',
+						fontWeight: 'normal',
+						fontSize: 16,
+					}
+				},
+				backgroundColor: '#fff',
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				grid: {
+					top: '28%', //调整体表格的整体
+					containLabel: true
+				},
+				color: ['#61a0a8'],
+				xAxis: [{
+					axisLabel: {
+						interval: 0,
+						rotate: 30, //倾斜度 -90 至 90 默认为0  
+						//						margin: 5,
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					data: ['飞机', '火车', '客车', '自驾', '租车', '其他'],
+				}],
+				yAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'value',
+					name: '人数(人)'
+				}],
+				series: [{
+					name: '人数',
+					type: 'bar',
+					barWidth: '50%',
+					boundaryGap: true,
+					data: [647705, 304903, 340898, 560910, 450899, 501999]
+				}]
+			};
+			yeararrivewayChart3.setOption(yearximengarrivewayoption);
+		</script>
+	</body>
+
+</html>

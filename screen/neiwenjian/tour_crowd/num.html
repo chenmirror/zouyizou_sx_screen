@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name=renderer content=webkit>
+		<title>游客数量分析</title>
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/world.js"></script>
+		<script type="text/javascript" src="js/china.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+		<script src="js/bmap.js"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0UqXGL98FSmi22w2Rl6HK56I"></script>
+		<!--<script src="semantic/semantic.min.js"></script>-->
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+		
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/num.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(".form_datetime").datetimepicker({
+					format: "yyyy-mm-dd hh:ii",
+					language: 'zh-CN',
+					autoclose: true,
+					todayBtn: true,
+					startDate: "2017-08-01 00:00",
+					minuteStep: 10,
+					todayHighlight: true,
+				});
+				/*游客数量柱状图*/
+				var touristNumChartBar = echarts.init(document.getElementById('touristNumChartBar'));
+				option = {
+					title: {
+						text: '▌各旗县游客数量分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					color: ['#C23531'],
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					toolbox: {
+						right: '2%',
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					grid: {
+						left: '3%',
+						right: '3%',
+						bottom: '15%',
+						containLabel: true
+					},
+					xAxis: [{
+						type: 'category',
+						data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗'],
+						axisTick: {
+							alignWithLabel: false
+						},
+						axisLabel: {
+							interval: 0,
+							rotate: 45, //倾斜度 -90 至 90 默认为0  
+							margin: 5,
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					}],
+					yAxis: [{
+						name:"人数（人）",
+						nameGap: 10,
+						type: 'value',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					}],
+					series: [{
+						name: '游客数量',
+						type: 'bar',
+						barWidth: '50%',
+						data: [2425, 2100, 2014, 1789, 1700, 1505, 1241, 1000, 874, 867, 850, 657, 600]
+					}]
+				};
+
+				touristNumChartBar.setOption(option);
+
+				/*游客数量饼图*/
+				var touristNumChartPie = echarts.init(document.getElementById('touristNumChartPie'));
+				option = {
+					title: {
+						text: '▌各旗县游客数量占比分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					toolbox: {
+						right: '3%',
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					legend: {
+						orient: 'vertical',
+						left: 'left',
+						//						data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗']
+					},
+					series: [{
+						name: '游客数量',
+						type: 'pie',
+						radius: '50%',
+						center: ['50%', '60%'],
+						data: [{
+								value: 2425,
+								name: '锡林浩特市'
+							},
+							{
+								value: 2100,
+								name: '二连浩特市'
+							},
+							{
+								value: 2014,
+								name: '乌拉盖管理区'
+							},
+							{
+								value: 1789,
+								name: '多伦县'
+							},
+							{
+								value: 1700,
+								name: '正蓝旗'
+							},
+							{
+								value: 1505,
+								name: '太仆寺旗'
+							},
+							{
+								value: 1241,
+								name: '正镶白旗'
+							},
+							{
+								value: 1000,
+								name: '镶黄旗'
+							},
+							{
+								value: 874,
+								name: '苏尼特左旗'
+							},
+							{
+								value: 867,
+								name: '苏尼特右旗'
+							},
+							{
+								value: 850,
+								name: '阿巴嘎旗'
+							},
+							{
+								value: 657,
+								name: '西乌珠穆沁旗'
+							},
+							{
+								value: 600,
+								name: '东乌珠穆沁旗'
+							}
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				};
+				touristNumChartPie.setOption(option);
+
+				/*游客数量折线图*/
+				var touristNumChartLine = echarts.init(document.getElementById('touristNumChartLine'));
+				option = {
+					title: {
+						text: '▌各旗县游客数量趋势分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗'],
+						top: 'bottom',
+						right: '3%',
+					},
+					toolbox: {
+						right: '2%',
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '15%',
+						containLabel: true
+					},
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['11时', '12时', '13时', '14时', '15时', '16时', '17时'],
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					yAxis: {
+						name:"人数（人）",
+						nameGap: 10,
+						type: 'value',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					series: [{
+							name: '锡林浩特市',
+							type: 'line',
+							smooth: 'true',
+							data: [420, 332, 401, 434, 390, 430, 410]
+						},
+						{
+							name: '二连浩特市',
+							type: 'line',
+							smooth: 'true',
+							data: [320, 382, 291, 334, 290, 350, 350]
+						},
+						{
+							name: '乌拉盖管理区',
+							type: 'line',
+							smooth: 'true',
+							data: [350, 332, 301, 354, 390, 330, 410]
+						},
+						{
+							name: '多伦县',
+							type: 'line',
+							smooth: 'true',
+							data: [220, 232, 301, 234, 290, 330, 220]
+						},
+						{
+							name: '正蓝旗',
+							type: 'line',
+							smooth: 'true',
+							data: [220, 232, 201, 234, 290, 330, 320]
+						},
+						{
+							name: '太仆寺旗',
+							type: 'line',
+							smooth: 'true',
+							data: [220, 232, 301, 234, 290, 330, 310]
+						},
+						{
+							name: '正镶白旗',
+							type: 'line',
+							smooth: 'true',
+							data: [220, 182, 291, 234, 290, 330, 210]
+						},
+						{
+							name: '镶黄旗',
+							type: 'line',
+							smooth: 'true',
+							data: [150, 232, 201, 154, 190, 130, 110]
+						},
+						{
+							name: '苏尼特左旗',
+							type: 'line',
+							smooth: 'true',
+							data: [120, 332, 301, 134, 190, 230, 220]
+						},
+						{
+							name: '苏尼特右旗',
+							type: 'line',
+							smooth: 'true',
+							data: [120, 132, 101, 234, 190, 230, 220]
+						},
+						{
+							name: '阿巴嘎旗',
+							type: 'line',
+							smooth: 'true',
+							data: [150, 232, 201, 154, 190, 130, 210]
+						},
+						{
+							name: '西乌珠穆沁旗',
+							type: 'line',
+							smooth: 'true',
+							data: [120, 232, 101, 234, 190, 130, 220]
+						},
+						{
+							name: '东乌珠穆沁旗',
+							type: 'line',
+							smooth: 'true',
+							data: [120, 132, 101, 134, 90, 93, 120]
+						}
+					]
+				};
+
+				touristNumChartLine.setOption(option);
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">游客数量分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					<li>
+						<a href="total.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+			</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<div class="row border-color">
+						<div class="col-md-1 col-img">
+							<div class="bgd-img"></div>
+						</div>
+						<div class="col-md-11 col-10">
+							<div class="row">
+								<div class="col-md-7 padding-left0">
+									<div class="num_people"><span class="num">14,323 </span>人&nbsp;&nbsp;&nbsp;&nbsp;今日盟内累计人数 </div>
+								</div>
+								<div class="col-md-5 padding-top7">
+									<div>较昨天增加<span class="num_small"> 1,789 </span>人</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="percent_up">↑10%<span class="tb"> 同比昨天</span></div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="row border-color">
+						<div class="col-md-1 col-img">
+							<div class="bgd-img2"></div>
+						</div>
+						<div class="col-md-11 col-10">
+							<div class="row">
+								<div class="col-md-7 padding-left0">
+									<div class="num_people"><span class="num_city">锡林浩特市</span>&nbsp;&nbsp;&nbsp;&nbsp;游客人数排名Top1 </div>
+								</div>
+								<div class="col-md-5">
+									<div>当前<span class="num"> 2,425 </span>人</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="percent_up">↑5%<span class="tb"> 同比昨天</span></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="container_div">
+				<div class="row select">
+					<span class="times_div">
+						<span class="times">统计区域：
+							<!--<input type="text" readonly="" value="各旗县" size="16" class="imput_sigle">&nbsp;&nbsp;-->
+								<select class="ui dropdown">
+									<option value="1">旗县</option>
+  									<option value="0">景区</option>
+								</select>&nbsp;&nbsp;&nbsp;&nbsp;
+						</span>
+					<span class="times">统计颗粒：
+							<!--<input type="text" readonly="" value="小时" size="16" class="imput_sigle">&nbsp;&nbsp;&nbsp;&nbsp;-->
+					<select class="ui dropdown">
+							<option value="1">小时</option>
+							<option value="2">天</option>
+							<option value="3">月</option>
+							<option value="4">季</option>
+							<option value="5">年</option>
+					</select>&nbsp;&nbsp;&nbsp;&nbsp;
+					</span>
+					<span class="times">时间日期：
+						<span class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
+							<input size="16" type="text" value="2017-08-15 11:00" readonly>
+							<span class="add-on add-on-remove"><i class="icon-remove"></i></span>
+					<span class="add-on"><i class="icon-calendar"></i></span>
+					</span>
+					</span>
+					<span class="times">&nbsp;&nbsp;至:&nbsp;&nbsp;
+								<span class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
+							<input size="16" type="text" value="2017-08-15 17:00" readonly>
+							<span class="add-on add-on-remove"><i class="icon-remove"></i></span>
+					<span class="add-on"><i class="icon-calendar"></i></span>
+					</span>
+					</span>
+					<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="search_btn">查询</button></span>
+					</span>
+				</div>
+				<div class="row select_div">
+					<div class="row">
+						<div class="col-md-8">
+							<div id="touristNumChartBar"></div>
+						</div>
+						<div class="col-md-4">
+							<div id="touristNumChartPie"></div>
+						</div>
+					</div>
+
+					<br />
+					<div class="row">
+						<div class="col-md-8">
+							<div id="touristNumChartLine"></div>
+						</div>
+						<div class="col-md-4">
+							<div class="table_title">▌各旗县游客数量统计表</div>
+							<div id="touristNumChartTable">
+								<table id="travel_table" class="table table-hover" data-toggle="table" data-url="#" data-page-size="5" data-pagination="true">
+									<thead>
+										<tr class="dytop_table_th">
+											<th>排名</th>
+											<th>地区</th>
+											<th>热度</th>
+											<th>游客人数</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="dytop_table_td1">
+											<td>1</td>
+											<td>锡林浩特市</a>
+											</td>
+											<td>★★★★★</td>
+											<td>2425</td>
+										</tr>
+										<tr class="dytop_table_td2">
+											<td>2</td>
+											<td>二连浩特市</td>
+											<td>★★★★★</td>
+											<td>2100</td>
+										</tr>
+										<tr class="dytop_table_td3">
+											<td>3</td>
+											<td>乌拉盖管理区</td>
+											<td>★★★★★</td>
+											<td>2014</td>
+										</tr>
+										<tr class="dytop_table_td">
+											<td>4</td>
+											<td>多伦县</td>
+											<td>★★★★</td>
+											<td>1789</td>
+										</tr>
+										<tr class="dytop_table_td">
+											<td>5</td>
+											<td>正蓝旗</td>
+											<td>★★★★</td>
+											<td>1700</td>
+										</tr>
+										<tr class="dytop_table_td">
+											<td>6</td>
+											<td>太仆寺旗</td>
+											<td>★★★★★</td>
+											<td>1505</td>
+										</tr>
+										<tr class="dytop_table_td">
+											<td>7</td>
+											<td>正镶白旗</td>
+
+											<td>★★★★</td>
+											<td>1241</td>
+										</tr>
+										<tr class="dytop_table_td1">
+											<td>8</td>
+											<td>镶黄旗</td>
+											<td>★★★★</td>
+											<td>1000</td>
+										</tr>
+										<tr class="dytop_table_td2">
+											<td>9</td>
+											<td>苏尼特左旗</td>
+											<td>★★★★</td>
+											<td>874</td>
+										</tr>
+										<tr class="dytop_table_td3">
+											<td>10</td>
+											<td>苏尼特右旗</td>
+											<td>★★★</td>
+											<td>867</td>
+										</tr>
+										<tr class="dytop_table_td">
+											<td>11</td>
+											<td>阿巴嘎旗</td>
+											<td>★★★</td>
+											<td>850</td>
+										</tr>
+										<tr class="dytop_table_td">
+											<td>12</td>
+											<td>西乌珠穆沁旗</td>
+											<td>★★★</td>
+											<td>657</td>
+										</tr>
+										<tr class="dytop_table_td">
+											<td>13</td>
+											<td>东乌珠穆沁旗</td>
+											<td>★★★</td>
+											<td>600</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

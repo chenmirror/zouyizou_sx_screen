@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name=renderer content=webkit>
+		<title>游客进出分析</title>
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/world.js"></script>
+		<script type="text/javascript" src="js/china.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+		<script src="js/bmap.js"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0UqXGL98FSmi22w2Rl6HK56I"></script>
+		<!--<script src="semantic/semantic.min.js"></script>-->
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+		
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/enterexit.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$(".form_datetime").datetimepicker({
+					format: "yyyy-mm-dd hh:ii",
+					language: 'zh-CN',
+					autoclose: true,
+					todayBtn: true,
+					startDate: "2017-08-01 00:00",
+					minuteStep: 10,
+					todayHighlight: true,
+				});
+				/*游客流入流出饼图*/
+				var enterExitChartPie = echarts.init(document.getElementById('enterExitChartPie'));
+				option = {
+					title: {
+						text: '▌全市游客进出流量占比分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)",
+					},
+					toolbox: {
+						top: '2%',
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					legend: {
+						
+						bottom:'10%',
+						data: ['流入人数', '流出人数', '新增人数']
+					},
+					series: [{
+						name: '人数',
+						type: 'pie',
+						radius: '45%',
+						center: ['50%', '45%'],
+						data: [{
+								value: 335,
+								name: '流入人数'
+							},
+							{
+								value: 310,
+								name: '流出人数'
+							},
+							{
+								value: 234,
+								name: '新增人数'
+							},
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				};
+				enterExitChartPie.setOption(option);
+
+				/*游客流入流出折线图*/
+				var enterExitChartLine = echarts.init(document.getElementById('enterExitChartLine'));
+				option = {
+					title: {
+						text: '▌全市游客进出流量趋势分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						data: ['流入人数', '流出人数', '新增人数'],
+						bottom:'10%',
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '20%',
+						containLabel: true
+					},
+					toolbox: {
+						top: '2%',
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['11时', '12时', '13时', '14时', '15时', '16时', '17时'],
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					yAxis: {
+						name:"人数（人）",
+						nameGap: 7,
+						type: 'value',
+						xisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					series: [{
+							name: '流入人数',
+							type: 'line',
+							smooth:'true',
+							data: [120, 132, 101, 134, 90, 230, 210]
+						},
+						{
+							name: '流出人数',
+							type: 'line',
+							smooth:'true',
+							data: [220, 182, 191, 234, 290, 330, 310]
+						},
+						{
+							name: '新增人数',
+							type: 'line',
+							smooth:'true',
+							data: [150, 232, 201, 154, 190, 330, 410]
+						}
+					]
+				};
+
+				enterExitChartLine.setOption(option);
+			});
+		</script>
+	</head>
+
+	<body >
+		<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">游客进出分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					<li>
+						<a href="total.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+			</div>
+		<div class="container">
+			<div class="container_div">
+			<div class="row select">
+					<span class="times_div">
+					<span class="times">统计颗粒：
+							<!--<input type="text" readonly="" value="小时" size="16" class="imput_sigle">&nbsp;&nbsp;&nbsp;&nbsp;-->
+					<select class="ui dropdown">
+							<option value="1">小时</option>
+							<option value="2">天</option>
+							<option value="3">月</option>
+							<option value="4">年</option>
+					</select>&nbsp;&nbsp;&nbsp;&nbsp;	
+					</span>
+					<span class="times">时间日期：
+							<span class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
+							<input size="16" type="text" value="2017-08-15 11:00" readonly>
+							<span class="add-on add-on-remove"><i class="icon-remove"></i></span>
+							<span class="add-on"><i class="icon-calendar"></i></span>
+						</span>
+					</span>
+					<span class="times">&nbsp;&nbsp;至:&nbsp;&nbsp;
+								<span class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
+							<input size="16" type="text" value="2017-08-15 17:00" readonly>
+							<span class="add-on add-on-remove"><i class="icon-remove"></i></span>
+							<span class="add-on"><i class="icon-calendar"></i></span>
+						</span>
+					</span>
+					<span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button type="button" class="search_btn">查询</button></span>
+					</span>
+				</div>
+			<div class="row select_div">
+				<div class="col-md-6">
+					<div id="enterExitChartPie"></div>
+				</div>
+				<div class="col-md-6">
+					<div id="enterExitChartLine"></div>
+				</div>
+			</div>
+		</div></div>
+	</body>
+
+</html>

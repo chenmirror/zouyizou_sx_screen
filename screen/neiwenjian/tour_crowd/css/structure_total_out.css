@@ -1,0 +1,78 @@
+/*头部导航栏*/
+.nav-tabs {
+	/*padding-left: 1120px;*/
+	padding-bottom: 15px;
+	border-bottom: 0px;
+	margin-top: -48px;
+	padding-right: 5px;
+	float: right;
+}
+.title_ul{
+	margin-top: 29px;
+}
+.nav {
+    margin-bottom: 0px;
+}
+li a {
+	color: white;
+	background-color: #3E4955;
+	/*border: 5px solid ghostwhite;*/
+	font-size: 14px;
+}
+.title {
+    margin-top: 29px;
+    float:right;
+    margin-left: 10px;
+    color: white;
+    font-size: 24px;
+}
+.navbar-collapse{
+	padding-right: 5px!important;
+}
+/*---------------------------------------------------------*/
+.container{
+	padding: 10px 0px;
+}
+.charts-style{
+	height: 350px;border-radius: 4px;
+}
+.height-300{
+	height: 390px;
+}
+.container{
+	height: 780;
+}
+#qx_button{
+	position: relative;
+    left: 70%;
+    top: -384px;
+    width: 60px;
+    margin-bottom: 3px;
+    font-size: 12px;
+    color: white;
+    background-color: #027AE0;
+    border: 1px solid #027AE0;
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
+}
+.top-div{
+	margin-left: 5px;
+	border-radius: 4px;
+	background-color: white;
+	margin-right: 5px;
+	margin-bottom:4px ;
+}
+#jq_button{
+	position: relative;
+    left: 69.69%;
+    top: -384px;
+    /*bottom: 285px;*/
+    width: 60px;
+    margin-bottom: 3px;
+    font-size: 12px;
+    color: #027AE0;
+    background-color: white;
+    border: 1px solid #027AE0;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+}

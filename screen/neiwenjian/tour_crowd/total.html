@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name=renderer content=webkit>
+		<title>旅游人群分析汇总</title>
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/world.js"></script>
+		<script type="text/javascript" src="js/china.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+		<script src="js/bmap.js"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0UqXGL98FSmi22w2Rl6HK56I"></script>
+		<script src="semantic/semantic.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/total.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+		<!--<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css" />
+		<link rel="stylesheet" type="text/css" href="semantic/docs.css" />-->
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$("#sourceChart").click(function(){
+					window.location.href="source.html"; 
+				})
+				
+				$("#numTopChart").click(function(){
+					window.location.href="num.html"; 
+				})
+				
+				$("#passengerFlowChart").click(function(){
+					window.location.href="passengerflow.html"; 
+				})
+				
+				$("#enterExitChart").click(function(){
+					window.location.href="enterexit.html"; 
+				})
+				
+				$("#sexChart").click(function(){
+					window.location.href="structure_age.html"; 
+				})
+				$("#ageChart").click(function(){
+					window.location.href="structure_age.html"; 
+				})
+				
+				$("#jingChart").click(function(){
+					window.location.href="structure_source_out.html"; 
+				})
+				$(".form_datetime").datetimepicker({
+					format: "yyyy-mm-dd hh:ii",
+					language: 'zh-CN',
+					autoclose: true,
+					todayBtn: true,
+					startDate: "2017-08-01 00:00",
+					minuteStep: 10,
+					todayHighlight: true,
+				});
+				/*游客来源*/
+				var sourceChart = echarts.init(document.getElementById('sourceChart'));
+				var option1 = {
+					title: {
+						text: '▌游客来源占比分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+//					toolbox: {
+//						feature: {
+//							saveAsImage: {}
+//						}
+//					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b}: {c} ({d}%)"
+					},
+					legend: {
+						orient: 'horizontal',
+						bottom: '5%',
+						data: ['国外', '省外', '省内', '盟内']
+					},
+					series: [{
+						name: '游客来源',
+						type: 'pie',
+						radius: ['30%', '55%'],
+						avoidLabelOverlap: false,
+						label: {
+							normal: {
+								show: false,
+								position: 'center',
+								formatter: "{b}:\n ({d}%)",
+								textStyle: {
+									fontSize: '15',
+									fontWeight: 'bold'
+								}
+							},
+							emphasis: {
+								show: true,
+								textStyle: {
+									fontSize: '15',
+									fontWeight: 'bold'
+								}
+							}
+						},
+						labelLine: {
+							normal: {
+								show: true,
+
+							}
+						},
+						data: [{
+								value: 1700,
+								name: '国外'
+							},
+
+							{
+								value: 1800,
+								name: '省内'
+							},
+							{
+								value: 10000,
+								name: '省外'
+							},
+							{
+								value: 800,
+								name: '盟内'
+							},
+						]
+					}]
+				};
+				var currentIndex = -1;
+
+				setInterval(function() {
+					var dataLen = option1.series[0].data.length;
+					// 取消之前高亮的图形
+					sourceChart.dispatchAction({
+						type: 'downplay',
+						seriesIndex: 0,
+						dataIndex: currentIndex
+					});
+					currentIndex = (currentIndex + 1) % dataLen;
+					// 高亮当前图形
+					sourceChart.dispatchAction({
+						type: 'highlight',
+						seriesIndex: 0,
+						dataIndex: currentIndex
+					});
+				}, 1000);
+				sourceChart.setOption(option1);
+
+				/*游客数量*/
+				var numTopChart = echarts.init(document.getElementById('numTopChart'));
+				var option = {
+					title: {
+						text: '▌景点游客数量Top5',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'item',
+						//confine:true,
+						position: 'right'
+					},
+					calculable: true,
+					grid: {
+						top: '15%',
+						left: '3%',
+						right: '3%',
+						bottom: '1%',
+						containLabel: true
+					},
+					xAxis: [{
+						type: 'value',
+						show: false
+					}],
+					yAxis: [{
+						axisLine: {
+							show: false
+						},
+						splitLine: {
+							show: false
+						},
+						axisLabel: {
+							interval: 0,
+							formatter: function(params) {
+								var newParamsName = ""; // 最终拼接成的字符串
+								var paramsNameNumber = params.length; // 实际标签的个数
+								var provideNumber = 5; // 每行能显示的字的个数
+								var rowNumber = Math.ceil((paramsNameNumber) / provideNumber); // 换行的话,需要显示几行，向上取整
+								/**
+								 * 判断标签的个数是否大于规定的个数， 如果大于，则进行换行处理 如果不大于，即等于或小于，就返回原标签
+								 */
+								// 条件等同于rowNumber>1
+								if(paramsNameNumber > provideNumber) {
+									/** 循环每一行,p表示行 */
+									for(var p = 0; p < rowNumber; p++) {
+										var tempStr = ""; // 表示每一次截取的字符串
+										var start = p * provideNumber; // 开始截取的位置
+										var end = start + provideNumber; // 结束截取的位置
+										// 此处特殊处理最后一行的索引值
+										if(p == rowNumber - 1) {
+											// 最后一次不换行
+											tempStr = params.substring(start, paramsNameNumber);
+										} else {
+											// 每一次拼接字符串并换行
+											tempStr = params.substring(start, end) + "\n";
+										}
+										newParamsName += tempStr; // 最终拼成的字符串
+									}
+
+								} else {
+									// 将旧标签的值赋给新标签
+									newParamsName = params;
+								}
+								//将最终的字符串返回
+								return newParamsName
+							}
+						},
+						axisTick: {
+							show: false
+						},
+
+						data:  ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑',  '多伦湖'],
+					}],
+					series: [{
+						itemStyle: {
+							normal: {
+								label: {
+									show: true,
+								},
+								color: function(params) {
+									var colorList = ['#91C7AE','#61A0A8','#D48265','#C23531','#334B5C' ];
+									return colorList[params.dataIndex]
+								}
+							}
+						},
+						type: 'bar',
+						barWidth: '60%',
+						data: [55,  65,  75,  85,   150],
+						name: '次数',
+					}]
+				};
+
+				numTopChart.setOption(option);
+
+				/*客流情况*/
+				var passengerFlowChart = echarts.init(document.getElementById('passengerFlowChart'));
+				var option = {
+					title: {
+						text: '▌Top5景点客流量趋势分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						data: ['贝子庙', '蒙古汗城', '元上都遗址', '多伦湖','皇家御马苑'],
+						left: '3%',
+						top:'bottom'
+					},
+					grid: {
+						left: '3%',
+						right: '8%',
+						bottom: '20%',
+						containLabel: true
+					},
+//					toolbox: {
+//						right: '3%',
+//						feature: {
+//							saveAsImage: {}
+//						}
+//					},
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['5分', '10分', '15分钟', '20分钟', '20分钟', '25分钟', '30分钟'],
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					yAxis: {
+						name: "人数（人）",
+						nameGap: 10,
+						type: 'value',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					series: [{
+							name: '贝子庙',
+							type: 'line',
+							smooth: 'true',
+							data: [120, 132, 101, 534, 490, 530, 550]
+						},
+						{
+							name: '蒙古汗城',
+							type: 'line',
+							smooth: 'true',
+							data: [220, 182, 191, 234, 290, 330, 500]
+						},
+						{
+							name: '元上都遗址',
+							type: 'line',
+							smooth: 'true',
+							data: [150, 232, 201, 154, 190, 330, 478]
+						},
+						{
+							name: '皇家御马苑',
+							type: 'line',
+							smooth: 'true',
+							data: [320, 332, 301, 334, 390, 330, 450]
+						},
+//						{
+//							name: '白垩纪恐龙公园',
+//							type: 'line',
+//							smooth: 'true',
+//							data: [320, 332, 301, 334, 290, 330, 400]
+//						},
+//						{
+//							name: '乌里雅斯太山',
+//							type: 'line',
+//							smooth: 'true',
+//							data: [120, 132, 101, 134, 290, 230, 340]
+//						},
+//						{
+//							name: '别力古台扎桑',
+//							type: 'line',
+//							smooth: 'true',
+//							data: [220, 182, 191, 234, 290, 330, 330]
+//						},
+//						{
+//							name: '二连浩特市国门旅游',
+//							type: 'line',
+//							smooth: 'true',
+//							data: [220, 182, 191, 234, 290, 330, 220]
+//						},
+//						{
+//							name: '博力彦神泉度假村',
+//							type: 'line',
+//							smooth: 'true',
+//							data: [150, 232, 201, 154, 190, 330, 250]
+//						},
+						{
+							name: '多伦湖',
+							type: 'line',
+							smooth: 'true',
+							data: [320, 332, 301, 334, 390, 330, 200]
+						},
+//						{
+//							name: '镶黄旗马文化博物馆',
+//							type: 'line',
+//							smooth: 'true',
+//							data: [220, 132, 101, 134, 290, 330, 190]
+//						}
+					]
+				};
+				passengerFlowChart.setOption(option);
+
+				/*游客进出*/
+				var enterExitChart = echarts.init(document.getElementById('enterExitChart'));
+				var option = {
+					title: {
+						text: '▌全市游客进出流量趋势分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						data: ['流入人数', '流出人数', '新增人数'],
+						bottom: '5%',
+					},
+					grid: {
+						left: '3%',
+						right: '5%',
+						bottom: '20%',
+						containLabel: true
+					},
+//					toolbox: {
+//						top: '2%',
+//						feature: {
+//							saveAsImage: {}
+//						}
+//					},
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['11时', '12时', '13时', '14时', '15时', '16时', '17时'],
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					yAxis: {
+						name: "人数（人）",
+						nameGap: 7,
+						type: 'value',
+						xisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					series: [{
+							name: '流入人数',
+							type: 'line',
+							smooth: 'true',
+							data: [120, 132, 101, 134, 90, 230, 210]
+						},
+						{
+							name: '流出人数',
+							type: 'line',
+							smooth: 'true',
+							data: [220, 182, 191, 234, 290, 330, 310]
+						},
+						{
+							name: '新增人数',
+							type: 'line',
+							smooth: 'true',
+							data: [150, 232, 201, 154, 190, 330, 410]
+						}
+					]
+				};
+				enterExitChart.setOption(option);
+
+				/*性别结构*/
+				var sexChart = echarts.init(document.getElementById('sexChart'));
+				var option = {
+					title: {
+						text: '▌全盟男女比例',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+
+					},
+					legend: {
+						orient: 'horizontal',
+						bottom: '5%',
+						data: ['男', '女']
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					series: [{
+						name: '人数',
+						type: 'pie',
+						radius: '65%',
+						label: {
+							normal: {
+								show: true,
+								position: 'inner',
+								formatter: "{b} \n({d}%)",
+								textStyle: {
+									fontSize: 12,
+								},
+							}
+						},
+						data: [{
+								value: 9350,
+								name: '男'
+							},
+							{
+								value: 9100,
+								name: '女'
+							},
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				};
+				sexChart.setOption(option);
+
+				/*年龄结构*/
+				var ageChart = echarts.init(document.getElementById('ageChart'));
+				var option = {
+					title: {
+						text: '▌全盟年龄阶段比例',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+
+					},
+//					toolbox: {
+//						feature: {
+//							saveAsImage: {}
+//						}
+//					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b}: {c} ({d}%)"
+					},
+					legend: {
+						orient: 'horizontal',
+						bottom: '5%',
+						data: ['老年', '青年', '儿童']
+					},
+					series: [{
+						name: '年龄阶段',
+						type: 'pie',
+						radius: '65%',
+						avoidLabelOverlap: false,
+						label: {
+							normal: {
+								show: true,
+								position: 'inner',
+								formatter: "{b} \n({d}%)",
+								textStyle: {
+									fontSize: 12,
+								},
+							}
+						},
+						labelLine: {
+							normal: {
+								show: true,
+
+							}
+						},
+						data: [{
+								value: 7000,
+								name: '老年'
+							},
+							{
+								value: 25000,
+								name: '青年'
+							},
+							{
+								value: 8000,
+								name: '儿童'
+							}
+						]
+					}]
+				};
+				ageChart.setOption(option);
+
+				/*境内外分析*/
+				var jingChart = echarts.init(document.getElementById('jingChart'));
+				var option = {
+					title: {
+						text: '▌境内外客源地比例',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+
+					},
+					legend: {
+						orient: 'horizontal',
+						bottom: '5%',
+						data: ['境内', '境外']
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					series: [{
+						name: '人数',
+						type: 'pie',
+						radius: '65%',
+						label: {
+							normal: {
+								show: true,
+								position: 'inner',
+								formatter: "{b} \n({d}%)",
+								textStyle: {
+									fontSize: 12,
+								},
+							}
+						},
+						data: [{
+								value: 9350,
+								name: '境内'
+							},
+							{
+								value: 3100,
+								name: '境外'
+							},
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				};
+				jingChart.setOption(option);
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">旅游人群分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					<li>
+						<a href="source.html" target="_self">游客来源分析</a>
+					</li>
+					<li>
+						<a href="num.html" target="_self"">游客数量分析</a>
+					</li>
+					<li>
+						<a href="passengerflow.html" target="_self"">客流情况分析</a>
+					</li>
+					<li>
+						<a href="enterexit.html" target="_self"">游客进出分析</a>
+					</li>
+					<li>
+						<a href="structure_total.html" target="_self"">游客结构分析</a>
+					</li>
+					<li>
+						<a href="/zouyizou_sx_screen/screen/index.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+			<!--<div class="times_div">
+					<div class="times">
+						<p class="ks">开始时间：</p>
+						<span class="input-append date form_datetime start_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<div class="times">&nbsp;&nbsp;
+						<p class="js">结束时间:</p>
+						<span class="input-append date form_datetime end_time" data-picker-position="bottom-left">
+        					<input type="text" readonly="" value="" size="16">
+        					<span class="add-on"><i class="icon-th"></i></span>
+						</span>
+					</div>
+					<span><a id="search" name="search" href="javascript:void(0)" onclick="doSearch()">&nbsp;&nbsp;查询</a></span>
+				</div>-->
+			</div>
+		<div class="container">
+			
+			<div class="row">
+				<div class="col-md-4">
+					<div id="sourceChart"></div>
+				</div>
+				<div class="col-md-4">
+					<div id="numTopChart"></div>
+				</div>
+				<div class="col-md-4">
+					<div id="passengerFlowChart"></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 padding-top10">
+					<div id="enterExitChart"></div>
+				</div>
+				<div class="col-md-8">
+					<div class="row">
+						<div class="col-md-4">
+							<div id="sexChart"></div>
+						</div>
+						<div class="col-md-4">
+							<div id="ageChart"></div>
+						</div>
+						<div class="col-md-4">
+							<div id="jingChart"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>

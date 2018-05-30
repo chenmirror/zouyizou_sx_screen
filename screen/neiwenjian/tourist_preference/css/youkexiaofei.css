@@ -1,0 +1,55 @@
+.xiaofei_guonei{
+	width: 90%;
+	height: 400px;
+}
+
+.xiaofei_guowai{
+	width: 90%;
+	height: 400px;
+}
+
+.xiaofei_zongti{
+	width: 400px;
+	height: 400px;
+}
+
+.container1{
+	border-left: 15px solid #EFF1FF;
+	border-right: 15px solid #EFF1FF;
+}
+
+.xiaofeiTop10{
+	width: 400px;
+	height: 400px;
+}
+
+#qx_button{
+	position: relative;
+    left: 896px;
+    bottom: 385px;
+    width: 60px;
+    margin-bottom: 3px;
+    font-size: 12px;
+    color: white;
+    background-color: #027AE0;
+    border: 1px solid #027AE0;
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
+}
+#jq_button{
+	position: relative;
+    left: 892px;
+    bottom: 385px;
+    width: 60px;
+    margin-bottom: 3px;
+    font-size: 12px;
+    color: #027AE0;
+    background-color: white;
+    border: 1px solid #027AE0;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+}
+
+#xiaofeipianhao_fenlei{
+	border-top: 10px solid #EFF1FF;
+}

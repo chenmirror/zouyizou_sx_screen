@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name=renderer content=webkit>
+		<title>客流情况分析</title>
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/world.js"></script>
+		<script type="text/javascript" src="js/china.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<!--<script src="js/bmap.js"></script>-->
+		<!--<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>-->
+		<!--<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0UqXGL98FSmi22w2Rl6HK56I"></script>-->
+
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/passengerflow.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+		<script type="text/javascript">
+			$(document).ready(function() {
+				/*游客数量柱状图*/
+				var touristNumChartBar = echarts.init(document.getElementById('touristNumChartBar'));
+				option = {
+					title: {
+						text: '▌各景点客流数量分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					color: ['#C23531'],
+					tooltip: {
+						trigger: 'axis',
+						axisPointer: { // 坐标轴指示器，坐标轴触发有效
+							type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+						}
+					},
+					toolbox: {
+						right: '3%',
+						right: '3%',
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '25%',
+						containLabel: true
+					},
+					xAxis: [{
+						type: 'category',
+						data: ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+						axisTick: {
+							alignWithLabel: false
+						},
+						axisLabel: {
+							interval: 0,
+							rotate: 45, //倾斜度 -90 至 90 默认为0  
+							margin: 5,
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					}],
+					yAxis: [{
+						name:"人数（人）",
+						nameGap: 10,
+						type: 'value',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					}],
+					series: [{
+						name: '游客数量',
+						type: 'bar',
+						barWidth: '50%',
+						data: [550,500,478,450,400,340,330,250,220,200,190]
+					}]
+				};
+
+				touristNumChartBar.setOption(option);
+				/*游客数量饼图*/
+				var touristNumChartPie = echarts.init(document.getElementById('touristNumChartPie'));
+				option = {
+					title: {
+						text: '▌各景点客流量占比分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'item',
+						formatter: "{a} <br/>{b} : {c} ({d}%)"
+					},
+					toolbox: {
+						right: '3%',
+						right: '3%',
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					legend: {
+						orient: 'vertical',
+						left: 'left',
+						//						data: ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+					},
+					series: [{
+						name: '客流量数',
+						type: 'pie',
+						radius: '40%',
+						center: ['50%', '60%'],
+						data: [{
+								value: 550,
+								name: '贝子庙'
+							},
+							{
+								value: 500,
+								name: '蒙古汗城'
+							},
+							{
+								value: 478,
+								name: '元上都遗址'
+							},
+							{
+								value: 450,
+								name: '皇家御马苑'
+							},
+							{
+								value: 400,
+								name: '白垩纪恐龙公园'
+							},
+							{
+								value: 340,
+								name: '乌里雅斯太山'
+							},
+							{
+								value: 330,
+								name: '别力古台扎桑'
+							},
+							{
+								value: 250,
+								name: '博力彦神泉度假村'
+							},
+							{
+								value: 220,
+								name: '二连浩特市国门旅游'
+							},
+							{
+								value: 200,
+								name: '多伦湖'
+							},
+							{
+								value: 190,
+								name: '镶黄旗马文化博物馆'
+							},
+						],
+						itemStyle: {
+							emphasis: {
+								shadowBlur: 10,
+								shadowOffsetX: 0,
+								shadowColor: 'rgba(0, 0, 0, 0.5)'
+							}
+						}
+					}]
+				};
+				touristNumChartPie.setOption(option);
+
+				/*游客数量折线图*/
+				var touristNumChartLine = echarts.init(document.getElementById('touristNumChartLine'));
+				option = {
+					title: {
+						text: '▌各景点客流量趋势分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						data: ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+						top: 'bottom',
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '20%',
+						containLabel: true
+					},
+					toolbox: {
+						right: '3%',
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['5分', '10分', '15分钟', '20分钟', '20分钟', '25分钟', '30分钟'],
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					yAxis: {
+						name:"人数（人）",
+						nameGap: 10,
+						type: 'value',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					series: [{
+							name: '贝子庙',
+							type: 'line',
+							smooth:'true',
+							data: [120, 132, 101, 534, 490, 530, 550]
+						},
+						{
+							name: '蒙古汗城',
+							type: 'line',
+							smooth:'true',
+							data: [220, 182, 191, 234, 290, 330, 500]
+						},
+						{
+							name: '元上都遗址',
+							type: 'line',
+							smooth:'true',
+							data: [150, 232, 201, 154, 190, 330, 478]
+						},
+						{
+							name: '皇家御马苑',
+							type: 'line',
+							smooth:'true',
+							data: [320, 332, 301, 334, 390, 330, 450]
+						},
+						{
+							name: '白垩纪恐龙公园',
+							type: 'line',
+							smooth:'true',
+							data: [320, 332, 301, 334, 290, 330, 400]
+						},
+						{
+							name: '乌里雅斯太山',
+							type: 'line',
+							smooth:'true',
+							data: [120, 132, 101, 134, 290, 230, 340]
+						},
+						{
+							name: '别力古台扎桑',
+							type: 'line',
+							smooth:'true',
+							data: [220, 182, 191, 234, 290, 330, 330]
+						},
+						{
+							name: '二连浩特市国门旅游',
+							type: 'line',
+							smooth:'true',
+							data: [220, 182, 191, 234, 290, 330, 220]
+						},
+						{
+							name: '博力彦神泉度假村',
+							type: 'line',
+							smooth:'true',
+							data: [150, 232, 201, 154, 190, 330, 250]
+						},
+						{
+							name: '多伦湖',
+							type: 'line',
+							smooth:'true',
+							data: [320, 332, 301, 334, 390, 330, 200]
+						},
+						{
+							name: '镶黄旗马文化博物馆',
+							type: 'line',
+							smooth:'true',
+							data: [220, 132, 101, 134, 290, 330, 190]
+						}
+					]
+				};
+
+				touristNumChartLine.setOption(option);
+			});
+		</script>
+	</head>
+
+	<body>
+		<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">客流情况分析</span>
+			</div>
+			</div>
+		<div class="container">
+			<div class="container_div">
+				<div class="row tab_style">
+					<div>
+						<ul id="myTab" class="nav nav-tabs">
+							<li class="active">
+								<a href="#30mins" data-toggle="tab">30分钟</a>
+							</li>
+							<li>
+								<a href="#1hour" data-toggle="tab">1小时</a>
+							</li>
+							<li>
+								<a href="#3hours" data-toggle="tab">3小时</a>
+							</li>
+							<li>
+								<a href="#12hours" data-toggle="tab">12小时</a>
+							</li>
+							<li>
+								<a href="#24hours" data-toggle="tab">24小时</a>
+							</li>
+							<li>
+								<a href="total.html" target="_self">返回</a>
+							</li>
+						</ul>
+					</div>
+
+				</div>
+
+				<div id="myTabContent" class="tab-content">
+					<div class="tab-pane fade in active" id="30mins">
+						<div class="row">
+							<div class="col-md-7">
+								<div id="touristNumChartBar"></div>
+							</div>
+							<div class="col-md-5">
+								<div id="touristNumChartPie"></div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-7">
+								<div id="touristNumChartLine"></div>
+							</div>
+							<div class="col-md-5 backgroundColor">
+								<div class="table_title">▌各景点客流量统计表</div>
+								<div id="touristNumChartTable">
+									<table id="travel_table" class="table table-hover" data-toggle="table" data-url="#" data-page-size="5" data-pagination="true">
+										<thead>
+											<tr class="dytop_table_th">
+												<th>排名</th>
+												<th>地区</th>
+												<th>景区级别</th>
+												<th>热度级别</th>
+												<th>游客人数</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr class="dytop_table_td1">
+												<td>1</td>
+												<td>贝子庙</td>
+												<td>AAAA</td>
+												<td>★★★★★</td>
+												<td>550</td>
+											</tr>
+											<tr class="dytop_table_td2">
+												<td>2</td>
+												<td>蒙古汗城</td>
+												<td>AAAA</td>
+												<td>★★★★★</td>
+												<td>500</td>
+											</tr>
+											<tr class="dytop_table_td3">
+												<td>3</td>
+												<td>元上都遗址</td>
+												<td>AAAA</td>
+												<td>★★★★★</td>
+												<td>478</td>
+											</tr>
+											<tr class="dytop_table_td">
+												<td>4</td>
+												<td>皇家御马苑</td>
+												<td>AAAA</td>
+												<td>★★★★★</td>
+												<td>450</td>
+											</tr>
+											<tr class="dytop_table_td">
+												<td>5</td>
+												<td>白垩纪恐龙公园</td>
+												<td>AAAA</td>
+												<td>★★★★</td>
+												<td>400</td>
+											</tr>
+											<tr class="dytop_table_td">
+												<td>6</td>
+												<td>乌里雅斯太山</td>
+												<td>AAA</td>
+												<td>★★★★</td>
+												<td>340</td>
+											</tr>
+											<tr class="dytop_table_td">
+												<td>7</td>
+												<td>别力古台扎桑</td>
+												<td>AAA</td>
+												<td>★★★★</td>
+												<td>330</td>
+											</tr>
+											<tr class="dytop_table_td1">
+												<td>8</td>
+												<td>博力彦神泉度假村</a>
+												<td>AAA</td>
+												<td>★★★★</td>
+												<td>250</td>
+											</tr>
+											<tr class="dytop_table_td2">
+												<td>9</td>
+												<td>二连浩特市国门旅游</td>
+												<td>AAA</td>
+												<td>★★★</td>
+												<td>220</td>
+											</tr>
+											<tr class="dytop_table_td3">
+												<td>10</td>
+												<td>多伦湖</td>
+												<td>AA</td>
+												<td>★★★</td>
+												<td>200</td>
+											</tr>
+											<tr class="dytop_table_td">
+												<td>11</td>
+												<td>镶黄旗马文化博物馆</td>
+												<td>AA</td>
+												<td>★★★</td>
+												<td>190</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-pane fade" id="1hour">
+					</div>
+					<div class="tab-pane fade" id="3hours"></div>
+					<div class="tab-pane fade" id="12hours"></div>
+					<div class="tab-pane fade" id="24hours"></div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</body>
+
+</html>

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<meta name=renderer content=webkit>
+		<title>游客行为分析</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css " rel="stylesheet ">
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css " rel="stylesheet ">
+		<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="js/echarts.js"></script>
+		<link href="css/bootstrap-table.min.css" rel="stylesheet ">
+		<script src="js/bootstrap-table.min.js"></script>
+		<script src="js/bootstrap-table-zh-CN.js"></script>
+		<script type="text/javascript" src="../tourist_preference/js/dataTool.js"></script>
+		<link href="css/tourbehavior.css" rel="stylesheet " />
+		<link href="css/navstyle.css" rel="stylesheet " />
+	</head>
+
+	<body>
+		<div class="">
+			<div class="row" style="background-color: #3f3d3e;">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+					<img class="logo" src="img/logo1.jpg" alt="logo" />
+					<span class="nav_title">游客行为分析</span>
+				</div>
+				<div class="navbar-collapse collapse nav_title">
+					<!--<ul class="nav navbar-nav">-->
+					<ul class="nav nav-tabs" role="tablist">
+						<li>
+							<a href="stopanlysis.html" target="_self">游客停留分析</a>
+						</li>
+						<li>
+							<a href="traceanalysis.html" target="_self">游客轨迹分析</a>
+						</li>
+						<li>
+							<a href="arrivewayanalysis.html" target="_self">到达方式分析</a>
+						</li>
+						<li>
+							<a href="teamorsingleanalysis.html" target="_self">团散情况分析</a>
+						</li>
+						<li>
+							<a href="eventearly-warning.html" target="_self">突发事件分析</a>
+						</li>
+						<li>
+							<a href="/zouyizou_sx_screen/screen/index.html" target="_self">返回</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-4 col-xs-4 col-sm-4 paddingleft-right">
+					<div id="daystayscalecharts" class="widthheight charts-style shadow_style"> </div>
+				</div>
+				<div class="col-md-4 col-xs-4 col-sm-4 paddingleft-right">
+					<div id="dayarrivechartsximeng" class="widthheight shadow_style"> </div>
+					<!--<div id="dayarrivechartsway" class="special_height margin-top10"> </div>-->
+				</div>
+				<div class="col-md-4 col-xs-4 col-sm-4 paddingleft-right">
+					<div class=" relation widthheight shadow_style" id="relation"></div>
+				</div>
+
+			</div>
+			<div class="row">
+				<div class="col-md-7 col-xs-7 col-sm-7 special-padding">
+					<div id="monthchartsmonth" class="widthheight">
+					</div>
+				</div>
+				<div class="col-md-5 col-xs-5 col-sm-5 charts-style  padding-bottom10" id="traceCharts">
+					<div class="table_title">▌旅游线路排行TOP10详情</div>
+					<table id="travel_table" class="table table-hover" data-toggle="table" data-url="#" data-page-size="7" data-pagination="true">
+						<thead>
+							<tr>
+								<th>线路名称</th>
+								<th>线路详情</th>
+								<th>热度</th>
+								<th>人数</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<a href="#" data-toggle="modal" data-target="#myModal">线路1</a>
+								</td>
+								<td>
+									<a href="#" data-toggle="modal" data-target="#myModal">锡林浩特市 > 东乌珠穆沁旗 > 西乌珠穆沁旗</a>
+								</td>
+								<td>19.8</td>
+								<td>8740</td>
+							</tr>
+							<tr>
+								<td>线路2</td>
+								<td>锡盟草原 > 元上都遗址 > 金莲川草原</td>
+								<td>19.5</td>
+								<td>7450</td>
+							</tr>
+							<tr>
+								<td>线路3</td>
+								<td>锡林郭勒 > 乌兰五台 > 半拉山湿地保护区 </td>
+								<td>18.0</td>
+								<td>5410</td>
+							</tr>
+							<tr>
+								<td>线路4</td>
+								<td>草原景区 > 阿斯哈图石林 > 白音敖包景区 </td>
+								<td>17.8</td>
+								<td>5210</td>
+							</tr>
+							<tr>
+								<td>线路5</td>
+								<td>达里诺尔湖 > 平顶山 > 锡林浩特</td>
+								<td>17.5</td>
+								<td>4440</td>
+							</tr>
+							<tr>
+								<td>线路6</td>
+								<td>锡林浩特 > 蒙古汗城 > 九曲湾</td>
+								<td>17.4</td>
+								<td>3330</td>
+							</tr>
+							<tr>
+								<td>线路7</td>
+								<td>锡林浩特 > 阿斯哈图石林 > 西乌旗</td>
+								<td>17.2</td>
+								<td>3000</td>
+							</tr>
+							<tr>
+								<td>线路8</td>
+								<td>锡林浩特 > 锡林郭勒大草原 > 阿巴嘎</td>
+								<td>17.0</td>
+								<td>2220</td>
+							</tr>
+							<tr>
+								<td>线路9</td>
+								<td>二连浩特 > 中蒙边防公路 > 成吉思宝格达山</td>
+								<td>16.9</td>
+								<td>1110</td>
+							</tr>
+							<tr>
+								<td>线路10</td>
+								<td>锡林浩特 > 恐龙博物馆 > 中蒙国门</td>
+								<td>16.8</td>
+								<td>1000</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<!--模态框-->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+								<h4 class="modal-title" id="modal-label">详情</h4>
+							</div>
+							<div class="modal-body">
+								<p>&nbsp;&nbsp;&nbsp;&nbsp;该线路突出展示了民族文化、草原风情、地质奇观，涵盖了锡林郭勒草原丰富多样的自然景观，保留完整的蒙古族民俗风情及富集的精品旅游景区，有国家唯一一个草地类自然保护区锡林郭勒草原、地质奇观——克什克腾世界地质公园；有北方游牧民族摇篮的乌珠穆沁部落文化；锡林浩特市有按照国家4A级标准建设的蒙元文化苑、贝子庙景区、锡林郭勒赛马场，白音锡勒国家级草原自然保护区；西乌珠穆沁旗有国家3A级旅游景区国家第一批工农业旅游示范点蒙古汗城，游牧部落；东乌珠穆沁旗有乌里雅斯太山景区、珠恩嘎达布其口岸；正蓝旗有蒙元帝国的夏都——元上都遗址，探险游的天堂——浑善达克沙地；多伦县有满清商业文化的代表山西会馆，汇宗寺等景区。</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$("#daystayscalecharts").click(function() {
+				window.location.href = "stopanlysis.html";
+			})
+
+			$("#dayarrivechartsximeng").click(function() {
+				window.location.href = "arrivewayanalysis.html";
+			})
+
+			$("#relation").click(function() {
+				window.location.href = "eventearly-warning.html";
+			})
+
+			$("#monthchartsmonth").click(function() {
+				window.location.href = "teamorsingleanalysis.html";
+			})
+			$("#traceCharts").click(function() {
+				window.location.href = "traceanalysis.html";
+			})
+
+			var dayStayChart3 = echarts.init(document.getElementById('daystayscalecharts'), 'dark');
+			var dayscaleoption = {
+				backgroundColor: '#fff',
+				title: {
+					text: '▌锡盟游客停留天数占比',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						mark: {
+							show: true
+						},
+						restore: {
+							show: true
+						},
+						saveAsImage: {
+							show: true
+						}
+					}
+				},
+				//				legend: {
+				//					orient: 'horizontal',
+				//					//						top: 'bottom',
+				//					bottom: '5%',
+				//					data: ['0-2天', '2-4天', '4-6天', '6-8天', '8-10天', '10天以上']
+				//				},
+				series: [{
+					name: '停留时间占比',
+					type: 'pie',
+					radius: '37%',
+					center: ['50%', '53%'],
+					clockwise: false,
+					data: [{
+						value: 50,
+						name: '0-2天'
+					}, {
+						value: 54,
+						name: '2-4天'
+					}, {
+						value: 64,
+						name: '4-6天'
+					}, {
+						value: 64,
+						name: '6-8天'
+					}, {
+						value: 30,
+						name: '8-10天'
+					}, {
+						value: 24,
+						name: '10天以上'
+					}],
+					label: {
+						normal: {
+							show: true,
+							position: 'outside',
+							formatter: '{b}\n{d}%',
+							textStyle: {
+								fontSize: '12',
+								fontWeight: 'bold'
+							}
+						},
+						emphasis: {
+							show: true,
+							textStyle: {
+								fontSize: '12',
+								fontWeight: 'bold'
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							show: true
+						}
+					},
+					itemStyle: {
+						normal: {
+							borderWidth: 4,
+							borderColor: '#ffffff',
+						},
+						emphasis: {
+							position: 'outside',
+							borderWidth: 0,
+							shadowBlur: 10,
+							shadowOffsetX: 0,
+							shadowColor: 'rgba(0, 0, 0, 0.5)'
+						}
+					}
+				}],
+				color: [
+					//					'#00acee',
+					'#86D560', '#AF89D6', '#59ADF3', '#FF999A', '#FFCC67', '#c8efff'
+				]
+			};
+			dayStayChart3.setOption(dayscaleoption);
+			var arrivewayChart3 = echarts.init(document.getElementById('dayarrivechartsximeng'), 'dark');
+			var ximengarrivewayoption = {
+				title: {
+					text: '▌锡盟游客到达方式',
+					top: '4%',
+					textStyle: {
+						color: '#FFC300',
+						fontStyle: 'normal',
+						fontWeight: 'normal',
+						fontSize: 16,
+					}
+				},
+				backgroundColor: '#fff',
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				grid: {
+					top: '28%', //调整体表格的整体
+					containLabel: true
+				},
+				color: ['#61a0a8'],
+				xAxis: [{
+					axisLabel: {
+						interval: 0,
+						rotate: 30, //倾斜度 -90 至 90 默认为0  
+						//						margin: 5,
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					data: ['飞机', '火车', '客车', '自驾', '租车', '其他'],
+				}],
+				yAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'value',
+					name: '人数(人)'
+				}],
+				series: [{
+					name: '人数',
+					type: 'bar',
+					barWidth: '50%',
+					boundaryGap: true,
+					data: [705, 903, 898, 910, 899, 1999]
+				}]
+			};
+			arrivewayChart3.setOption(ximengarrivewayoption);
+
+			//			$(document).ready(function() {
+			var relation = echarts.init(document.getElementById("relation"));
+
+			relation.showLoading();
+			$.get('./xml/yibingles-miserables.gexf', function(xml) {
+				relation.hideLoading();
+
+				var graph = echarts.dataTool.gexf.parse(xml);
+				var categories = [];
+				categories[0] = {
+					name: "卫生局"
+				};
+				categories[1] = {
+					name: "医院"
+				};
+				categories[2] = {
+					name: "交通局"
+				};
+				categories[3] = {
+					name: "酒店/旅馆"
+				};
+				categories[4] = {
+					name: "景点"
+				};
+				categories[5] = {
+					name: "疾病信息"
+				};
+				categories[6] = {
+					name: "接触人群"
+				};
+				graph.nodes.forEach(function(node) {
+					node.itemStyle = null;
+					node.value = node.symbolSize;
+					node.symbolSize /= 1.5;
+					node.label = {
+						normal: {
+							show: node.symbolSize > 10
+						}
+					};
+					node.category = node.attributes.modularity_class;
+				});
+				option = {
+					backgroundColor: 'white',
+					title: {
+						text: '▌疫情防控关系图',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						}
+					},
+					tooltip: {},
+					//						legend: [{
+					//							// selectedMode: 'single',
+					//							data: categories.map(function(a) {
+					//								console.log(a);
+					//								return a.name;
+					//							}),
+					//							orient: 'horizontal',
+					//							//						top: 'bottom',
+					//							top: 'bottom',
+					//						}],
+					animationDurationUpdate: 1500,
+					animationEasingUpdate: 'quinticInOut',
+					series: [{
+						name: '疫病关系图',
+						type: 'graph',
+						layout: 'circular',
+						circular: {
+							rotateLabel: true
+						},
+						data: graph.nodes,
+						links: graph.links,
+						categories: categories,
+						//						roam: 'scale',
+						roam: true,
+						bottom: '1%',
+						right: '1%',
+						label: {
+							normal: {
+								position: 'right',
+								formatter: '{b}'
+							}
+						},
+						lineStyle: {
+							normal: {
+								color: 'source',
+								curveness: 0.3
+							}
+						}
+					}]
+				};
+
+				relation.setOption(option);
+			}, 'xml');
+			//					})
+
+			var monthteamsingleChart4 = echarts.init(document.getElementById('monthchartsmonth'), 'dark');
+			var monthoption = {
+				backgroundColor: 'white',
+				title: {
+					text: '▌团散人数趋势',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						lineStyle: {
+							color: '#57617B'
+						}
+					}
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						saveAsImage: {
+							show: true
+						}
+					},
+					top: '1%'
+				},
+				legend: {
+					icon: 'rect',
+					itemWidth: 14,
+					itemHeight: 5,
+					itemGap: 13,
+					data: ['团', '散'],
+					//					textStyle: {
+					//						fontSize: 8,
+					//						color: '#C7C7C7'
+					//					},
+					right: '5%',
+					top: '2%'
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					//										bottom: '20%',
+					top: '17%',
+					containLabel: true
+				},
+				xAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						},
+						interval: 0,
+						rotate: 34,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'category',
+					boundaryGap: false,
+					data: ['2016年8月', '2016年9月', '2016年10月', '2016年11月', '2016年12月', '2017年1月', '2017年2月', '2017年3月', '2017年4月', '2017年5月', '2017年6月', '2017年7月']
+				}],
+				yAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					type: 'value',
+					name: '人数(人)',
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					}
+				}],
+				series: [{
+					name: '团',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(137, 189, 27, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(137, 189, 27, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(137,189,27)'
+						}
+					},
+					data: [966, 796, 977, 695, 588, 594, 619, 694, 680, 752, 875, 994]
+				}, {
+					name: '散',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(0, 136, 212, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(0, 136, 212, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(0,136,212)'
+						}
+					},
+					data: [897, 759, 959, 860, 799, 690, 720, 791, 829, 867, 990, 984]
+				}]
+			};
+			monthteamsingleChart4.setOption(monthoption);
+		</script>
+
+	</body>
+
+</html>

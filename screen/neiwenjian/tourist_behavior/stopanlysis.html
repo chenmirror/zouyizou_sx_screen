@@ -1,0 +1,3161 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name=renderer content=webkit>
+		<title>游客行为分析-停留分析</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+		<link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css " rel="stylesheet ">
+		<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css " rel="stylesheet ">
+		<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+		<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="js/echarts.js"></script>
+		<link rel="stylesheet" href="css/stopanlysis.css">
+		<link rel="stylesheet" href="css/navstyle.css">
+		<!--<script src="js/xilinguolemeng.js"></script>-->
+	</head>
+
+	<body>
+		<div class="row" style="background-color: #3f3d3e;padding: 6px 10px;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="nav_title">游客停留分析</span>
+			</div>
+		</div>
+		<div class="container">
+			<ul class="nav nav-tabs" role="tablist" id="feature-tab" style="float: right;margin-top: -52px;">
+				<li class="active">
+					<a href="#tab-day" role="tab" data-toggle="tab">天</a>
+				</li>
+				<li>
+					<a href="#tab-week" role="tab" data-toggle="tab">周</a>
+				</li>
+				<li>
+					<a href="#tab-month" role="tab" data-toggle="tab">月</a>
+				</li>
+				<li>
+					<a href="#tab-season" role="tab" data-toggle="tab">季节</a>
+				</li>
+				<li>
+					<a href="tourbehavior.html" target="_self">返回</a>
+				</li>
+			</ul>
+
+			<div class="tab-content">
+				<div class="tab-pane active" id="tab-day">
+					<div class="row">
+						<div class="col-md-5 col-xs-5 col-sm-5 div-padding-right">
+							<div id="daychartsqixian" class="widthheight charts-style"> </div>
+						</div>
+						<div class="col-md-4 col-xs-4 col-sm-4 charts-style div-padding-special">
+							<div id="daychartsjingqu" class="widthheight charts-style"> </div>
+						</div>
+						<div class="col-md-3 col-xs-3 col-sm-3 div-padding-left">
+							<div id="daystayscalecharts" class="col-md-12 col-xs-12 col-sm-12 special_height charts-style"> </div>
+							<div id="daystayinterestcharts" class="col-md-12 col-xs-12 col-sm-12 special_height charts-style margin-top10"> </div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-6 col-sm-6 col-md-6 div-padding">
+							<div id="daystaytimejingqucharts" class="widthheight charts-style"> </div>
+						</div>
+						<div class="col-xs-6 col-sm-6 col-md-6 div-padding">
+							<div id="daystaytimeqixiancharts" class="widthheight charts-style"> </div>
+						</div>
+					</div>
+
+				</div>
+				<div class="tab-pane" id="tab-week">
+					<!--<div class="row feature">-->
+					<div class="col-md-5 div-padding-top">
+						<div id="weekchartsqixian" class="widthheight charts-style"> </div>
+					</div>
+					<div class="col-md-7 div-padding-top">
+						<div id="weekchartsjingqu" class="widthheight charts-style"> </div>
+					</div>
+
+				</div>
+				<div class="tab-pane" id="tab-month">
+					<!--<div class="row feature">-->
+					<div class="col-md-6 div-padding-top">
+						<div id="monthchartsjingqu" class="widthheight charts-style">
+						</div>
+					</div>
+					<div class="col-md-6 div-padding-top">
+						<div id="monthchartsqixian" class="widthheight charts-style">
+						</div>
+					</div>
+
+				</div>
+				<div class="tab-pane" id="tab-season">
+					<div class="row">
+						<div class="col-md-3 div-padding-top">
+							<div id="seasonchartsximeng" class="widthheight charts-style">
+							</div>
+						</div>
+
+						<div class="col-md-6 div-padding-top">
+							<div id="seasonchartsjingqu" class="widthheight charts-style">
+							</div>
+						</div>
+						<div class="col-md-3 div-padding-top">
+							<div id="seasonchartsqixian" class="widthheight charts-style">
+							</div>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<script type="text/javascript ">
+			var dayStayChart1 = echarts.init(document.getElementById('daychartsqixian'), 'dark');
+			var dayximengoption = {
+				title: {
+					text: '▌锡盟各旗县游客停留数',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				grid: {
+					//					left: '3%',
+					right: '2%',
+					top: '17%', //调整体表格的整体
+					containLabel: true
+				},
+				color: ['#80bef9'],
+				xAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						},
+						interval: 0,
+						rotate: 30,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'category',
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗'],
+				}],
+				yAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'value',
+					name: '人数(人)',
+				}],
+				series: [{
+					name: '停留人数',
+					type: 'bar',
+					barWidth: '50%',
+					boundaryGap: true,
+					data: [5, 3, 8, 10, 9, 10, 6, 3, 2, 3, 9, 12, 15]
+				}]
+			};
+			dayStayChart1.setOption(dayximengoption);
+
+			var dayStayChart2 = echarts.init(document.getElementById('daychartsjingqu'), 'dark');
+			var dayqixianoption = {
+				title: {
+					text: '▌锡盟各景区停留数',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis',
+					formatter: '{b} : {c}(人/天)'
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						mark: {
+							show: true
+						},
+						magicType: {
+							show: true,
+							type: ['line', 'bar']
+						},
+					}
+				},
+				calculable: true,
+				grid: {
+					right: '2%',
+					top: '17%',
+					containLabel: true
+				},
+				xAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						},
+						interval: 0,
+						rotate: 35,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'category',
+					boundaryGap: true,
+					data: ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+				}],
+				yAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'value',
+					name: '人数(人)',
+
+				}],
+				series: [{
+					name: '停留数量',
+					type: 'line',
+					data: [20, 32, 10, 34, 12, 13, 20, 17, 18, 15, 10]
+				}, ]
+
+			};
+			dayStayChart2.setOption(dayqixianoption);
+
+			var dayStayChart3 = echarts.init(document.getElementById('daystayscalecharts'), 'dark');
+			var dayscaleoption = {
+				title: {
+					text: '▌锡盟游客停留天数占比',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'item',
+					formatter: "{a} <br/>{b} : {c} ({d}%)"
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						mark: {
+							show: true
+						},
+						restore: {
+							show: true
+						},
+						saveAsImage: {
+							show: true
+						}
+					}
+				},
+				//				legend: {
+				//					orient: 'horizontal',
+				//					//						top: 'bottom',
+				//					bottom: '5%',
+				//					data: ['0-2天', '2-4天', '4-6天', '6-8天', '8-10天', '10天以上']
+				//				},
+				series: [{
+					name: '停留时间占比',
+					type: 'pie',
+					radius: '37%',
+					center: ['50%', '53%'],
+					clockwise: false,
+					data: [{
+						value: 50,
+						name: '0-2天'
+					}, {
+						value: 54,
+						name: '2-4天'
+					}, {
+						value: 64,
+						name: '4-6天'
+					}, {
+						value: 64,
+						name: '6-8天'
+					}, {
+						value: 30,
+						name: '8-10天'
+					}, {
+						value: 24,
+						name: '10天以上'
+					}],
+					label: {
+						normal: {
+							show: true,
+							position: 'outside',
+							formatter: '{b}\n{d}%',
+							textStyle: {
+								fontSize: '12',
+								fontWeight: 'bold'
+							}
+						},
+						emphasis: {
+							show: true,
+							textStyle: {
+								fontSize: '12',
+								fontWeight: 'bold'
+							}
+						}
+					},
+					labelLine: {
+						normal: {
+							show: true
+						}
+					},
+					itemStyle: {
+						normal: {
+							borderWidth: 4,
+							borderColor: '#ffffff',
+						},
+						emphasis: {
+							position: 'outside',
+							borderWidth: 0,
+							shadowBlur: 10,
+							shadowOffsetX: 0,
+							shadowColor: 'rgba(0, 0, 0, 0.5)'
+						}
+					}
+				}],
+				color: [
+					//					'#00acee',
+					'#86D560', '#AF89D6', '#59ADF3', '#FF999A', '#FFCC67', '#c8efff'
+				]
+			};
+			dayStayChart3.setOption(dayscaleoption);
+			var dayStayChart4 = echarts.init(document.getElementById('daystaytimejingqucharts'), 'dark');
+			var daytimejingquoption = {
+				backgroundColor: 'white',
+				title: {
+					text: '▌各景区游客停留时长',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						lineStyle: {
+							color: '#57617B'
+						}
+					}
+				},
+				legend: {
+					icon: 'rect',
+					itemWidth: 14,
+					itemHeight: 5,
+					itemGap: 13,
+					left: '5%',
+					right: '2%',
+					data: ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+					textStyle: {
+						fontSize: 8,
+
+					},
+					top: 'bottom'
+
+				},
+				grid: {
+					left: '3%',
+					right: '5%',
+					bottom: '20%',
+					top: '20%',
+					containLabel: true
+				},
+				xAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'category',
+					boundaryGap: false,
+					data: ['0-2h', '2-4h', '4-6h', '6-8h', '8-10h', '10h以上']
+				}],
+				yAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					type: 'value',
+					name: '人数(人)',
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					}
+				}],
+				series: [{
+					name: '贝子庙',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(137, 189, 27, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(137, 189, 27, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(137,189,27)'
+						}
+					},
+					data: [66, 96, 80, 95, 68, 24]
+				}, {
+					name: '蒙古汗城',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(0, 136, 212, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(0, 136, 212, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(0,136,212)'
+						}
+					},
+					data: [67, 90, 85, 80, 69, 29]
+				}, {
+					name: '元上都遗址',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(219,50,51)'
+						}
+					},
+					data: [74, 81, 97, 72, 43, 18]
+
+				}, {
+					name: '皇家御马苑',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(100,30,51)'
+						}
+					},
+					data: [80, 70, 68, 78, 49, 28]
+				}, {
+					name: '白垩纪恐龙公园',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(200,100,21)'
+						}
+					},
+					data: [60, 87, 78, 75, 40, 38]
+				}, {
+					name: '乌里雅斯太山',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(0, 136, 212, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(0, 136, 212, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(130,136,212)'
+						}
+					},
+					data: [87, 79, 99, 40, 59, 37]
+				}, {
+					name: '别力古台扎桑',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(137, 189, 27, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(137, 189, 27, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(237,189,57)'
+						}
+					},
+					data: [56, 76, 97, 55, 38, 28]
+				}, {
+					name: '博力彦神泉度假村',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(0, 136, 212, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(0, 136, 212, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(200,136,212)'
+						}
+					},
+					data: [87, 89, 69, 90, 69, 9]
+				}, {
+					name: '二连浩特市国门旅游',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 30, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 30, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(219,100,51)'
+						}
+					},
+					data: [84, 68, 86, 92, 53, 48]
+				}, {
+					name: '多伦湖',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 31, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 31, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(100,100,51)'
+						}
+					},
+					data: [40, 90, 77, 38, 99, 58]
+				}, {
+					name: '镶黄旗马文化博物馆',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(200,100,21)'
+						}
+					},
+					data: [60, 87, 58, 75, 40, 38]
+				}]
+			};
+			dayStayChart4.setOption(daytimejingquoption);
+			var dayStayChart5 = echarts.init(document.getElementById('daystaytimeqixiancharts'), 'dark');
+			var daytimeqixianoption = {
+				title: {
+					text: '▌各旗县游客停留时间',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				grid: {
+					left: '3%',
+					right: '5%',
+					bottom: '20%',
+					top: '20%',
+					containLabel: true
+				},
+				legend: {
+					icon: 'rect',
+					itemWidth: 14,
+					itemHeight: 5,
+					itemGap: 13,
+					left: '5%',
+					right: '2%',
+					textStyle: {
+						fontSize: 8,
+
+					},
+					top: 'bottom',
+					data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗']
+
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						mark: {
+							show: true
+						},
+						magicType: {
+							show: true,
+							type: ['bar', 'stack']
+							//							type: ['line', 'bar', 'stack', 'tiled']
+						},
+						restore: {
+							show: true
+						},
+						saveAsImage: {
+							show: true
+						}
+					}
+				},
+				calculable: true,
+				xAxis: [{
+					type: 'category',
+					boundaryGap: false,
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					data: ['0-2天', '2-4天', '4-6天', '6-8天', '8-10天', '10天以上']
+					//					data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+				}],
+				yAxis: [{
+					type: 'value',
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					name: '人数(人)',
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					}
+				}],
+				series: [{
+						name: '锡林浩特市',
+						type: 'line',
+						smooth: true,
+						data: [312, 284, 319, 395, 296, 119]
+					},
+					{
+						name: '二连浩特市',
+						type: 'line',
+						smooth: true,
+						data: [134, 339, 353, 312, 284, 120]
+					},
+					{
+						name: '乌拉盖管理区',
+						type: 'line',
+						smooth: true,
+						data: [234, 339, 353, 312, 220, 182]
+					},
+					{
+						name: '多伦县',
+						type: 'line',
+						smooth: true,
+						data: [353, 312, 284, 319, 395, 296]
+					},
+					{
+						name: '正蓝旗',
+						type: 'line',
+						smooth: true,
+						data: [253, 322, 184, 219, 264, 161]
+					},
+					{
+						name: '太仆寺旗',
+						type: 'line',
+						smooth: true,
+						data: [364, 361, 365, 342, 339, 253]
+					},
+					{
+						name: '正镶白旗',
+						type: 'line',
+						smooth: true,
+						data: [264, 261, 265, 242, 239, 253]
+					},
+					{
+						name: '镶黄旗',
+						type: 'line',
+						smooth: true,
+						data: [353, 312, 284, 319, 395, 296]
+					},
+					{
+						name: '苏尼特左旗',
+						type: 'line',
+						smooth: true,
+						data: [212, 284, 319, 295, 296, 213]
+					},
+					{
+						name: '苏尼特右旗',
+						type: 'line',
+						smooth: true,
+						data: [334, 321, 305, 312, 309, 300]
+					},
+					{
+						name: '阿巴嘎旗',
+						type: 'line',
+						smooth: true,
+						data: [252, 259, 271, 276, 291, 280]
+					},
+					{
+						name: '西乌珠穆沁旗',
+						type: 'line',
+						smooth: true,
+						data: [364, 361, 365, 342, 339, 303]
+					},
+					{
+						name: '东乌珠穆沁旗',
+						type: 'line',
+						smooth: true,
+						data: [264, 351, 245, 282, 309, 203]
+					}
+				]
+			};
+			dayStayChart5.setOption(daytimeqixianoption);
+			var dayStayChart6 = echarts.init(document.getElementById('daystayinterestcharts'), 'dark');
+			var dayinterestoption = {
+				title: {
+					text: '▌锡盟游客兴趣地',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {},
+				//				legend: {
+				//					top: 20,
+				//					itemWidth: 12,
+				//					itemHeight: 12,
+				//					data: ['兴趣'],
+				//					textStyle: {
+				//						color: '#fff'
+				//					}
+				//				},
+				radar: {
+					radius: '50%',
+					splitNumber: 8,
+					name: {
+						formatter: '【{value}】',
+						textStyle: {
+							color: '#646464'
+						}
+					},
+					center: ['50%', '55%'],
+					axisLine: {
+						lineStyle: {
+							color: '#fff',
+							opacity: .2
+						}
+					},
+					splitLine: {
+						lineStyle: {
+							color: '#fff',
+							opacity: .2
+						}
+					},
+					splitArea: {
+						areaStyle: {
+							color: 'rgba(127,95,132,.3)',
+							opacity: 1,
+							shadowBlur: 45,
+							shadowColor: 'rgba(0,0,0,.5)',
+							shadowOffsetX: 0,
+							shadowOffsetY: 15,
+						}
+					},
+					indicator: [{
+						name: '商场',
+						max: 6000
+					}, {
+						name: '餐饮',
+						max: 16000
+					}, {
+						name: '商业街',
+						max: 30000
+					}, {
+						name: '景区',
+						max: 35000
+					}, {
+						name: '酒店',
+						max: 50000
+					}, {
+						name: '其他',
+						max: 25000
+					}]
+				},
+				series: [{
+					name: '兴趣',
+					type: 'radar',
+					symbolSize: 0,
+					areaStyle: {
+						normal: {
+							shadowBlur: 13,
+							shadowColor: 'rgba(0,0,0,.2)',
+							shadowOffsetX: 0,
+							shadowOffsetY: 10,
+							opacity: 1
+						}
+					},
+					data: [{
+						value: [5000, 7000, 12000, 11000, 15000, 14000],
+						name: '兴趣',
+					}]
+				}],
+				color: ['#80bef9'],
+				backgroundColor: {
+					type: 'radial',
+					x: 0.4,
+					y: 0.4,
+					r: 0.35,
+					colorStops: [{
+						offset: 0,
+						color: '#ffffff' // 0% 处的颜色
+					}, {
+						offset: .4,
+						color: '#ffffff' // 100% 处的颜色
+					}, {
+						offset: 1,
+						color: '#ffffff' // 100% 处的颜色
+					}],
+					globalCoord: false // 缺省为 false
+				}
+			};
+			dayStayChart6.setOption(dayinterestoption);
+			var weekStayChart1 = echarts.init(document.getElementById('weekchartsqixian'), 'dark');
+			var weekqixianoption = {
+				title: {
+					text: '▌各旗县停留人数',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				legend: {
+					icon: 'rect',
+					itemWidth: 14,
+					itemHeight: 5,
+					itemGap: 13,
+					left: '5%',
+					right: '2%',
+					textStyle: {
+						fontSize: 8,
+
+					},
+					top: 'bottom',
+					data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗']
+				},
+				grid: {
+					left: '3%',
+					right: '5%',
+					bottom: '15%',
+					top: '15%',
+					containLabel: true
+				},
+				color: ['#C23531', '#2f4544', '#61a0a8', '#d48265', '#ff999a', '#80bef9', '#ffcc67', '#C4CCD3', '#546570', ' #6E7074', '#BDA29A', ' #CA8622', '#749F83'],
+				xAxis: {
+					type: 'value',
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+				},
+				yAxis: {
+					type: 'category',
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+				},
+				series: [{
+						name: '锡林浩特市',
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [32, 22, 31, 34, 39, 33, 32]
+					},
+					{
+						name: '二连浩特市',
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [20, 32, 101, 34, 90, 30, 21]
+					},
+					{
+						name: '乌拉盖管理区',
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [20, 82, 91, 34, 29, 33, 31]
+					},
+					{
+						name: '多伦县',
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [50, 22, 21, 54, 90, 30, 41]
+					},
+					{
+						name: '正蓝旗',
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [22, 32, 30, 24, 29, 33, 32]
+					},
+					{
+						name: '太仆寺旗',
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [50, 22, 20, 54, 60, 30, 41]
+					},
+					{
+						name: '正镶白旗',
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [50, 22, 21, 54, 40, 30, 61]
+					},
+					{
+						name: '镶黄旗',
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [45, 32, 20, 54, 71, 33, 41]
+					},
+					{
+						name: '苏尼特左旗',
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [35, 29, 41, 64, 60, 30, 28]
+					},
+					{
+						name: '苏尼特右旗',
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [40, 22, 20, 54, 29, 23, 31]
+					},
+					{
+						name: '阿巴嘎旗',
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [40, 52, 61, 54, 19, 33, 41]
+					},
+					{
+						name: '西乌珠穆沁旗',
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [30, 42, 21, 34, 17, 33, 42]
+					},
+					{
+						name: '东乌珠穆沁旗',
+						type: 'bar',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+					}
+
+				]
+			};
+			weekStayChart1.setOption(weekqixianoption);
+			var weekStayChart2 = echarts.init(document.getElementById('weekchartsjingqu'), 'dark');
+			var weekjingquoption = {
+				title: {
+					text: '▌各景区停留人数',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis'
+				},
+				legend: {
+					icon: 'rect',
+					itemWidth: 14,
+					itemHeight: 5,
+					itemGap: 13,
+					data: ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+					left: '5%',
+					right: '2%',
+					textStyle: {
+						fontSize: 8,
+
+					},
+					top: 'bottom',
+
+					//					top: '8%',
+					//					data: ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+				},
+				grid: {
+					left: '3%',
+					right: '5%',
+					bottom: '15%',
+					top: '15%',
+					containLabel: true
+				},
+				toolbox: {
+					show: true,
+					feature: {
+						mark: {
+							show: true
+						},
+						magicType: {
+							show: true,
+							//							type: ['line', 'bar', 'stack', 'tiled']
+							type: ['bar', 'stack', 'tiled']
+						},
+						restore: {
+							show: true
+						},
+						saveAsImage: {
+							show: true
+						}
+					}
+				},
+				calculable: true,
+				xAxis: [{
+					type: 'category',
+					//						axisTick:{show:false},
+					boundaryGap: false,
+					//					data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+					data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					}
+				}],
+				yAxis: [{
+					type: 'value',
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						show: false
+					},
+					name: '人数(人)',
+				}],
+				series: [{
+						name: '贝子庙',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [67, 63, 60, 65, 62, 60, 70]
+					},
+					{
+						name: '蒙古汗城',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [51, 49, 30, 50, 53, 63, 43]
+					},
+					{
+						name: '元上都遗址',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [73, 68, 77, 58, 68, 69, 54]
+					},
+					{
+						name: '皇家御马苑',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [54, 60, 50, 52, 42, 54, 60]
+					},
+					{
+						name: '白垩纪恐龙公园',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [50, 40, 52, 53, 60, 50, 52]
+					},
+					{
+						name: '乌里雅斯太山',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [49, 59, 69, 50, 52, 56, 48]
+					},
+					{
+						name: '别力古台扎桑',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [53, 53, 54, 60, 50, 32, 52]
+					},
+					{
+						name: '博力彦神泉度假村',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [61, 50, 53, 54, 40, 51, 55]
+					},
+					{
+						name: '二连浩特市国门旅游',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [52, 59, 71, 76, 91, 97, 99]
+					},
+					{
+						name: '多伦湖',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [47, 48, 49, 71, 102, 73, 69]
+					},
+					{
+						name: '镶黄旗马文化博物馆',
+						type: 'line',
+						smooth: true,
+						symbolSize: 5,
+						label: {
+							normal: {
+								show: false,
+								position: 'top' //值显示
+							}
+						},
+						data: [64, 61, 65, 42, 39, 53, 32]
+					}
+				]
+			};
+			weekStayChart2.setOption(weekjingquoption);
+			var monthChart1 = echarts.init(document.getElementById('monthchartsjingqu'), 'dark');
+			var monthjingquoption = {
+				//				backgroundColor: '#394056',
+				backgroundColor: 'white',
+				title: {
+					text: '▌各景区停留人数',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						lineStyle: {
+							color: '#57617B'
+						}
+					}
+				},
+				legend: {
+					icon: 'rect',
+					itemWidth: 14,
+					itemHeight: 5,
+					itemGap: 13,
+					data: ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+					left: '5%',
+					right: '2%',
+					textStyle: {
+						fontSize: 8,
+
+					},
+					top: 'bottom',
+				},
+				grid: {
+					left: '5%',
+					right: '5%',
+					bottom: '25%',
+					top: '15%',
+					containLabel: true
+				},
+				xAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						},
+						interval: 0,
+						rotate: 34,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'category',
+					boundaryGap: false,
+					data: ['2016年8月', '2016年9月', '2016年10月', '2016年11月', '2016年12月', '2017年1月', '2017年2月', '2017年3月', '2017年4月', '2017年5月', '2017年6月', '2017年7月']
+				}],
+				yAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					type: 'value',
+					name: '人数(人)',
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					}
+				}],
+				series: [{
+					name: '贝子庙',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(137, 189, 27, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(137, 189, 27, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(137,189,27)'
+						}
+					},
+					data: [66, 96, 77, 95, 88, 94, 49, 94, 80, 52, 75, 94]
+				}, {
+					name: '蒙古汗城',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(0, 136, 212, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(0, 136, 212, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(0,136,212)'
+						}
+					},
+					data: [97, 59, 99, 100, 99, 90, 80, 91, 69, 67, 90, 84]
+				}, {
+					name: '元上都遗址',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(219,50,51)'
+						}
+					},
+					data: [84, 81, 67, 72, 43, 88, 91, 101, 79, 87, 92, 0]
+
+				}, {
+					name: '皇家御马苑',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(100,30,51)'
+						}
+					},
+					data: [80, 70, 68, 78, 49, 48, 81, 123, 89, 90, 94, 0]
+				}, {
+					name: '白垩纪恐龙公园',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(200,100,21)'
+						}
+					},
+					data: [60, 77, 98, 75, 40, 88, 89, 133, 99, 70, 99, 13]
+				}, {
+					name: '乌里雅斯太山',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(0, 136, 212, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(0, 136, 212, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(130,136,212)'
+						}
+					},
+					data: [87, 79, 99, 10, 59, 70, 80, 71, 69, 87, 50, 4]
+				}, {
+					name: '别力古台扎桑',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(137, 189, 27, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(137, 189, 27, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(237,189,57)'
+						}
+					},
+					data: [6, 76, 97, 55, 38, 84, 59, 74, 89, 42, 75, 74]
+				}, {
+					name: '博力彦神泉度假村',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(0, 136, 212, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(0, 136, 212, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(200,136,212)'
+						}
+					},
+					data: [87, 59, 49, 90, 109, 90, 85, 71, 59, 87, 97, 8]
+				}, {
+					name: '二连浩特市国门旅游',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 30, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 30, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(219,100,51)'
+						}
+					},
+					data: [94, 8, 76, 92, 53, 48, 61, 121, 89, 97, 42, 10]
+				}, {
+					name: '多伦湖',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 31, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 31, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(100,100,51)'
+						}
+					},
+					data: [40, 90, 48, 38, 99, 58, 91, 123, 79, 40, 94, 23]
+				}, {
+					name: '镶黄旗马文化博物馆',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(200,100,21)'
+						}
+					},
+					data: [60, 77, 98, 75, 40, 88, 89, 133, 99, 70, 99, 13]
+				}]
+			};
+			// 使用刚指定的配置项和数据显示图表。
+			monthChart1.setOption(monthjingquoption);
+			var monthChart2 = echarts.init(document.getElementById('monthchartsqixian'), 'dark');
+			var monthqixianoption = {
+				title: {
+					text: '▌各旗县停留人数',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						lineStyle: {
+							color: '#57617B'
+						}
+					}
+				},
+				legend: {
+					icon: 'rect',
+					itemWidth: 14,
+					itemHeight: 5,
+					itemGap: 13,
+					data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗'],
+					left: '5%',
+					right: '2%',
+					textStyle: {
+						fontSize: 8,
+
+					},
+					top: 'bottom',
+				},
+				grid: {
+					left: '5%',
+					right: '5%',
+					bottom: '25%',
+					top: '15%',
+					containLabel: true
+				},
+				xAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						},
+						interval: 0,
+						rotate: 34,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'category',
+					boundaryGap: false,
+					data: ['2016年8月', '2016年9月', '2016年10月', '2016年11月', '2016年12月', '2017年1月', '2017年2月', '2017年3月', '2017年4月', '2017年5月', '2017年6月', '2017年7月']
+				}],
+				yAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					type: 'value',
+					name: '人数(人)',
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					}
+				}],
+				series: [{
+					name: '锡林浩特市',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(137, 189, 27, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(137, 189, 27, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(137,189,27)'
+						}
+					},
+					data: [66, 96, 77, 95, 88, 94, 49, 94, 80, 52, 75, 94, 100]
+				}, {
+					name: '二连浩特市',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(0, 136, 212, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(0, 136, 212, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(0,136,212)'
+						}
+					},
+					data: [97, 59, 99, 100, 99, 90, 80, 91, 69, 67, 90, 84, 98]
+				}, {
+					name: '乌拉盖管理区',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(219,50,51)'
+						}
+					},
+					data: [84, 81, 67, 72, 43, 88, 91, 101, 79, 87, 92, 110, 120]
+
+				}, {
+					name: '多伦县',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(100,30,51)'
+						}
+					},
+					data: [80, 70, 68, 78, 49, 48, 81, 123, 89, 90, 94, 100, 110]
+				}, {
+					name: '正蓝旗',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(200,100,21)'
+						}
+					},
+					data: [60, 77, 98, 75, 40, 88, 89, 133, 99, 70, 99, 98, 110]
+				}, {
+					name: '太仆寺旗',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(0, 136, 212, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(0, 136, 212, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(130,136,212)'
+						}
+					},
+					data: [87, 79, 99, 10, 59, 70, 80, 71, 69, 87, 50, 94, 110]
+				}, {
+					name: '正镶白旗',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(137, 189, 27, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(137, 189, 27, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(237,189,57)'
+						}
+					},
+					data: [6, 76, 97, 55, 38, 84, 59, 74, 89, 42, 75, 74, 89]
+				}, {
+					name: '镶黄旗',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(0, 136, 212, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(0, 136, 212, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(200,136,212)'
+						}
+					},
+					data: [87, 59, 49, 90, 109, 90, 85, 71, 59, 87, 97, 80, 100]
+				}, {
+					name: '苏尼特左旗',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 30, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 30, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(219,100,51)'
+						}
+					},
+					data: [94, 8, 76, 92, 53, 48, 61, 121, 89, 97, 42, 100, 120]
+				}, {
+					name: '苏尼特右旗',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 31, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 31, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(100,100,51)'
+						}
+					},
+					data: [40, 90, 48, 38, 99, 58, 91, 123, 79, 40, 94, 123, 112]
+				}, {
+					name: '阿巴嘎旗',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(200,100,21)'
+						}
+					},
+					data: [60, 77, 98, 75, 40, 88, 89, 133, 99, 70, 99, 130, 133]
+				}, {
+					name: '西乌珠穆沁旗',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 31, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 31, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(100,120,51)'
+						}
+					},
+					data: [40, 90, 48, 38, 99, 58, 91, 123, 79, 40, 94, 123, 122]
+				}, {
+					name: '东乌珠穆沁旗',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 31, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 31, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(100,180,61)'
+						}
+					},
+					data: [50, 90, 68, 78, 99, 88, 91, 123, 79, 70, 94, 103, 112]
+				}, ]
+				//				tooltip: {
+				//					trigger: 'axis'
+				//				},
+				//				grid: {
+				//					left: '3%',
+				//					right: '4%',
+				//					//					bottom: '5%',
+				//					top: '27%',
+				//					containLabel: true
+				//				},
+				//				legend: {
+				//					icon: 'rect',
+				//					itemWidth: 14,
+				//					itemHeight: 5,
+				//					itemGap: 13,
+				//					right: '8%',
+				//					textStyle: {
+				//						fontSize: 8,
+				//						
+				//					},
+				//					top: '10%',
+				//					data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗']
+				//
+				//				},
+				//				toolbox: {
+				//					show: true,
+				//					feature: {
+				//						mark: {
+				//							show: true
+				//						},
+				//						//						dataView: {
+				//						//							show: true,
+				//						//							readOnly: false
+				//						//						},
+				//						magicType: {
+				//							show: true,
+				//							type: ['bar', 'stack', 'tiled']
+				//						},
+				//						restore: {
+				//							show: true
+				//						},
+				//						saveAsImage: {
+				//							show: true
+				//						}
+				//					}
+				//				},
+				//				calculable: true,
+				//				xAxis: [{
+				//					axisLabel: {
+				//						textStyle: {
+				//							color: "#646464"
+				//						},
+				//						interval: 0,
+				//						rotate: 34,
+				//					},
+				//					axisLine: {
+				//						lineStyle: {
+				//							color: '#999999'
+				//						}
+				//					},
+				//					type: 'category',
+				//					boundaryGap: false,
+				//					data: ['2016年8月', '2016年9月', '2016年10月', '2016年11月', '2016年12月', '2017年1月', '2017年2月', '2017年3月', '2017年4月', '2017年5月', '2017年6月', '2017年7月']
+				//					//					['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+				//					//					data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+				//				}],
+				//				yAxis: [{
+				//					name: '人数(人)',
+				//					type: 'value',
+				//					axisLabel: {
+				//						textStyle: {
+				//							color: "#646464"
+				//						}
+				//					},
+				//					splitLine: {
+				//						show: true,
+				//						lineStyle: {
+				//							// 使用深浅的间隔色
+				//							color: ['#d9d9d9'],
+				//							type: 'dashed',
+				//						}
+				//					},
+				//					axisLine: {
+				//						lineStyle: {
+				//							color: '#999999'
+				//						}
+				//					}
+				//				}],
+				//				series: [{
+				//						name: '锡林浩特市',
+				//						type: 'line',
+				//						smooth: true,
+				//						data: [272, 264, 300, 295, 286, 288, 280, 302, 291, 334, 339, 353]
+				//					},
+				//					{
+				//						name: '二连浩特市',
+				//						type: 'line',
+				//						smooth: true,
+				//						data: [234, 289, 302, 282, 276, 260, 240, 261, 294, 321, 353, 343]
+				//					},
+				//					{
+				//						name: '乌拉盖管理区',
+				//						type: 'line',
+				//						smooth: true,
+				//						data: [230, 239, 293, 278, 280, 262, 251, 274, 299, 329, 366, 359]
+				//					},
+				//					{
+				//						name: '多伦县',
+				//						type: 'line',
+				//						smooth: true,
+				//						data: [263, 287, 299, 279, 269, 259, 255, 270, 289, 335, 342, 340]
+				//					},
+				//					{
+				//						name: '正蓝旗',
+				//						type: 'line',
+				//						smooth: true,
+				//						data: [253, 262, 284, 279, 264, 261, 251, 272, 286, 365, 366, 359]
+				//					},
+				//					{
+				//						name: '太仆寺旗',
+				//						type: 'line',
+				//						smooth: true,
+				//						data: [264, 271, 295, 282, 272, 253, 252, 284, 319, 395, 396, 389]
+				//					},
+				//					{
+				//						name: '正镶白旗',
+				//						type: 'line',
+				//						smooth: true,
+				//						data: [264, 261, 275, 242, 239, 243, 242, 284, 319, 390, 386, 359]
+				//					},
+				//					{
+				//						name: '镶黄旗',
+				//						type: 'line',
+				//						smooth: true,
+				//						data: [259, 262, 284, 279, 275, 269, 289, 294, 321, 355, 362, 360]
+				//					},
+				//					{
+				//						name: '苏尼特左旗',
+				//						type: 'line',
+				//						smooth: true,
+				//						data: [242, 264, 279, 275, 266, 259, 264, 281, 305, 342, 369, 363]
+				//					},
+				//					{
+				//						name: '苏尼特右旗',
+				//						type: 'line',
+				//						smooth: true,
+				//						data: [234, 231, 245, 239, 229, 213, 209, 284, 309, 355, 356, 369]
+				//					},
+				//					{
+				//						name: '阿巴嘎旗',
+				//						type: 'line',
+				//						smooth: true,
+				//						data: [252, 260, 271, 256, 251, 260, 266, 284, 333, 373, 390, 385]
+				//					},
+				//					{
+				//						name: '西乌珠穆沁旗',
+				//						type: 'line',
+				//						smooth: true,
+				//						data: [264, 265, 279, 262, 259, 253, 240, 274, 319, 395, 396, 379]
+				//					},
+				//					{
+				//						name: '东乌珠穆沁旗',
+				//						type: 'line',
+				//						smooth: true,
+				//						data: [260, 264, 275, 260, 251, 243, 262, 274, 339, 365, 386, 379]
+				//					}
+				//				]
+			};
+			monthChart2.setOption(monthqixianoption);
+
+			var seasonStayChart1 = echarts.init(document.getElementById('seasonchartsximeng'), 'dark');
+			var seasonximengoption = {
+				title: {
+					text: '▌锡盟游客停留数',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'line' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				grid: {
+					top: '17%', //调整体表格的整体
+					containLabel: true
+				},
+				color: ['#80bef9'],
+				xAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'category',
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					data: ['春', '夏', '秋', '冬'],
+				}],
+				yAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'value',
+					name: '人数(人)'
+				}],
+				series: [{
+					name: '停留人数',
+					type: 'bar',
+					barWidth: '50%',
+					boundaryGap: true,
+					data: [18500, 12600, 40500, 38500]
+				}]
+			};
+			seasonStayChart1.setOption(seasonximengoption);
+			var seasonStayChart2 = echarts.init(document.getElementById('seasonchartsqixian'), 'dark');
+			var seasonqixianoption = {
+				title: {
+					text: '▌各旗县游客停留数',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				color: ['#C23531', '#2f4544', '#61a0a8', '#d48265', '#ff999a', '#80bef9', '#ffcc67', '#C4CCD3', '#546570', ' #6E7074', '#BDA29A', ' #CA8622', '#749F83'],
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: { // 坐标轴指示器，坐标轴触发有效
+						type: 'shadow' // 默认为直线，可选为：'line' | 'shadow'
+					}
+				},
+				//				legend: {
+				//					orient: 'horizontal', // 布局方式，默认为水平布局，可选为：
+				//					x: 'right', // 水平安放位置，默认为全图居中，可选为：
+				//					y: 'top', // 垂直安放位置，默认为全图顶端，可选为：
+				//					backgroundColor: 'rgba(0,0,0,0)',
+				//					borderColor: '#ccc', // 图例边框颜色
+				//					borderWidth: 0, // 图例边框线宽，单位px，默认为0（无边框）
+				//					padding: 5, // 图例内边距，单位px，默认各方向内边距为5，
+				//					data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗']
+				//				},
+
+				grid: {
+					//					left: '3%',
+					//					right: '4%',
+					top: '17%',
+					//					bottom:'10%',
+					containLabel: true
+				},
+				yAxis: {
+					type: 'value',
+					name: '人数(人)'
+				},
+				xAxis: {
+					type: 'category',
+					data: ['春', '夏', '秋', '冬'],
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					}
+				},
+				series: [{
+						name: '锡林浩特市',
+						type: 'bar',
+						barWidth: '40%',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [320, 202, 201, 134]
+					},
+					{
+						name: '二连浩特市',
+						type: 'bar',
+						barWidth: '40%',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [120, 132, 101, 134]
+					},
+					{
+						name: '乌拉盖管理区',
+						type: 'bar',
+						barWidth: '40%',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [220, 182, 191, 234]
+					},
+					{
+						name: '多伦县',
+						type: 'bar',
+						barWidth: '40%',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [150, 212, 201, 154]
+					},
+					{
+						name: '正蓝旗',
+						type: 'bar',
+						barWidth: '40%',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [320, 232, 301, 134]
+					},
+					{
+						name: '太仆寺旗',
+						type: 'bar',
+						barWidth: '40%',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [220, 232, 301, 134]
+					},
+					{
+						name: '正镶白旗',
+						type: 'bar',
+						barWidth: '40%',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [220, 132, 201, 134]
+					},
+					{
+						name: '镶黄旗',
+						type: 'bar',
+						barWidth: '40%',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [320, 232, 101, 234]
+					},
+					{
+						name: '苏尼特左旗',
+						type: 'bar',
+						barWidth: '40%',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [222, 312, 321, 134]
+					},
+					{
+						name: '苏尼特右旗',
+						type: 'bar',
+						barWidth: '40%',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [122, 212, 121, 234]
+					},
+					{
+						name: '阿巴嘎旗',
+						type: 'bar',
+						barWidth: '40%',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [92, 202, 221, 334]
+					},
+					{
+						name: '西乌珠穆沁旗',
+						type: 'bar',
+						barWidth: '40%',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [320, 132, 301, 242]
+					},
+					{
+						name: '东乌珠穆沁旗',
+						type: 'bar',
+						barWidth: '40%',
+						stack: '总量',
+						label: {
+							normal: {
+								show: true,
+								position: 'insideRight'
+							}
+						},
+						data: [320, 332, 321, 134]
+					}
+				]
+			};
+			seasonStayChart2.setOption(seasonqixianoption);
+			var seasonStayChart3 = echarts.init(document.getElementById('seasonchartsjingqu'), 'dark');
+			var seasonjingquoption = {
+				backgroundColor: 'white',
+				title: {
+					text: '▌各景区游客停留数',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						lineStyle: {
+							color: '#57617B'
+						}
+					}
+				},
+				legend: {
+					icon: 'rect',
+					itemWidth: 14,
+					itemHeight: 5,
+					itemGap: 13,
+					data: ['春', '夏', '秋', '冬'],
+					right: '4%',
+					textStyle: {
+						fontSize: 8,
+
+					},
+					top: '10%'
+
+				},
+				grid: {
+					left: '3%',
+					right: '4%',
+					//					bottom: '5%',
+					top: '17%',
+					containLabel: true
+				},
+				xAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						},
+						interval: 0,
+						rotate: 30,
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					},
+					nameTextStyle: {
+						color: '#858585'
+					},
+					type: 'category',
+					//					name: '景区',
+					boundaryGap: false,
+					data: ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+				}],
+				yAxis: [{
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					type: 'value',
+					name: '人数(人)',
+					axisTick: {
+						interval: 0,
+						lineStyle: {
+							color: '#858585'
+						}
+					}
+				}],
+				series: [{
+					name: '春',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(137, 189, 27, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(137, 189, 27, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(137,189,27)'
+						}
+					},
+					data: [359, 262, 284, 279, 275, 269, 289, 294, 321, 355, 362]
+				}, {
+					name: '夏',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(0, 136, 212, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(0, 136, 212, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(0,136,212)'
+						}
+					},
+					data: [442, 464, 479, 475, 466, 459, 464, 481, 405, 442, 469]
+				}, {
+					name: '秋',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(219,50,51)'
+						}
+					},
+					data: [434, 431, 445, 439, 429, 413, 479, 484, 409, 455, 446]
+				}, {
+					name: '冬',
+					type: 'line',
+					smooth: true,
+					lineStyle: {
+						normal: {
+							width: 1
+						}
+					},
+					areaStyle: {
+						normal: {
+							color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+								offset: 0,
+								color: 'rgba(219, 50, 51, 0.3)'
+							}, {
+								offset: 0.8,
+								color: 'rgba(219, 50, 51, 0)'
+							}], false),
+							shadowColor: 'rgba(0, 0, 0, 0.1)',
+							shadowBlur: 10
+						}
+					},
+					itemStyle: {
+						normal: {
+							color: 'rgb(100,30,51)'
+						}
+					},
+					data: [352, 360, 371, 356, 351, 360, 366, 384, 333, 373, 390]
+				}]
+			};
+			seasonStayChart3.setOption(seasonjingquoption);
+		</script>
+
+	</body>
+
+</html>

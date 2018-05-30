@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8" />
+		<meta name=renderer content=webkit>
+		<title>游客结构分析（总体）</title>
+		<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/echarts.js"></script>
+		<script type="text/javascript" src="js/jquery.min.js"></script>
+		<script type="text/javascript" src="js/world.js"></script>
+		<script type="text/javascript" src="js/china.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-table-zh-CN.js"></script>
+		<script src="js/bmap.js"></script>
+		<script src="http://libs.baidu.com/jquery/2.0.0/jquery.js"></script>
+		<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=0UqXGL98FSmi22w2Rl6HK56I"></script>
+		<script src="semantic/semantic.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js"></script>
+		<script type="text/javascript" src="js/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+
+		<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/2.2.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="css/structure_total.css">
+		<link rel="stylesheet" href="css/bootstrap-table.min.css">
+		<link rel="stylesheet" type="text/css" href="semantic/semantic.min.css" />
+		<link rel="stylesheet" type="text/css" href="semantic/docs.css" />
+		<link rel="stylesheet" href="js/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.css">
+
+		<script type="text/javascript">
+			var option_qx;
+			var option_jq;
+			var option_bottom_qx;
+			var option_bottom_jq;
+			var singleCityChartLine;
+			var singleSenicChartLine;
+			var singleKLLChartLine;
+			var singleJqChartLine;
+			option_qx = {
+				title: {
+					text: '▌各旗县游客数量变化情况',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				toolbox: {
+					left: '96%',
+					feature: {
+						saveAsImage: {}
+					}
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						type: 'shadow'
+					}
+				},
+				grid: {
+					left: '3%',
+					right: '7%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					name: "人数（人）",
+					nameGap: 10,
+					type: 'value',
+					axisTick: {
+						alignWithLabel: false
+					},
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					boundaryGap: [0, 0.01]
+				},
+				yAxis: {
+					type: 'category',
+					axisLabel: {
+						textStyle: {
+							color: "#646464",
+							formatter: '{value} '
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					data: ['乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗', '二连浩特市', '锡林浩特市'],
+				},
+				series: [{
+						name: '游客数量',
+						type: 'bar',
+						data: [33203, 44489, 49034, 50970, 51744, 63023, 65203, 66489, 73034, 74970, 77744, 80230, 95157]
+					},
+
+				]
+			};
+			option_jq = {
+				title: {
+					text: '▌各景区游客数量变化情况',
+					top: '4%',
+					left: '2%',
+					textStyle: {
+						color: '#EEB300',
+						fontSize: 15
+					},
+				},
+				color: ['#2F4554'],
+				toolbox: {
+					left: '96%',
+					feature: {
+						saveAsImage: {}
+					}
+				},
+				tooltip: {
+					trigger: 'axis',
+					axisPointer: {
+						type: 'shadow'
+					}
+				},
+				grid: {
+					left: '3%',
+					right: '7%',
+					bottom: '3%',
+					containLabel: true
+				},
+				xAxis: {
+					name: "人数（人）",
+					nameGap: 10,
+					type: 'value',
+					axisTick: {
+						alignWithLabel: false
+					},
+					axisLabel: {
+						textStyle: {
+							color: "#646464"
+						}
+					},
+					splitLine: {
+						show: true,
+						lineStyle: {
+							// 使用深浅的间隔色
+							color: ['#d9d9d9'],
+							type: 'dashed',
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					boundaryGap: [0, 0.01]
+				},
+				yAxis: {
+					type: 'category',
+					axisLabel: {
+						textStyle: {
+							color: "#646464",
+							formatter: '{value} '
+						}
+					},
+					axisLine: {
+						lineStyle: {
+							color: '#999999'
+						}
+					},
+					data: ['镶黄旗马文化博物馆', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '贝子庙'],
+				},
+				series: [{
+						name: '游客数量',
+						type: 'bar',
+						data: [30034, 30970, 31744, 33023, 55203, 56489, 63034, 64970, 67744, 70230, 85157]
+					},
+
+				]
+			};
+			$(document).ready(function() {
+				init();
+				$(".form_datetime").datetimepicker({
+					format: "yyyy-mm-dd hh:ii",
+					language: 'zh-CN',
+					autoclose: true,
+					todayBtn: true,
+					startDate: "2017-08-01 00:00",
+					minuteStep: 10,
+					todayHighlight: true,
+				});
+			});
+
+			function flesh() {
+				singleCityChartLine.setOption(option_qx);
+			}
+
+			function flesh2() {
+				singleSenicChartLine.setOption(option_jq);
+			}
+
+			function change_qx() {
+				$("#singleJqChartLine").css("display", "none");
+				$("#singleKLLChartLine").css("display", "block");
+				$("#jq_button").css("background-color", "white");
+				$("#jq_button").css("color", "#027AE0");
+				$("#qx_button").css("background-color", "#027AE0");
+				$("#qx_button").css("color", "white");
+			}
+
+			function change_jq() {
+				$("#singleJqChartLine").css("display", "block");
+				$("#singleKLLChartLine").css("display", "none");
+				$("#jq_button").css("background-color", "#027AE0");
+				$("#jq_button").css("color", "white");
+				$("#qx_button").css("background-color", "white");
+				$("#qx_button").css("color", "#027AE0");
+
+				/*景区客流量变化情况*/
+				singleJqChartLine = echarts.init(document.getElementById('singleJqChartLine'));
+				option_bottom_jq = {
+					title: {
+						text: '▌各景点客流量趋势分析',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						data: ['贝子庙', '蒙古汗城', '元上都遗址', '皇家御马苑', '白垩纪恐龙公园', '乌里雅斯太山', '别力古台扎桑', '博力彦神泉度假村', '二连浩特市国门旅游', '多伦湖', '镶黄旗马文化博物馆'],
+						top: 'bottom',
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '20%',
+						containLabel: true
+					},
+					toolbox: {
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					yAxis: {
+						name: "人数（人）",
+						nameGap: 10,
+						type: 'value',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					series: [{
+							name: '贝子庙',
+							type: 'line',
+							smooth: 'true',
+							data: [3120, 3132, 3101, 4134, 4490, 4120, 5132, 5101, 5134, 4490, 4230, 3210]
+						},
+						{
+							name: '蒙古汗城',
+							type: 'line',
+							smooth: 'true',
+							data: [4220, 4182, 4120, 3132, 3101, 3134, 5590, 5191, 5534, 5290, 6330, 7310]
+						},
+						{
+							name: '元上都遗址',
+							type: 'line',
+							smooth: 'true',
+							data: [3150, 3232, 2201, 2120, 2132, 3101, 3134, 4090, 4154, 4190, 4330, 4410]
+						},
+						{
+							name: '皇家御马苑',
+							type: 'line',
+							smooth: 'true',
+							data: [4150, 4232, 4201, 2120, 2132, 4101, 4134, 4090, 5154, 4190, 3330, 3410]
+						},
+						{
+							name: '白垩纪恐龙公园',
+							type: 'line',
+							smooth: 'true',
+							data: [3150, 3232, 2201, 2120, , 5154, 4190, 3330, 3410, 4190, 4330, 4410, 3410]
+						},
+						{
+							name: '乌里雅斯太山',
+							type: 'line',
+							smooth: 'true',
+							data: [5154, 4190, 3330, 3410, 3101, 3134, 4090, 4154, 4190, 4330, 3410, 4410]
+						},
+						{
+							name: '别力古台扎桑',
+							type: 'line',
+							smooth: 'true',
+							data: [3150, 3232, 2201, 2120, 2132, 3101, 3134, 4090, 4154, 4190, 4330, 4410]
+						},
+						{
+							name: '博力彦神泉度假村',
+							type: 'line',
+							smooth: 'true',
+							data: [3134, 4090, 4154, 4190, 4330, 4410, 3150, 3232, 2201, 2120, 2132, 3101, ]
+						},
+						{
+							name: '多伦湖',
+							type: 'line',
+							smooth: 'true',
+							data: [4150, 4232, 2201, 2120, 2132, 5101, 3134, 5090, 4154, 4190, 3330, 3410]
+						},
+						{
+							name: '镶黄旗马文化博物馆',
+							type: 'line',
+							smooth: 'true',
+							data: [2120, 2132, 3101, 3150, 3232, 2201, 2120, 2132, 3101, 5134, 5090, 2154]
+						}
+					]
+				};
+				singleJqChartLine.setOption(option_bottom_jq);
+			}
+
+			function init() {
+
+				/*全盟游客数量变化情况*/
+				var allMengChartLine = echarts.init(document.getElementById('allMengChartLine'));
+				option = {
+					title: {
+						text: '▌全盟游客数量变化情况',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '20%',
+						containLabel: true
+					},
+					toolbox: {
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+						data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+					},
+					yAxis: {
+						name: "人数",
+						nameGap: 10,
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+						type: 'value'
+					},
+					series: [{
+						name: '人数',
+						type: 'line',
+						smooth: 'true',
+						data: [68120, 67132, 76101, 76134, 88890, 88230, 99210, 77120, 74132, 66101, 60134, 66690]
+					}, ]
+				};
+
+				allMengChartLine.setOption(option);
+
+				/*各旗县游客数量变化情况*/
+				singleCityChartLine = echarts.init(document.getElementById('singleCityChartLine'));
+				singleCityChartLine.setOption(option_qx);
+				singleCityChartLine.on('click', function(parmas) {
+					option_single_qx = {
+						title: {
+							text: '▌锡林浩特市游客数量变化分析',
+							top: '4%',
+							left: '2%',
+							textStyle: {
+								color: '#EEB300',
+								fontSize: 15
+							},
+						},
+						tooltip: {
+							trigger: 'axis'
+						},
+						grid: {
+							left: '3%',
+							right: '4%',
+							bottom: '3%',
+							containLabel: true
+						},
+						toolbox: {
+							feature: {
+								saveAsImage: {}
+							}
+						},
+						xAxis: {
+							type: 'category',
+							boundaryGap: false,
+							axisLabel: {
+								textStyle: {
+									color: "#646464"
+								}
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#999999'
+								}
+							},
+							data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+						},
+						yAxis: {
+							name: "人数（人）",
+							nameGap: 10,
+							axisLabel: {
+								textStyle: {
+									color: "#646464"
+								}
+							},
+							splitLine: {
+								show: true,
+								lineStyle: {
+									// 使用深浅的间隔色
+									color: ['#d9d9d9'],
+									type: 'dashed',
+								}
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#999999'
+								}
+							},
+							type: 'value'
+						},
+						series: [{
+							name: '人数',
+							type: 'line',
+							smooth: 'true',
+							data: [2200, 1020, 1110, 1340, 2290, 2230, 4210, 4120, 3132, 2101, 2134, 2900]
+						}, ]
+					};
+					singleCityChartLine.setOption(option_single_qx, true);
+				});
+
+				/*各景点游客数量变化*/
+				singleSenicChartLine = echarts.init(document.getElementById('singleSenicChartLine'));
+				singleSenicChartLine.setOption(option_jq);
+				singleSenicChartLine.on('click', function(parmas) {
+					option_single_jq = {
+						title: {
+							text: '▌贝子庙游客数量变化分析',
+							top: '4%',
+							left: '2%',
+							textStyle: {
+								color: '#EEB300',
+								fontSize: 15
+							},
+						},
+						tooltip: {
+							trigger: 'axis'
+						},
+						grid: {
+							left: '3%',
+							right: '4%',
+							bottom: '3%',
+							containLabel: true
+						},
+						toolbox: {
+							feature: {
+								saveAsImage: {}
+							}
+						},
+						xAxis: {
+							type: 'category',
+							boundaryGap: false,
+							axisLabel: {
+								textStyle: {
+									color: "#646464"
+								}
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#999999'
+								}
+							},
+							data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月']
+						},
+						yAxis: {
+							name: "人数（人）",
+							nameGap: 10,
+							axisLabel: {
+								textStyle: {
+									color: "#646464"
+								}
+							},
+							splitLine: {
+								show: true,
+								lineStyle: {
+									// 使用深浅的间隔色
+									color: ['#d9d9d9'],
+									type: 'dashed',
+								}
+							},
+							axisLine: {
+								lineStyle: {
+									color: '#999999'
+								}
+							},
+							type: 'value'
+						},
+						series: [{
+							name: '人数',
+							type: 'line',
+							smooth: 'true',
+							data: [2200, 1020, 1010, 1340, 2290, 2230, 4210, 4120, 3132, 2101, 2134, 2900]
+						}, ]
+					};
+					singleSenicChartLine.setOption(option_single_jq, true);
+				});
+
+				/*各旗县客流量变化情况*/
+				singleKLLChartLine = echarts.init(document.getElementById('singleKLLChartLine'));
+				option_bottom_qx = {
+					title: {
+						text: '▌各旗县客流量变化情况',
+						top: '4%',
+						left: '2%',
+						textStyle: {
+							color: '#EEB300',
+							fontSize: 15
+						},
+
+					},
+					tooltip: {
+						trigger: 'axis'
+					},
+					legend: {
+						data: ['锡林浩特市', '二连浩特市', '乌拉盖管理区', '多伦县', '正蓝旗', '太仆寺旗', '正镶白旗', '镶黄旗', '苏尼特左旗', '苏尼特右旗', '阿巴嘎旗', '西乌珠穆沁旗', '东乌珠穆沁旗'],
+						top: 'bottom',
+					},
+					grid: {
+						left: '3%',
+						right: '4%',
+						bottom: '20%',
+						containLabel: true
+					},
+					toolbox: {
+						feature: {
+							saveAsImage: {}
+						}
+					},
+					xAxis: {
+						type: 'category',
+						boundaryGap: false,
+						data: ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					yAxis: {
+						name: "人数（人）",
+						nameGap: 10,
+						type: 'value',
+						axisLabel: {
+							textStyle: {
+								color: "#646464"
+							}
+						},
+						splitLine: {
+							show: true,
+							lineStyle: {
+								// 使用深浅的间隔色
+								color: ['#d9d9d9'],
+								type: 'dashed',
+							}
+						},
+						axisLine: {
+							lineStyle: {
+								color: '#999999'
+							}
+						},
+					},
+					series: [{
+							name: '锡林浩特市',
+							type: 'line',
+							smooth: 'true',
+							data: [8120, 8132, 8801, 9134, 9490, 9120, 9132, 8101, 9134, 8490, 8230, 7210]
+
+						},
+						{
+							name: '二连浩特市',
+							type: 'line',
+							smooth: 'true',
+							data: [8220, 7182, 8120, 7132, 7101, 6134, 6590, 8191, 9534, 8290, 6330, 7310]
+
+						},
+						{
+							name: '乌拉盖管理区',
+							type: 'line',
+							smooth: 'true',
+							data: [7150, 9232, 8201, 8120, 7132, 7101, 7134, 6090, 8154, 8190, 8330, 8410]
+
+						},
+						{
+							name: '多伦县',
+							type: 'line',
+							smooth: 'true',
+							data: [8150, 8232, 7201, 7120, 7132, 8101, 9134, 8090, 8154, 8190, 7330, 7410]
+
+						},
+						{
+							name: '正蓝旗',
+							type: 'line',
+							smooth: 'true',
+							data: [8150, 7232, 8201, 7120, 5154, 8190, 8330, 7410, 7190, 6330, 8410, 8410]
+
+						},
+						{
+							name: '太仆寺旗',
+							type: 'line',
+							smooth: 'true',
+							data: [6154, 6190, 7330, 5410, 5101, 5134, 6090, 6154, 6190, 7330, 7410, 7410]
+
+						},
+						{
+							name: '正镶白旗',
+							type: 'line',
+							smooth: 'true',
+							data: [6150, 6232, 7201, 6120, 6132, 6101, 7134, 7090, 7154, 8190, 8330, 6410]
+
+						},
+						{
+							name: '镶黄旗',
+							type: 'line',
+							smooth: 'true',
+							data: [6134, 6090, 6154, 7190, 6330, 5410, 7150, 6232, 8201, 8120, 8132, 6101]
+
+						},
+						{
+							name: '苏尼特左旗',
+							type: 'line',
+							smooth: 'true',
+							data: [6150, 7232, 6201, 7120, 6132, 6101, 6134, 7090, 7154, 7190, 6330, 7410]
+
+						},
+						{
+							name: '苏尼特右旗',
+							type: 'line',
+							smooth: 'true',
+							data: [, 7090, 7154, 6190, 6330, 6132, 6101, 6134, 7090, 7154, 7190, 6330, 7410]
+
+						},
+						{
+							name: '阿巴嘎旗',
+							type: 'line',
+							smooth: 'true',
+							data: [6150, 7232, 6201, 7120, 6132, 6101, 6134, 7090, 7154, 6190, 6330, 6410]
+
+						},
+						{
+							name: '西乌珠穆沁旗',
+							type: 'line',
+							smooth: 'true',
+							data: [5150, 7232, 4201, 7120, 3132, 6101, 6134, 5090, 5154, 6190, 6330, 5410]
+						},
+
+						{
+							name: '东乌珠穆沁旗',
+							type: 'line',
+							smooth: 'true',
+							data: [6150, 5232, 5201, 5120, 5132, 6101, 7134, 7090, 7154, 6190, 6330, 6410]
+
+						}
+					]
+				};
+				singleKLLChartLine.setOption(option_bottom_qx);
+			};
+		</script>
+	</head>
+
+	<body>
+		<div class="row" style="background-color: #3f3d3e;">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">切换导航</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+				<img class="logo" src="img/logo1.jpg" alt="logo" />
+				<span class="title">游客结构分析</span>
+			</div>
+			<div class="navbar-collapse collapse title">
+				<!--<ul class="nav navbar-nav">-->
+				<ul class="nav nav-tabs" role="tablist">
+					<li>
+						<a href="structure_age.html" target="_self">年龄、性别分析</a>
+					</li>
+					<li>
+						<a href="structure_source_out.html" target="_self">境外客源地分析</a>
+					</li>
+					<li>
+						<a href="structure_source.html" target="_self"">境内客源地分析</a>
+					</li>
+					<li>
+						<a href="structure_total_out.html" target="_self"">重点客源地分析</a>
+					</li>
+					<li>
+						<a href="total.html" target="_self">返回</a>
+					</li>
+				</ul>
+			</div>
+			</div>
+		<div class="container">
+			<div class="container_div">
+				<div class="row select">
+					<span class="times_div">
+					<span class="times">时间日期：&nbsp;&nbsp;
+						<span class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
+							<input size="16" type="text" value="2016-01-01" readonly>
+							<span class="add-on add-on-remove"><i class="icon-remove"></i></span>
+					<span class="add-on"><i class="icon-calendar"></i></span>
+					</span>
+					</span>
+					<span class="times">&nbsp;&nbsp;&nbsp;至：
+						<span class="input-append date form_datetime" data-date="2013-02-21T15:25:00Z">
+							<input size="16" type="text" value="2016-12-31" readonly>
+							<span class="add-on add-on-remove"><i class="icon-remove"></i></span>
+					<span class="add-on"><i class="icon-calendar"></i></span>
+					</span>
+					</span>
+					<span>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<button type="button" class="search_btn">查询</button>
+					</span>
+					</span>
+					<!--<a id="search" name="search" href="javascript:void(0)" onclick="doSearch()">&nbsp;&nbsp;查询</a>-->
+				</div>
+
+				<div class="row select_div">
+					<div class="row">
+						<div class="col-md-12">
+							<div id="allMengChartLine"></div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-6">
+							<div id="singleCityChartLine"></div>
+							<button onclick="flesh()" id="return_button">返回</button>
+						</div>
+						<div class="col-md-6">
+							<div id="singleSenicChartLine"></div>
+							<button onclick="flesh2()" id="return_button">返回</button>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<div id="singleKLLChartLine"></div>
+							<div id="singleJqChartLine" style="display: none;"></div>
+						</div>
+						<button onclick="change_qx()" id="qx_button">各旗县</button>
+						<button onclick="change_jq()" id="jq_button">各景区</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+
+</html>
